@@ -1,6 +1,6 @@
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> NOVO BASELINE: **v0.1.0 (Foundation)**. Esta versão consolida e refatora a linha funcional v0.9.14.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **v0.2.7**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat
@@ -45,7 +45,7 @@ Arquivos antigos em `game/data/*` podem permanecer como re-exports de compatibil
 
 **Expediente 08:00–18:00 → resultados → Desenvolvimento da Equipe → pós-expediente/NEXO → próximo dia.**
 
-- 10 horas diegéticas = 15 minutos reais no protótipo.
+- 10 horas diegéticas = 10 minutos reais no protótipo.
 - ocorrências se sobrepõem;
 - equipe de 1–3 heróis;
 - despacho assíncrono;
@@ -94,8 +94,26 @@ Prioridade P1/P2/P3 existe internamente, mas não é exibida como sigla ao jogad
 ## Save
 
 - localStorage
-- schema atual: v6
+- schema atual: v8
 - saves antigos são migrados; não apagar save para resolver mudança de schema.
+
+
+## Social/NEXO v0.1.5
+
+- Um contato do NEXO acumula histórico de vários dias; cenas longas usam turnos adicionais autorados.
+- Autoscroll acompanha novas mensagens usando scroll interno do histórico; header, lista de contatos e compositor permanecem fixos.
+- Romance possui progresso 0–100% por personagem, além dos eixos relacionais existentes.
+- Romance agora ganha pontos por mensagem (100=+7, 50=+5, 30=+3), com teto diário de 18 por personagem; conversas longas ajudam sem permitir farm infinito.
+- Meta de 35% no Dia 3 e 75% no Dia 6 para encontros exclusivos; a resposta que aceita o convite conta para alcançar o threshold.
+- Dias 3 e 6 permitem no máximo um encontro presencial cada; não escolher ninguém é válido.
+- O ritmo D1–D6 é direcional e pode variar por personagem.
+- A dificuldade do Dispatch cresce por dia (0,45/0,50/0,62/0,75/0,90/1,05). D1–D2 favorecem especialistas solo; D5–D6 cobram builds, cobertura complementar e combos.
+- Tamanho de equipe não concede bônus automático. Se um agente cobre sozinho os requisitos/capacidades, ele é viável solo; outros agentes entram para cobrir lacunas, condição, Ressonância e combos.
+- Técnicas desbloqueadas adicionam capacidades (`grantedTags`) ao cálculo de Dispatch e são visíveis na ficha/briefing.
+- Contatos permanecem acessiveis nos dias seguintes mesmo se uma mensagem antiga ficou sem resposta.
+- Todo o conteúdo social/operacional atual dos agentes é tratado como PLACEHOLDER de QA; D1-D6 servem para testar motor, histórico, romance e progressão antes da autoria final.
+- Saidas dos Dias 3/6 usam uma tela presencial generica `/encontro` com background + caixa de texto data-driven.
+- Roadmap de fechamento: `docs/design/CONTENT_COMPLETE_ROADMAP.md`.
 
 ## Regra de desenvolvimento
 
@@ -105,3 +123,52 @@ Prioridade P1/P2/P3 existe internamente, mas não é exibida como sigla ao jogad
 4. Mudança mecânica durável atualiza GDD + failsafe.
 5. Mudança canônica/AU durável atualiza Bíblia da AU.
 6. Atualizar `NEXT_SESSION.md` antes de cada handoff.
+
+## Progressão v0.1.5
+
+- thresholds cumulativos de XP: 50 / 130 / 230 / 360 / 520 para níveis 2–6;
+- Desenvolvimento seleciona automaticamente o próximo agente com upgrade pendente;
+- saves migrados reconstroem milestones a partir do XP acumulado;
+- o botão de topo não finge concluir upgrades: leva ao próximo upgrade pendente e só libera o pós-expediente quando todos forem resolvidos.
+
+
+## Dev Mode v0.1.6
+
+- Novo botão `FINALIZAR EXPEDIENTE 100%` no painel DEV.
+- Resolve automaticamente todas as ocorrências ainda não arquivadas como `Sucesso`, aplica custo/XP normal de Sucesso, limpa relatórios pendentes e encerra o turno às 18:00.
+- O atalho segue diretamente para Desenvolvimento para acelerar QA de progressão, NEXO e dias posteriores.
+- Resultados já arquivados não recebem XP novamente.
+
+
+## Atualização v0.2.0 (2026-09-29)
+Rotas sociais agora são individuais por personagem e independentes do dia global. Campanha continua após Dia 6. Técnicas relevantes têm efeito direto (+6 p.p., cap +12), XP pós-Nv6 alimenta Maestria 1–5 e dificuldade pós-D6 alterna ondas sem inflação infinita. Save schema v9. Ver `docs/design/ROUTE_AND_LATEGAME_SYSTEM.md`.
+
+
+## Atualização v0.2.1 (2026-09-29)
+
+O banco aprovado de 48 ocorrências foi implementado em `content/incidents/caseBank.ts`, com composição diária determinística, pesos, cooldown, `minDay` e faixas easy/medium/hard/crisis. Casos aprovados com afinidade contextual de poder concedem +10 p.p. por herói compatível, teto +15 p.p. por equipe, sem tornar o herói obrigatório. Peso de atributo 3/2/1 agora significa ESSENCIAL/IMPORTANTE/APOIO literalmente. Save permanece v9. Ver `docs/design/INCIDENT_POOL_SYSTEM.md`.
+
+## Atualização v0.2.4 (2026-09-29)
+
+Playtest D1-D6 rebalanceado. NEXO agora permite no máximo uma etapa de rota por personagem por noite global e remove progresso/ROTA da lista de contatos; romance permanece visível somente dentro da conversa. Relatórios voltam a contextualizar o chamado e descrevem como a equipe o resolveu. Dispatch acelera para 10 minutos reais, usa 10/11/12/13 casos conforme pressão, spawns em ondas mais próximas, requisitos D1-D5 mais firmes e custos de Energia maiores para tornar disponibilidade/fadiga relevantes. Afinidade contextual passa a +8 p.p. (cap +12). Casos de enchente/drenagem agora reconhecem Alexandra. Save permanece v9.
+
+
+## Atualização v0.2.4 (2026-09-29)
+
+Onboarding definitivo do Dia 1 implementado a partir do roteiro autoral: Edison recebe o Despachante, apresenta os Guerreiros Elementais, primeiro contato ocorre no grupo NEXO e o SDH ensina o primeiro despacho usando o incêndio E-04 com Hélio. Tutorial pode ser pulado; primeiro caso tutorial é sucesso controlado e depois libera o banco normal. Menu principal foi redesenhado com navegação à esquerda e área reservada para arte futura. Edison passa a ser [AU-APROVADO] como supervisora/chefia de onboarding da Agência. Save permanece v9.
+
+
+## Atualização v0.2.4 (2026-09-29)
+
+Primeiro despacho agora é isolado: nenhum outro caso surge durante E-04; a missão guiada dura 12 minutos diegéticos e o banco normal só é liberado após arquivar o relatório. Orientação de Edison foi movida para dentro do briefing quando necessário e o card final foi corrigido responsivamente. NEXO é mensageiro corporativo: grupos/canais operacionais podem ser supervisionados; DMs privadas não são supervisionadas. Save permanece v9.
+
+
+## Atualização v0.2.6 (2026-09-29)
+
+Polimento do onboarding após playtest: texto de privacidade do NEXO reduzido à regra essencial; imagem autoral de Edison integrada à introdução e aos elementos do tutorial; card de conclusão redesenhado; chat operacional passa a acompanhar automaticamente a mensagem mais recente usando scroll interno; e a liberação do banco após E-04 usa cadência compacta, com último spawn bem antes do fim do turno para evitar vazios longos e chamados tardios. Save permanece v9.
+
+## Atualização v0.2.6 (2026-09-29)
+
+A abertura visual deixa de usar o retrato de Edison como key art. A introdução agora começa com a imagem externa do prédio da Agência, muda para o interior do escritório a partir da segunda fala e, depois do NEXO, segue para a linguagem visual do sistema/SDH. `edison.jpg` permanece reservado a avatar/retrato em elementos de interface e orientação.
+
+- v0.2.7: caixas de diálogo da introdução exibem avatar pequeno de Edison ao lado do speaker, usando `public/edison.jpg` apenas como retrato.

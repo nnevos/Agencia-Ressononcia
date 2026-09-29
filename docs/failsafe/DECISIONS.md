@@ -137,3 +137,38 @@ Textos iniciais vivem em `content/narrative/`. `Coordenação` é placeholder ed
 
 ## D-030 — Novo baseline de versionamento (v0.1.0 Foundation)
 A linha funcional v0.9.14 foi consolidada/refatorada como novo baseline v0.1.0. O antigo snapshot `ressonancia-fase1-0.1.1` permanece obsoleto e não deve ser usado, apesar da numeração histórica semelhante.
+
+## D-031 — Pós-expediente usa NEXO multi-chat persistente (v0.1.1)
+**Status:** ativa.
+
+O pós-expediente deve se comportar como um mensageiro: lista de contatos e conversa ativa coexistem no desktop; no mobile, navega-se entre lista e chat. Abrir uma conversa não força seu término antes de visitar outra. Conversas já respondidas continuam visíveis como histórico na mesma noite. O compositor nunca gera fala livre: ele só envia opções explicitamente autoradas em `content/dialogues/post-shift/`, preservando D-027 e a autoridade narrativa do autor.
+
+## D-029 — Progresso romântico explícito por personagem (v0.1.2)
+**SUPERSEDE parcialmente D-004.** Relações continuam multidimensionais (confiança, respeito, intimidade, tensão e atração), mas a rota romântica também possui progresso explícito de `0–100%` por personagem. Esse percentual não substitui os demais eixos; serve para marcos de campanha e elegibilidade de encontros.
+
+## D-030 — Três respostas com peso romântico 100/50/30
+Cada turno pós-expediente oferece três respostas autoradas. Elas podem ser marcadas com `romanceAffinity: 100 | 50 | 30`, representando encaixe romântico alto, médio e baixo. O valor é determinístico e não é chance/RNG.
+
+## D-031 — Marcos românticos dos Dias 3 e 6
+- Dia 3: encontro presencial exige pelo menos 35% de progresso romântico e o jogador pode escolher no máximo um personagem.
+- Dia 6: date/encontro presencial exige pelo menos 75% e o jogador pode escolher no máximo um personagem.
+- Conversar com os demais continua permitido.
+- O jogador pode não desenvolver romance com ninguém e terminar a campanha sem par.
+
+## D-032 — Cadência romântica é direcional, não uniforme
+A referência de seis dias é: D1 conhecer/backstory; D2 conversa cotidiana/humor; D3 possível saída; D4 repercussão/início de flerte; D5 flerte forte; D6 possível date. Personagens podem acelerar ou atrasar essa cadência conforme personalidade, flags e relação. Não forçar o mesmo ritmo narrativo a todos.
+
+## D-033 — NEXO guarda histórico contínuo por personagem
+Um contato representa um histórico persistente através de vários dias/cenas. Cenas podem ter múltiplos turnos autorados (`followUps`). O histórico autoscrolla ao abrir e quando chega uma mensagem nova, mas continua rolável para leitura de mensagens antigas.
+
+## D-034 — Escalada diária do Dispatch
+O Dia 1 deve comportar mais soluções solo; a exigência cresce diariamente e o Dia 6 deve valorizar duplas/trios, Ressonância e combos. A curva atual usa multiplicadores de requisito por dia configuráveis em `content/config/balance.ts`.
+
+## D-045 — Edison substitui Coordenação no onboarding (v0.2.3)
+**SUPERSEDE a decisão antiga de placeholder da chefia para a abertura.** Edison é [AU-APROVADO] como supervisora que recebe o Despachante, apresenta os Guerreiros Elementais/NEXO e acompanha o primeiro despacho. Aparência e histórico pessoal além dessa função permanecem [A DEFINIR].
+
+## D-046 — Primeiro despacho guiado e pulável
+Novo jogo passa por onboarding autorado, mas `PULAR TUTORIAL` deve sempre permitir entrada direta no Dispatch normal. Quando ativo, E-04 + Hélio formam o único caso rigidamente guiado; o resultado é Sucesso controlado com custo normal, e o restante do Dia 1 fica livre após arquivar o relatório.
+
+## D-047 — Menu reserva área para key art
+A navegação principal fica concentrada à esquerda. A área direita do menu é intencionalmente livre para futura imagem/background, sem depender dessa arte para legibilidade ou navegação.

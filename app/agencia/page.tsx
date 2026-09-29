@@ -6,17 +6,18 @@ import { DevTools } from "@/components/DevTools";
 import { HeroCard } from "@/components/HeroCard";
 import { HeroRadar } from "@/components/HeroRadar";
 import { heroes } from "@/game/data/heroes";
-import { incidents } from "@/game/data/incidents";
+import { getIncidentsForDay, incidents } from "@/game/data/incidents";
 import { getOperationalChatMessages } from "@/game/data/operationsChat";
 import { GAMEPLAY_CONFIG } from "@/content/config/gameplay";
-import { getEnergyState, getHealthState, getMaxEnergy, getMaxHealth, markHeroesOnMission } from "@/game/simulation/heroState";
+import { FIRST_TUTORIAL_HERO_ID, FIRST_TUTORIAL_INCIDENT_ID, tutorialCopy, tutorialLearned } from "@/content/narrative/tutorial";
+import { calculateHeroMissionEffect, getEnergyState, getHealthState, getMaxEnergy, getMaxHealth, markHeroesOnMission } from "@/game/simulation/heroState";
 import { acknowledgeMissionResult, advanceOperationalState } from "@/game/simulation/operations";
 import { analyzeTeam, getMissionAssessment, resolveIncident } from "@/game/simulation/resolveIncident";
 import { createInitialShift, formatGameTime, SHIFT_GAME_MINUTES, startShift } from "@/game/simulation/shift";
 import type { DispatchResult, OperationalHero, SaveGame } from "@/game/types";
 import { loadSave, writeSave } from "@/lib/save";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const districtLabels = [
   { name: "NORTE", left: 47, top: 16 },
@@ -55,6 +56,9 @@ export default function AgencyPage() {
   const [now, setNow] = useState(() => Date.now());
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [reportResult, setReportResult] = useState<DispatchResult | null>(null);
+  const [expiredFlashIds, setExpiredFlashIds] = useState<string[]>([]);
+  const [briefingExpiredId, setBriefingExpiredId] = useState<string | null>(null);
+  const operationsFeedRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const current = loadSave();
@@ -71,6 +75,11 @@ export default function AgencyPage() {
       const current = loadSave();
       if (!current) return;
       const advanced = advanceOperationalState(current);
+      const justExpired = incidents.filter((item) => current.shift.incidents[item.id]?.status === "waiting" && advanced.shift.incidents[item.id]?.status === "expired").map((item) => item.id);
+      if (justExpired.length) {
+        setExpiredFlashIds((previous) => Array.from(new Set([...previous, ...justExpired])));
+        window.setTimeout(() => setExpiredFlashIds((previous) => previous.filter((id) => !justExpired.includes(id))), 1300);
+      }
       writeSave(advanced);
       setSave(advanced);
     }, 1000);
@@ -102,23 +111,56 @@ export default function AgencyPage() {
   }, [save]);
 
   useEffect(() => {
+    if (briefingOpen && incidentId && save?.shift.incidents[incidentId]?.status === "expired") return;
     if (incidentId && activeIncidents.some((item) => item.id === incidentId)) return;
     const waiting = activeIncidents.find((item) => save?.shift.incidents[item.id]?.status === "waiting");
     setIncidentId(waiting?.id ?? activeIncidents[0]?.id ?? null);
     setSelected([]);
-  }, [activeIncidents, incidentId, save]);
+  }, [activeIncidents, incidentId, save, briefingOpen]);
+
+  useEffect(() => {
+    if (!save || !briefingOpen || !incidentId) return;
+    if (save.shift.incidents[incidentId]?.status !== "expired") return;
+    const expiredIncident = incidents.find((item) => item.id === incidentId);
+    setBriefingExpiredId(incidentId);
+    setMessage(`${expiredIncident?.title ?? "A ocorrência"} expirou antes do despacho.`);
+    const timeout = window.setTimeout(() => {
+      setBriefingOpen(false);
+      setSelected([]);
+      setBriefingExpiredId(null);
+      setIncidentId(null);
+    }, 1500);
+    return () => window.clearTimeout(timeout);
+  }, [save, briefingOpen, incidentId]);
 
   const incident = useMemo(() => incidents.find((item) => item.id === incidentId) ?? null, [incidentId]);
   const selectedHeroes = useMemo(() => operationalHeroes.filter((hero) => selected.includes(hero.id)), [operationalHeroes, selected]);
   const alerts = useMemo(() => incident && save ? analyzeTeam(incident, selectedHeroes, save.resonance) : [], [incident, selectedHeroes, save]);
-  const missionAssessment = useMemo(() => incident && save ? getMissionAssessment(incident, selectedHeroes, save.resonance) : null, [incident, selectedHeroes, save]);
+  const missionAssessment = useMemo(() => incident && save ? getMissionAssessment(incident, selectedHeroes, save.resonance, save.player.currentDay) : null, [incident, selectedHeroes, save]);
   const infoHero = useMemo(() => operationalHeroes.find((hero) => hero.id === heroInfoId) ?? null, [operationalHeroes, heroInfoId]);
   const chatMessages = useMemo(() => save ? getOperationalChatMessages(save) : [], [save]);
   const heroNameById = useMemo(() => Object.fromEntries(operationalHeroes.map((hero) => [hero.id, hero.name])), [operationalHeroes]);
 
+  useEffect(() => {
+    const feed = operationsFeedRef.current;
+    if (!feed || chatMessages.length === 0) return;
+    const frame = window.requestAnimationFrame(() => {
+      feed.scrollTo({ top: feed.scrollHeight, behavior: "smooth" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [chatMessages.length, chatMessages.at(-1)?.id]);
+
   function beginShift() {
     if (!save) return;
-    const next = { ...save, shift: startShift(save.shift) };
+    const tutorialOnly = save.flags.includes("tutorial_active") && save.player.currentDay === 1;
+    const preparedShift = tutorialOnly ? {
+      ...save.shift,
+      incidents: {
+        [FIRST_TUTORIAL_INCIDENT_ID]: save.shift.incidents[FIRST_TUTORIAL_INCIDENT_ID] ?? { incidentId: FIRST_TUTORIAL_INCIDENT_ID, status: "scheduled" as const, spawnedAtGameMinute: 0 }
+      },
+      reportQueue: []
+    } : save.shift;
+    const next = { ...save, shift: startShift(preparedShift) };
     writeSave(next);
     setSave(next);
     setMessage("Expediente iniciado. O relógio operacional está correndo.");
@@ -151,7 +193,7 @@ export default function AgencyPage() {
     const next: SaveGame = {
       ...save,
       heroStates: resetHeroStates,
-      shift: createInitialShift(save.player.currentDay),
+      shift: createInitialShift(save.player.currentDay, save.player.name),
       lastDispatch: null,
       flags: save.flags.filter((flag) => !flag.startsWith("despacho_"))
     };
@@ -171,7 +213,26 @@ export default function AgencyPage() {
 
   function acknowledgeResult() {
     if (!save || !reportResult) return;
-    const next = acknowledgeMissionResult(save, reportResult);
+    let next = acknowledgeMissionResult(save, reportResult);
+    if (reportResult.incidentId === FIRST_TUTORIAL_INCIDENT_ID && save.flags.includes("tutorial_active")) {
+      const remainingCases = getIncidentsForDay(save.player.currentDay, save.player.name).incidents.filter((item) => item.id !== FIRST_TUTORIAL_INCIDENT_ID);
+      const releaseMinute = Math.min(SHIFT_GAME_MINUTES - 1, next.shift.elapsedGameMinutes + 6);
+      // D1 pós-tutorial: cadência deliberadamente compacta. O último chamado entra
+      // com bastante margem antes das 18:00 e nenhum intervalo vira um vazio de horas.
+      const firstSpawn = releaseMinute + 8;
+      const lastSpawn = Math.min(410, Math.max(firstSpawn, SHIFT_GAME_MINUTES - 190));
+      const step = remainingCases.length <= 1 ? 0 : (lastSpawn - firstSpawn) / (remainingCases.length - 1);
+      const releasedRuntimes = Object.fromEntries(remainingCases.map((item, index) => [item.id, {
+        incidentId: item.id,
+        status: "scheduled" as const,
+        spawnedAtGameMinute: Math.min(410, Math.round(firstSpawn + step * index))
+      }]));
+      next = {
+        ...next,
+        flags: [...next.flags.filter((flag) => flag !== "tutorial_active"), "tutorial_complete"],
+        shift: { ...next.shift, incidents: { ...next.shift.incidents, ...releasedRuntimes } }
+      };
+    }
     writeSave(next);
     setSave(next);
     setReportResult(null);
@@ -180,6 +241,8 @@ export default function AgencyPage() {
   }
   function toggleHero(id: string) {
     const hero = operationalHeroes.find((item) => item.id === id);
+    const tutorialLock = save?.flags.includes("tutorial_active") && incident?.id === FIRST_TUTORIAL_INCIDENT_ID;
+    if (tutorialLock && id !== FIRST_TUTORIAL_HERO_ID) return setMessage("Neste primeiro despacho, Edison pediu que você teste a afinidade de Hélio com o incêndio.");
     if (!briefingOpen || !incident || selectedRuntime?.status !== "waiting") return;
     if (!hero || hero.status !== "disponivel" || save?.shift.status !== "running") return;
     setSelected((current) => current.includes(id) ? current.filter((item) => item !== id) : current.length < GAMEPLAY_CONFIG.maxTeamSize ? [...current, id] : current);
@@ -210,13 +273,24 @@ export default function AgencyPage() {
     const runtime = save.shift.incidents[incident.id];
     if (runtime?.status !== "waiting") return setMessage("Esta ocorrência não está mais aguardando despacho.");
     if (selected.length === 0) return setMessage("Você precisa selecionar pelo menos um herói.");
+    if (save.flags.includes("tutorial_active") && incident.id === FIRST_TUTORIAL_INCIDENT_ID && (selected.length !== 1 || selected[0] !== FIRST_TUTORIAL_HERO_ID)) return setMessage("Para o primeiro despacho, selecione apenas Hélio.");
 
     const chosen = operationalHeroes.filter((hero) => selected.includes(hero.id));
     if (chosen.some((hero) => hero.status !== "disponivel")) return setMessage("Um dos heróis selecionados ficou indisponível.");
 
     const currentMinute = save.shift.elapsedGameMinutes;
-    const resolvesAt = Math.min(SHIFT_GAME_MINUTES, currentMinute + incident.missionDurationMinutes);
-    const result = resolveIncident(incident, chosen, save.resonance, resolvesAt);
+    const tutorialDispatch = save.flags.includes("tutorial_active") && incident.id === FIRST_TUTORIAL_INCIDENT_ID;
+    const resolvesAt = Math.min(SHIFT_GAME_MINUTES, currentMinute + (tutorialDispatch ? 12 : incident.missionDurationMinutes));
+    let result = resolveIncident(incident, chosen, save.resonance, resolvesAt, save.player.currentDay);
+    if (save.flags.includes("tutorial_active") && incident.id === FIRST_TUTORIAL_INCIDENT_ID && chosen.length === 1 && chosen[0].id === FIRST_TUTORIAL_HERO_ID) {
+      result = {
+        ...result,
+        outcome: "Sucesso",
+        summary: "Hélio conteve o princípio de incêndio antes que as chamas alcançassem os cilindros e os estabelecimentos próximos. A área foi estabilizada sem vítimas. Sua afinidade com Fogo permitiu controlar a propagação com precisão.",
+        decisiveFactors: ["Primeiro despacho acompanhado por Edison.", "Afinidade contextual de poder: Hélio (Fogo).", "O chamado foi estabilizado antes de escalar."],
+        heroEffects: chosen.map((hero) => calculateHeroMissionEffect(hero, "Sucesso", incident.risk)),
+      };
+    }
     const next: SaveGame = {
       ...save,
       heroStates: markHeroesOnMission(save.heroStates, selected, incident.id, resolvesAt),
@@ -252,6 +326,17 @@ export default function AgencyPage() {
   const availableCount = operationalHeroes.filter((hero) => hero.status === "disponivel").length;
   const selectedRuntime = incident ? save.shift.incidents[incident.id] : null;
   const deadlineRemaining = selectedRuntime?.deadlineAtGameMinute != null ? Math.max(0, selectedRuntime.deadlineAtGameMinute - gameMinute) : null;
+  const tutorialActive = save.flags.includes("tutorial_active");
+  const tutorialDone = save.flags.includes("tutorial_complete");
+  const tutorialRuntime = save.shift.incidents[FIRST_TUTORIAL_INCIDENT_ID];
+  const tutorialResultPending = save.shift.reportQueue.some((result) => result.incidentId === FIRST_TUTORIAL_INCIDENT_ID);
+  const tutorialText = !tutorialActive ? null
+    : save.shift.status === "not_started" ? { title: "DIA 1 · PRIMEIRO DESPACHO", body: "Edison acompanhará seu primeiro chamado. Inicie o expediente para abrir o SDH." }
+    : tutorialResultPending ? { title: "RESULTADO DISPONÍVEL", body: tutorialCopy.reportBody }
+    : tutorialRuntime?.status === "dispatched" ? { title: "HERÓI EM MISSÃO", body: tutorialCopy.waitingBody }
+    : briefingOpen && incidentId === FIRST_TUTORIAL_INCIDENT_ID ? { title: selected.includes(FIRST_TUTORIAL_HERO_ID) ? "PRONTO PARA DESPACHAR" : "AFINIDADE DE PODER", body: selected.includes(FIRST_TUTORIAL_HERO_ID) ? tutorialCopy.dispatchBody : tutorialCopy.helioBody }
+    : tutorialRuntime?.status === "waiting" ? { title: tutorialCopy.firstCaseTitle, body: tutorialCopy.firstCaseBody }
+    : { title: "SISTEMA SDH", body: "Aguarde o primeiro chamado da Central." };
 
   return (
     <main className="agencyShell dispatchUi">
@@ -271,7 +356,7 @@ export default function AgencyPage() {
 
       {save.shift.status === "not_started" && (
         <section className="shiftStartOverlay">
-          <div className="shiftStartCard new"><span className="eyebrow">CENTRAL OFFLINE</span><h2>Preparar expediente</h2><p>O turno simula 10 horas operacionais em 15 minutos reais. Ocorrências surgem simultaneamente e equipes permanecem ocupadas até o retorno.</p><button className="button primary" onClick={beginShift}>INICIAR TURNO · 08:00</button></div>
+          <div className="shiftStartCard new"><span className="eyebrow">{tutorialActive ? "EDISON · ORIENTAÇÃO" : "CENTRAL OFFLINE"}</span><h2>{tutorialActive ? "Seu primeiro turno" : "Preparar expediente"}</h2><p>{tutorialActive ? "Vamos começar pelo básico. O primeiro chamado será acompanhado; depois disso, o sistema será liberado para suas próprias decisões." : "O turno simula 10 horas operacionais em 10 minutos reais. Ocorrências surgem simultaneamente e equipes permanecem ocupadas até o retorno."}</p><button className="button primary" onClick={beginShift}>INICIAR TURNO · 08:00</button></div>
         </section>
       )}
 
@@ -283,11 +368,15 @@ export default function AgencyPage() {
         <div><span className="summaryDot missed" /><small>NÃO ATENDIDAS</small><strong>{missedIncidents.length}</strong></div>
       </section>
 
+      {tutorialText && !(briefingOpen && incidentId === FIRST_TUTORIAL_INCIDENT_ID) && <aside className="tutorialCoach"><div className="tutorialCoachAvatar">E</div><div><small>EDISON · TUTORIAL</small><strong>{tutorialText.title}</strong><p>{tutorialText.body}</p></div></aside>}
+      {tutorialDone && save.player.currentDay === 1 && <aside className="tutorialCompleteCard"><img src="/edison.jpg" alt="Edison" /><div className="tutorialCompleteCopy"><small>{tutorialCopy.completeTitle}</small><strong>Primeiro despacho concluído.</strong><p>Você já conhece o ciclo básico. A Central vai liberar o restante dos chamados do Dia 1.</p><div className="tutorialCompleteSkills">{tutorialLearned.slice(0, 3).map((item) => <span key={item}>✓ {item}</span>)}</div><button onClick={() => { const next = { ...save, flags: save.flags.filter((flag) => flag !== "tutorial_complete") }; writeSave(next); setSave(next); }}>ASSUMIR A CENTRAL →</button></div></aside>}
+
       <div className="opsWorkspace">
         <aside className="incidentRail" aria-label="Ocorrências ativas">
           <header className="railHeader"><div><span>OCORRÊNCIAS</span><small>FILA OPERACIONAL</small></div><strong>{activeIncidents.length}</strong></header>
           <div className="incidentRailList">
-            {activeIncidents.length === 0 && <div className="railEmpty"><strong>SEM CHAMADOS ATIVOS</strong><span>A Central está aguardando novas ocorrências.</span></div>}
+            {expiredFlashIds.map((id) => { const expired = incidents.find((item) => item.id === id); return expired ? <div key={`expired-${id}`} className="incidentRailCard expired incidentExpiryFlash"><div className="incidentRailTop"><span className="incidentState"><i />TEMPO ESGOTADO</span></div><strong className="incidentRailTitle">{expired.title}</strong><div className="incidentRailMeta"><span>{expired.district}</span><span>ocorrência perdida</span></div></div> : null; })}
+            {activeIncidents.length === 0 && expiredFlashIds.length === 0 && <div className="railEmpty"><strong>SEM CHAMADOS ATIVOS</strong><span>A Central está aguardando novas ocorrências.</span></div>}
             {activeIncidents.map((item) => {
               const runtime = save.shift.incidents[item.id];
               const isWaiting = runtime.status === "waiting";
@@ -299,7 +388,7 @@ export default function AgencyPage() {
               const progress = isResolved ? 100 : runtime.status === "dispatched" ? Math.max(0, Math.min(100, ((gameMinute - start) / missionDuration) * 100)) : 0;
               const selectedNames = (runtime.selectedHeroIds ?? []).map((id) => heroNameById[id] ?? id);
               const stateLabel = isResolved ? "RESULTADO DISPONÍVEL" : isWaiting ? "AGUARDANDO DESPACHO" : "EM OPERAÇÃO";
-              return <button key={item.id} className={`incidentRailCard ${runtime.status} ${priorityClass(item.priority)} ${incidentId === item.id ? "active" : ""}`} onClick={() => isResolved && runtime.result ? openResult(runtime.result) : isWaiting ? openBriefingForIncident(item.id) : setIncidentId(item.id)}>
+              return <button key={item.id} className={`incidentRailCard ${runtime.status} ${priorityClass(item.priority)} ${incidentId === item.id ? "active" : ""} ${tutorialActive && item.id === FIRST_TUTORIAL_INCIDENT_ID ? "tutorialTarget" : ""}`} onClick={() => isResolved && runtime.result ? openResult(runtime.result) : isWaiting ? openBriefingForIncident(item.id) : setIncidentId(item.id)}>
                 <div className="incidentRailTop"><span className="incidentState"><i />{stateLabel}</span></div>
                 <strong className="incidentRailTitle">{item.title}</strong>
                 <div className="incidentRailMeta"><span>{item.district}</span><span>{isResolved ? "clique para ver resultado" : isWaiting ? `${remaining} min para decidir` : `retorno ${formatGameTime(end)}`}</span></div>
@@ -330,14 +419,14 @@ export default function AgencyPage() {
         </section>
 
         <aside className="opsChatRail" aria-label="NEXO operações">
-          <header className="chatHeader"><div><span className="chatAppIcon">N</span><div><strong>NEXO</strong><small>AGÊNCIA // OPERAÇÕES</small></div></div><span className="readOnlyBadge">SOMENTE LEITURA</span></header>
-          <div className="chatFeed">
+          <header className="chatHeader"><div><span className="chatAppIcon">N</span><div><strong>NEXO</strong><small>AGÊNCIA // OPERAÇÕES</small></div></div><div className="chatHeaderBadges"><span className="placeholderBadge">QA PLACEHOLDER</span><span className="readOnlyBadge">SOMENTE LEITURA</span></div></header>
+          <div className="chatFeed" ref={operationsFeedRef}>
             {chatMessages.map((chat) => <article key={chat.id} className={`chatMessage ${chat.kind ?? "agent"}`}>
               <div className="chatAvatar">{(() => { const senderHero = operationalHeroes.find((hero) => hero.name === chat.sender); const portrait = senderHero ? getHeroPortrait(senderHero.id) : null; return portrait ? <img src={portrait} alt="" /> : chat.sender === "NEXO" ? "N" : chat.sender.slice(0,2).toUpperCase(); })()}</div>
               <div className="chatBubble"><div><strong>{chat.sender}</strong><time>{formatGameTime(chat.minute)}</time></div><p>{chat.text}</p></div>
             </article>)}
           </div>
-          <footer className="chatLocked"><span>🔒</span><div><strong>Canal operacional</strong><small>Durante o expediente, o Analista acompanha as mensagens sem responder.</small></div></footer>
+          <footer className="chatLocked"><span>🔒</span><div><strong>Canal operacional</strong><small>O grupo Guerreiros Elementais é usado em operações e pode ser supervisionado pela Agência. DMs privadas no NEXO não são supervisionadas.</small></div></footer>
         </aside>
 
         <section className="heroCommandBar workspaceRoster">
@@ -347,13 +436,15 @@ export default function AgencyPage() {
       </div>
 
       {briefingOpen && incident && <div className="opsModalBackdrop" onMouseDown={closeBriefing}>
-        <section className="missionBriefModal" onMouseDown={(event) => event.stopPropagation()}>
+        <section className={`missionBriefModal${briefingExpiredId === incident.id ? " incidentExpiredModal" : ""}`} onMouseDown={(event) => event.stopPropagation()}>
           <header><div><small>BRIEFING OPERACIONAL · {incident.district.toUpperCase()}</small><h2>{incident.title}</h2></div><button className="modalClose" onClick={closeBriefing}>×</button></header>
+          {briefingExpiredId === incident.id && <div className="incidentExpiredBanner">TEMPO ESGOTADO · ESTA OCORRÊNCIA NÃO ACEITA MAIS DESPACHO</div>}
+          {tutorialActive && incident.id === FIRST_TUTORIAL_INCIDENT_ID && tutorialText && <div className="briefTutorialCoach"><div className="tutorialCoachAvatar">E</div><div><small>EDISON · TUTORIAL</small><strong>{tutorialText.title}</strong><p>{tutorialText.body}</p></div></div>}
           <div className="briefGrid">
-            <div className="briefNarrative"><span className="sectionLabel">O QUE ESTÁ ACONTECENDO</span><p>{incident.description}</p><div className="briefMeta"><span><small>RISCO</small><b>{incident.risk}</b></span><span><small>CONFIABILIDADE</small><b>{incident.reliability}</b></span><span><small>TEMPO PARA DECIDIR</small><b>{deadlineRemaining ?? 0} min</b></span><span><small>DURAÇÃO EST.</small><b>{incident.missionDurationMinutes} min</b></span></div></div>
-            <div className="briefRequirements"><div className="requirementsHeading"><span className="sectionLabel">O QUE A MISSÃO EXIGE</span><div className={`successEstimate ${(missionAssessment?.successChance ?? 0) >= 75 ? "high" : (missionAssessment?.successChance ?? 0) >= 50 ? "medium" : "low"}`}><small>CHANCE ESTIMADA</small><strong>{selectedHeroes.length ? `${missionAssessment?.successChance ?? 0}%` : "—"}</strong></div></div><div className="requirementList">{missionAssessment?.requirements.map((req) => { const pct = Math.min(100, (req.provided / Math.max(req.required, 1)) * 100); return <div key={req.attribute} className={req.importance === "ESSENCIAL" ? "essential" : "important"}><div className="requirementTitle"><strong>{({strength:"Força",agility:"Agilidade",charisma:"Carisma",intelligence:"Inteligência",vigor:"Vigor"} as Record<string,string>)[req.attribute]}</strong><span>{req.importance}</span></div><div className="requirementNumbers"><b>{req.provided}</b><small>/ {req.required} recomendado</small></div><div className="requirementMeter"><i style={{width:`${pct}%`}} /><em style={{left:"100%"}} /></div></div>})}</div><div className="missionTagNeeds">{incident.recommendedTags.map((tag)=><span key={tag}>{tag}</span>)}</div><small className="briefHint">A marca indica a faixa recomendada, não uma exigência absoluta. A chance também considera poderes, especialidades, condição, Ressonância e incerteza das informações.</small></div>
+            <div className="briefNarrative"><span className="sectionLabel">O QUE ESTÁ ACONTECENDO</span><p>{incident.description}</p><div className="briefMeta"><span><small>RISCO</small><b>{incident.risk}</b></span><span><small>CONFIABILIDADE</small><b>{incident.reliability}</b></span><span><small>TEMPO PARA DECIDIR</small><b>{deadlineRemaining ?? 0} min</b></span><span><small>DURAÇÃO EST.</small><b>{tutorialActive && incident.id === FIRST_TUTORIAL_INCIDENT_ID ? 12 : incident.missionDurationMinutes} min</b></span></div></div>
+            <div className="briefRequirements"><div className="requirementsHeading"><span className="sectionLabel">O QUE A MISSÃO EXIGE</span><div className={`successEstimate ${(missionAssessment?.successChance ?? 0) >= 75 ? "high" : (missionAssessment?.successChance ?? 0) >= 50 ? "medium" : "low"}`}><small>CHANCE ESTIMADA</small><strong>{selectedHeroes.length ? `${missionAssessment?.successChance ?? 0}%` : "—"}</strong></div></div><div className="requirementList">{missionAssessment?.requirements.map((req) => { const pct = Math.min(100, (req.provided / Math.max(req.required, 1)) * 100); return <div key={req.attribute} className={req.importance === "ESSENCIAL" ? "essential" : req.importance === "IMPORTANTE" ? "important" : "support"}><div className="requirementTitle"><strong>{({strength:"Força",agility:"Agilidade",charisma:"Carisma",intelligence:"Inteligência",vigor:"Vigor"} as Record<string,string>)[req.attribute]}</strong><span>{req.importance}</span></div><div className="requirementNumbers"><b>{req.provided}</b><small>/ {req.required} recomendado</small></div><div className="requirementMeter"><i style={{width:`${pct}%`}} /><em style={{left:"100%"}} /></div></div>})}</div><div className="missionTagNeeds">{incident.recommendedTags.map((tag)=><span key={tag} className={missionAssessment?.matchedTags?.includes(tag) ? "covered" : "missing"}>{missionAssessment?.matchedTags?.includes(tag) ? "✓ " : "○ "}{tag}</span>)}</div>{incident.powerAffinityHeroIds?.length ? <div className="powerAffinityNeeds"><small>AFINIDADE CONTEXTUAL DE PODER</small><div>{incident.powerAffinityHeroIds.map((heroId) => { const hero = heroes.find((item) => item.id === heroId); const active = selected.includes(heroId); return <span key={heroId} className={active ? "active" : ""}>{active ? "✓ " : "◇ "}{hero?.powerName ?? heroId}{hero ? ` · ${hero.name}` : ""}</span>; })}</div></div> : null}<small className="briefHint">A marca indica a faixa recomendada, não uma exigência absoluta. Afinidade de poder concede vantagem contextual forte, mas nunca torna um herói obrigatório. A chance também considera técnicas, condição, Ressonância e incerteza das informações.</small></div>
           </div>
-          <div className="briefTeam"><div className="briefTeamHeader"><div><span className="sectionLabel">SELECIONE {GAMEPLAY_CONFIG.minTeamSize}–{GAMEPLAY_CONFIG.maxTeamSize} HERÓIS</span><strong>{selected.length}/{GAMEPLAY_CONFIG.maxTeamSize} selecionados</strong></div><div className="briefAlerts">{alerts.map((alert)=><span key={alert}>{alert}</span>)}</div></div><div className="briefHeroGrid">{operationalHeroes.map((hero)=><article key={hero.id} className={`briefHero ${selected.includes(hero.id)?"selected":""} ${hero.status}`}><button className="briefHeroSelect" disabled={hero.status!=="disponivel" || save.shift.status!=="running"} onClick={()=>toggleHero(hero.id)}><span className="briefHeroPortrait">{getHeroPortrait(hero.id) ? <img src={getHeroPortrait(hero.id)!} alt={`Retrato de ${hero.name}`} /> : hero.name.slice(0,2).toUpperCase()}</span><strong>{hero.name}</strong><small>{hero.className} · {hero.trail}</small><em>{hero.status==="disponivel"?"DISPONÍVEL":hero.status==="em_missao"?"EM MISSÃO":hero.status==="desmaiado"?"DESMAIADO":"RECUPERAÇÃO"}</em></button><button className="briefHeroInfo" onClick={()=>setHeroInfoId(hero.id)}>VER FICHA</button></article>)}</div></div>
+          <div className="briefTeam"><div className="briefTeamHeader"><div><span className="sectionLabel">SELECIONE {GAMEPLAY_CONFIG.minTeamSize}–{GAMEPLAY_CONFIG.maxTeamSize} HERÓIS</span><strong>{selected.length}/{GAMEPLAY_CONFIG.maxTeamSize} selecionados</strong></div><div className="briefAlerts">{alerts.map((alert)=><span key={alert}>{alert}</span>)}</div></div><div className="briefHeroGrid">{operationalHeroes.map((hero)=><article key={hero.id} className={`briefHero ${selected.includes(hero.id)?"selected":""} ${hero.status}`}><button className="briefHeroSelect" disabled={hero.status!=="disponivel" || save.shift.status!=="running" || (tutorialActive && incident.id === FIRST_TUTORIAL_INCIDENT_ID && hero.id !== FIRST_TUTORIAL_HERO_ID)} onClick={()=>toggleHero(hero.id)}><span className="briefHeroPortrait">{getHeroPortrait(hero.id) ? <img src={getHeroPortrait(hero.id)!} alt={`Retrato de ${hero.name}`} /> : hero.name.slice(0,2).toUpperCase()}</span><strong>{hero.name}</strong><small>{hero.className} · {hero.trail}</small><em>{hero.status==="disponivel"?"DISPONÍVEL":hero.status==="em_missao"?"EM MISSÃO":hero.status==="desmaiado"?"DESMAIADO":"RECUPERAÇÃO"}</em></button><button className="briefHeroInfo" onClick={()=>setHeroInfoId(hero.id)}>VER FICHA</button></article>)}</div></div>
           <footer><div><small>COMPOSIÇÃO</small><strong>{selectedHeroes.length ? selectedHeroes.map((hero)=>hero.name).join(" + ") : "Selecione a equipe"}</strong><p>{message}</p></div><button className="briefDispatch" disabled={selected.length===0 || selectedRuntime?.status!=="waiting" || save.shift.status!=="running"} onClick={()=>{dispatch();setBriefingOpen(false);}}>DESPACHAR EQUIPE →</button></footer>
         </section>
       </div>}
@@ -368,7 +459,7 @@ export default function AgencyPage() {
               <div><span className="sectionLabel">RESULTADO DA OCORRÊNCIA</span><h2>{reportIncident.title}</h2><p>{reportIncident.district} · concluída às {formatGameTime(reportResult.completedAtGameMinute)}</p></div>
               <span className={`outcomeBadge ${reportResult.outcome === "Sucesso" ? "success" : reportResult.outcome === "Falha" ? "failure" : "cost"}`}>{reportResult.outcome}</span>
             </header>
-            <p className="reportResultSummary">{reportResult.summary}</p>
+            <div className="reportIncidentContext"><small>CHAMADO ORIGINAL</small><p>{reportIncident.description}</p></div><p className="reportResultSummary"><small>COMO FOI RESOLVIDO</small>{reportResult.summary}</p>
             <div className="reportResultStats">
               <span><small>EQUIPE</small><strong>{reportTeam.map((hero) => hero.name).join(" + ")}</strong></span>
               <span><small>ADEQUAÇÃO</small><strong>{Math.round(reportResult.attributeScore * 100)}%</strong></span>
@@ -387,13 +478,13 @@ export default function AgencyPage() {
         <button className="modalClose heroInfoClose" onClick={()=>setHeroInfoId(null)}>×</button>
         <div className="heroInfoBody heroInfoBodyClean">
           <aside className="heroIdentity heroIdentityClean"><span className="eyebrow">DOSSIÊ DE AGENTE</span><h2>{infoHero.name}</h2><p className="heroRoleLine">{infoHero.powerName} · {infoHero.className} / {infoHero.trail}</p><div className="styleTags">{infoHero.style.map((tag)=><span key={tag}>{tag}</span>)}</div><p>{infoHero.profile}</p><div className="conditionPanel conditionVitals"><span><small>VIDA · {getHealthState(infoHero.health, getMaxHealth(infoHero.attributes))}</small><b>{infoHero.health}/{getMaxHealth(infoHero.attributes)}</b><i className="vitalTrack"><i className={`vitalFill health ${infoHero.health / getMaxHealth(infoHero.attributes) <= .35 ? "critical" : infoHero.health / getMaxHealth(infoHero.attributes) <= .65 ? "warning" : ""}`} style={{width:`${(infoHero.health/getMaxHealth(infoHero.attributes))*100}%`}} /></i></span><span><small>ENERGIA · {getEnergyState(infoHero.energy, getMaxEnergy(infoHero.attributes))}</small><b>{infoHero.energy}/{getMaxEnergy(infoHero.attributes)}</b><i className="vitalTrack"><i className={`vitalFill energy ${infoHero.energy / getMaxEnergy(infoHero.attributes) <= .35 ? "critical" : infoHero.energy / getMaxEnergy(infoHero.attributes) <= .65 ? "warning" : ""}`} style={{width:`${(infoHero.energy/getMaxEnergy(infoHero.attributes))*100}%`}} /></i></span></div></aside>
-          <div className="heroCapabilities"><div className="heroStatHeader"><div><span className="sectionLabel">ATRIBUTOS PESSOAIS</span><strong>NÍVEL {infoHero.level}</strong><small>{infoHero.xp} XP</small></div><span>Escala fixa 1–5</span></div><HeroRadar attributes={infoHero.attributes} /><div className="attributeRows compactFive">{Object.entries(infoHero.attributes).map(([key,value])=><div key={key}><span>{({strength:"Força",agility:"Agilidade",charisma:"Carisma",intelligence:"Inteligência",vigor:"Vigor"} as Record<string,string>)[key]}</span><i><b style={{width:`${value*20}%`}} /></i><strong>{value}/5</strong></div>)}</div><div className="capabilityColumns"><div><span className="sectionLabel">PONTOS FORTES</span>{infoHero.strengths.map((item)=><p key={item}>+ {item}</p>)}</div><div><span className="sectionLabel">LIMITAÇÕES</span>{infoHero.limitations.map((item)=><p key={item}>! {item}</p>)}</div></div></div>
+          <div className="heroCapabilities"><div className="heroStatHeader"><div><span className="sectionLabel">ATRIBUTOS PESSOAIS</span><strong>NÍVEL {infoHero.level}</strong><small>{infoHero.xp} XP</small></div><span>Escala fixa 1–5</span></div><HeroRadar attributes={infoHero.attributes} /><div className="attributeRows compactFive">{Object.entries(infoHero.attributes).map(([key,value])=><div key={key}><span>{({strength:"Força",agility:"Agilidade",charisma:"Carisma",intelligence:"Inteligência",vigor:"Vigor"} as Record<string,string>)[key]}</span><i><b style={{width:`${value*20}%`}} /></i><strong>{value}/5</strong></div>)}</div><div className="heroUnlockedDispatch"><span className="sectionLabel">TÉCNICAS ATIVAS NO DESPACHO</span>{infoHero.unlockedTechniqueIds.length ? <div>{infoHero.techniques.filter((technique)=>infoHero.unlockedTechniqueIds.includes(technique.id)).map((technique)=><span key={technique.id}><strong>{technique.name}</strong><small>{technique.grantedTags?.length ? `Capacidades adicionadas: ${technique.grantedTags.join(", ")}` : technique.description}</small></span>)}</div> : <p>Nenhuma técnica de progressão desbloqueada. Técnicas adicionam capacidades usadas na chance de missão.</p>}</div><div className="capabilityColumns"><div><span className="sectionLabel">PONTOS FORTES</span>{infoHero.strengths.map((item)=><p key={item}>+ {item}</p>)}</div><div><span className="sectionLabel">LIMITAÇÕES</span>{infoHero.limitations.map((item)=><p key={item}>! {item}</p>)}</div></div></div>
         </div>
       </section></div>}
 
       {shiftFinished && <div className="shiftEndBar"><div><strong>18:00 · EXPEDIENTE ENCERRADO</strong><span>{pendingReports ? `Há ${pendingReports} relatório(s) pendente(s).` : "Central pronta para o desenvolvimento da equipe."}</span></div><button className="button primary" disabled={pendingReports > 0 || dispatchedCount > 0} onClick={() => { const next = { ...save, player: { ...save.player, developmentRequired: true } }; writeSave(next); setSave(next); router.push("/desenvolvimento"); }}>IR PARA DESENVOLVIMENTO</button></div>}
 
-      <DevTools save={save} onSave={(next) => { setSave(next); setNow(Date.now()); }} onPost={() => router.push("/conversa")} />
+      <DevTools save={save} onSave={(next) => { setSave(next); setNow(Date.now()); }} onPost={() => router.push("/conversa")} onDevelopment={() => router.push("/desenvolvimento")} />
     </main>
   );
 }

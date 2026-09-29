@@ -11,7 +11,9 @@ Ao escrever conteúdo, separar sempre:
 Nunca reescrever personalidade, parentesco, poder ou limitação canônica só para facilitar romance/gameplay. Mudanças deliberadas de AU precisam ser registradas em `AU_CHANGES.md` e no failsafe.
 
 ## Premissa da AU
-[AU-APROVADO] O jogador é um **Analista de Despacho** da Agência Ressonância, não um dos sete heróis. O jogador escolhe seu nome no início. O Analista administra crises, monta equipes, recebe relatórios e convive com os heróis entre operações.
+[AU-APROVADO] O jogador é um **Analista de Despacho** da Agência Ressonância, não um dos sete heróis.
+
+[AU-APROVADO] **Edison** é a supervisora que recebe o Analista no primeiro dia, apresenta os Guerreiros Elementais, adiciona o jogador ao NEXO e acompanha o primeiro despacho. O jogador escolhe seu nome no início. O Analista administra crises, monta equipes, recebe relatórios e convive com os heróis entre operações.
 
 [AU-APROVADO] O mundo é pós-transformação: magia e poderes estão mais disseminados e a ordem política está em reconstrução. A Agência começa pequena. O mistério central da AU permanece **[A DEFINIR]** e não deve virar automaticamente uma continuação literal do enredo do livro.
 
@@ -46,7 +48,7 @@ Antes de criar cena, rota ou missão centrada em um herói: ler `CHARACTER_BIBLE
 [AU-APROVADO] XP de campo é ganho desde o Dia 1. Ao fim de cada expediente, antes do pós-expediente, existe a tela Desenvolvimento da Equipe. Níveis 2/4/6 liberam técnicas/especialização/evolução e níveis 3/5 concedem +1 atributo escolhido pelo jogador. As melhorias ficam ativas para o dia seguinte.
 
 ## Formato social aprovado — baseline v0.1.0
-[AU-APROVADO] O **NEXO** é a principal interface cotidiana de comunicação. Durante o expediente, o Analista acompanha o grupo operacional em modo somente leitura; fora do expediente, pode abrir DMs privadas e escolher respostas.
+[AU-APROVADO] O **NEXO** é a principal interface cotidiana de comunicação. Durante o expediente, o Analista acompanha o grupo operacional em modo somente leitura; fora do expediente, pode abrir DMs privadas e escolher respostas. O NEXO funciona como um mensageiro corporativo: grupos e canais de operação podem ser supervisionados pela Agência, enquanto DMs privadas entre o Analista e cada contato não são supervisionadas.
 
 [AU-APROVADO] O pós-expediente não força uma única conversa. O Analista pode conversar com qualquer personagem que tenha uma cena disponível, conversar com vários na mesma noite ou não conversar com ninguém.
 

@@ -1,4 +1,4 @@
-RESSONÂNCIA — BASELINE v0.1.0 FOUNDATION
+RESSONÂNCIA — BASELINE v0.1.0 FOUNDATION / BUILD v0.1.2
 
 1. Leia PROJECT_CONTEXT.md
 2. Leia content/README.md
@@ -6,4 +6,4 @@ RESSONÂNCIA — BASELINE v0.1.0 FOUNDATION
 4. Leia docs/failsafe/CURRENT_STATE.md
 5. Continue de docs/failsafe/NEXT_SESSION.md
 
-NÃO usar o antigo snapshot 0.1.1 como base. O v0.1.0 atual é uma nova linha consolidada a partir da v0.9.14 funcional.
+NÃO usar o antigo snapshot ressonancia-fase1-0.1.1 como base. A baseline continua sendo v0.1.0 Foundation; o build incremental atual é v0.1.2.

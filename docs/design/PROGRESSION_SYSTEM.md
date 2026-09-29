@@ -82,3 +82,22 @@ Nos níveis 3 e 5 o jogador escolhe um dos cinco atributos para receber +1. Teto
 - progressão horizontal deve ser tão importante quanto progressão numérica;
 - um personagem não deve ficar universalmente melhor em tudo;
 - upgrades devem abrir decisões novas.
+
+## Escalada operacional por dia — v0.1.2
+
+A progressão do elenco precisa conversar com a curva de dificuldade do Dispatch.
+
+- Dia 1 deve aceitar com frequência soluções solo quando o agente combina bem com o chamado.
+- A exigência sobe gradualmente ao longo dos dias.
+- Dias 4–6 passam a valorizar mais composição, cobertura de tags, condição, Ressonância e combos.
+- No Dia 6, uma equipe mal combinada de um único agente deve ser sensivelmente menos confiável do que uma dupla/trio bem montados.
+- O jogador resolve Desenvolvimento ao fim de cada expediente para que os upgrades conquistados estejam ativos no dia seguinte.
+
+A implementação atual aplica um multiplicador diário aos pontos recomendados do briefing: `0.55 / 0.70 / 0.82 / 0.95 / 1.08 / 1.20` do Dia 1 ao Dia 6. Esses valores vivem em `content/config/balance.ts` e são balanceamento de playtest, não cânone.
+
+
+## Ajuste v0.1.4 — campanha de seis dias
+
+A curva anterior exigia participação demais para que o jogador percebesse evolução consistente dentro de apenas seis dias. Os thresholds cumulativos passam a ser: Nv2 50, Nv3 130, Nv4 230, Nv5 360, Nv6 520 XP. Os prêmios por resultado permanecem 30/26/20/14.
+
+O Desenvolvimento continua obrigatório apenas quando há evolução conquistada, mas a UI agora guia automaticamente ao próximo agente pendente. Ao carregar saves antigos, milestones são reconstruídos a partir do XP acumulado para evitar XP válido sem upgrade disponível.

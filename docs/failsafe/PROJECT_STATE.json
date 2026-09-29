@@ -1,14 +1,14 @@
 {
   "project": "RESSONANCIA",
-  "prototypeVersion": "0.1.0",
+  "prototypeVersion": "0.2.7",
   "baselineName": "Foundation",
-  "updatedAt": "2026-09-28",
-  "status": "baseline_refatorado_content_driven",
-  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation",
+  "updatedAt": "2026-09-29",
+  "status": "tutorial_isolation_runtime_qa_pending",
+  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation -> v0.1.1_nexo_multichat -> v0.1.2_nexo_longform -> v0.1.3_campaign_test_placeholders -> v0.1.4_social_progression_qa -> v0.1.5_nexo_dispatch_fixes -> v0.1.6_dev_perfect_shift -> v0.2.0_individual_routes_mastery -> v0.2.1_incident_pool_power_affinity -> v0.2.2_playtest_rebalance -> v0.2.3_first_dispatch_onboarding -> v0.2.4_tutorial_isolation_nexo_privacy -> v0.2.5_onboarding_polish -> v0.2.6_agency_intro_backgrounds -> v0.2.7_dialogue_speaker_avatar",
   "obsoleteDoNotUse": "ressonancia-fase1-0.1.1",
   "platform": "web",
-  "saveVersion": 6,
-  "persistence": "localStorage_save_v6",
+  "saveVersion": 9,
+  "persistence": "localStorage_save_v9_with_migrations",
   "authoringRoot": "content/",
   "architecture": {
     "content": "autoria_e_balanceamento",
@@ -18,16 +18,26 @@
     "lib": "infraestrutura_save",
     "docs": "design_canon_autoria_failsafe"
   },
-  "shift": { "gameTime": "08:00-18:00", "realDurationMinutes": 15, "teamSize": "1-3" },
-  "attributes": ["strength", "agility", "charisma", "intelligence", "vigor"],
+  "shift": {
+    "gameTime": "08:00-18:00",
+    "realDurationMinutes": 10,
+    "teamSize": "1-3"
+  },
+  "attributes": [
+    "strength",
+    "agility",
+    "charisma",
+    "intelligence",
+    "vigor"
+  ],
   "attributeScale": "1-5",
   "condition": {
     "healthMax": "9+vigor",
     "energyMax": "9+agility",
     "knockout": "health_or_energy_zero_until_next_day"
   },
-  "postShift": "optional_multi_contact_nexo_hub",
-  "communication": "operations_read_only_nexo_plus_private_post_shift_dm",
+  "postShift": "persistent_all_contacts_longform_threads_d2_d6_placeholders_data_driven_day3_day6_outings",
+  "communication": "operations_read_only_nexo_plus_private_longform_threads",
   "mustRead": [
     "PROJECT_CONTEXT.md",
     "content/README.md",
@@ -36,5 +46,95 @@
     "docs/failsafe/CURRENT_STATE.md",
     "docs/failsafe/NEXT_SESSION.md"
   ],
-  "nextTask": "smoke_test_foundation_then_day_specific_content_city_reputation_hidden_modifiers"
+  "nextTask": "QA do onboarding v0.2.7: avatar pequeno de Edison no cabeçalho das caixas de diálogo, exterior -> escritório -> sistema.",
+  "validation": {
+    "syntaxTranspile": "passed_56_ts_tsx_parse_2026-09-29",
+    "runtimeSmoke": "pending_v021_pool_and_affinity_qa",
+    "typescript": "blocked_by_missing_next_react_type_packages_with_cascade_errors",
+    "nextBuild": "not_attempted_missing_dependencies"
+  },
+  "social": {
+    "progress": "individual_routeStage_per_character",
+    "romanceProgress": "0-100_per_character",
+    "choiceWeights": [
+      100,
+      50,
+      30
+    ],
+    "firstOutingThreshold": 30,
+    "secondOutingThreshold": 70,
+    "oneOutingPerGlobalNight": true,
+    "completion": "both_outing_milestones_all_7",
+    "placeholderRouteStages": "1-10_QA"
+  },
+  "dispatchDifficulty": {
+    "days1to6": {
+      "1": 0.6,
+      "2": 0.68,
+      "3": 0.76,
+      "4": 0.86,
+      "5": 0.96,
+      "6": 1.05
+    },
+    "postDay6Cycle": [
+      0.68,
+      0.76,
+      0.88,
+      0.72,
+      0.94,
+      1.02,
+      0.78,
+      0.86
+    ]
+  },
+  "contentReadyRoadmap": "docs/design/CONTENT_COMPLETE_ROADMAP.md",
+  "saveSchema": 9,
+  "lastUpdate": "2026-09-29",
+  "notes": [
+    "v0.2.0: calendario global e rotas sociais desacoplados; campanha aberta ate completar rotas.",
+    "Tecnicas relevantes agora afetam chance diretamente; Maestria sustenta progressao pos-Nv6.",
+    "Pós-D6 usa ondas de dificuldade sem inflacao infinita.",
+    "v0.2.1: 48-case data-driven pool active; fixed Day 1 agenda retired from runtime.",
+    "Power affinity is a contextual bonus, not a hard hero requirement.",
+    "v0.2.2: one route stage per character per global night; NEXO contact list simplified.",
+    "v0.2.2: 10-minute shift, 10/11/12/13 cases, clustered spawns and stronger energy pressure.",
+    "v0.2.3: Edison onboarding, NEXO group intro, guided Hélio fire dispatch, skippable tutorial and left-aligned menu.",
+    "v0.2.4: tutorial isolates E-04 until report archive; 12-minute guided mission; NEXO groups supervised, private DMs unsupervised.",
+    "v0.2.7: caixas VN da introdução mostram retrato circular pequeno de Edison ao lado do nome; foto continua sem uso como cenário ampliado."
+  ],
+  "progression": {
+    "levels": "1-6",
+    "masteryRanks": "0-5_after_level6",
+    "techniqueRelevantBonusPP": 6,
+    "techniqueTeamCapPP": 12,
+    "masterySoloBonusPPPerRank": 1.2
+  },
+  "incidentPool": {
+    "total": 48,
+    "tiers": {
+      "easy": 12,
+      "medium": 12,
+      "hard": 12,
+      "crisis": 12
+    },
+    "selection": "deterministic_player_plus_day_weighted_cooldown_minDay",
+    "dayProfiles": [
+      "respite",
+      "normal",
+      "pressure",
+      "peak"
+    ],
+    "approvedSource": "docs/design/RESSONANCIA_BANCO_DE_CASOS_v0_2_1_APROVADO.docx",
+    "dailyCounts": {
+      "respite": 10,
+      "normal": 11,
+      "pressure": 12,
+      "peak": 13
+    }
+  },
+  "powerAffinity": {
+    "bonusPPPerMatchedHero": 8,
+    "teamCapPP": 12,
+    "mandatory": false
+  }
 }

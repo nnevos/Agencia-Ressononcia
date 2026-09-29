@@ -1,11 +1,11 @@
 "use client";
 
-import { devAdvanceMinutes, devResetShift, devResolveAllAndFinish, devSkipToPostShift } from "@/game/simulation/devTools";
+import { devAdvanceMinutes, devPerfectFinishShift, devResetShift, devResolveAllAndFinish, devSkipToPostShift } from "@/game/simulation/devTools";
 import type { SaveGame } from "@/game/types";
 import { writeSave } from "@/lib/save";
 import { useState } from "react";
 
-export function DevTools({ save, onSave, onPost }: { save: SaveGame; onSave: (save: SaveGame) => void; onPost: () => void }) {
+export function DevTools({ save, onSave, onPost, onDevelopment }: { save: SaveGame; onSave: (save: SaveGame) => void; onPost: () => void; onDevelopment: () => void }) {
   const [open, setOpen] = useState(false);
 
   function apply(next: SaveGame) {
@@ -24,9 +24,11 @@ export function DevTools({ save, onSave, onPost }: { save: SaveGame; onSave: (sa
         <button onClick={() => apply(devAdvanceMinutes(save, 180))}>+3 horas</button>
         <button onClick={() => apply(devResolveAllAndFinish(save))}>Ir para 18:00</button>
       </div>
+      <button className="devPrimary devPerfectFinish" onClick={() => { const next = devPerfectFinishShift(save); apply(next); onDevelopment(); }}>FINALIZAR EXPEDIENTE 100%</button>
+      <small className="devPerfectHint">QA rápido: todas as ocorrências ainda não arquivadas viram Sucesso, aplicam XP/custo normal de Sucesso e o jogo segue para Desenvolvimento.</small>
       <button className="devPrimary" onClick={() => { const next = devSkipToPostShift(save); apply(next); onPost(); }}>Pular direto para pós-expediente</button>
       <button className="devDanger" onClick={() => apply(devResetShift(save))}>Resetar expediente atual</button>
-      <small>Uso recomendado: testes de UI, diálogos, saves e fluxo narrativo.</small>
+      <small>Uso recomendado: testes de UI, diálogos, saves, progressão e fluxo narrativo.</small>
     </aside>}
   </>;
 }

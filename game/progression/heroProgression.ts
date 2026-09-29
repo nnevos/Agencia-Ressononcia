@@ -11,6 +11,7 @@ export function createInitialHeroProgression(): Record<string, HeroProgression> 
     heroId: hero.id,
     level: 1,
     xp: 0,
+    masteryRank: 0,
     attributes: { ...hero.attributes },
     unspentAttributePoints: 0,
     unlockedTechniqueIds: [],
@@ -53,8 +54,15 @@ export function queueEarnedMilestones(progress: HeroProgression): HeroProgressio
   return { ...progress, pendingMilestoneLevels: [...progress.pendingMilestoneLevels, ...pending] };
 }
 
+export function masteryRankFromXp(xp: number) {
+  let rank = 0;
+  for (let i = 1; i <= PROGRESSION_BALANCE.maxMasteryRank; i += 1) if (xp >= (PROGRESSION_BALANCE.masteryXp[i] ?? Infinity)) rank = i;
+  return rank;
+}
+
 export function awardHeroXp(progress: HeroProgression, amount: number): HeroProgression {
-  return queueEarnedMilestones({ ...progress, xp: progress.xp + amount });
+  const xp = progress.xp + amount;
+  return queueEarnedMilestones({ ...progress, xp, masteryRank: masteryRankFromXp(xp) });
 }
 
 export function confirmAttributeLevel(progress: HeroProgression, level: 3 | 5): HeroProgression {

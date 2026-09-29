@@ -1,2 +1,3 @@
-/** Compatibilidade: a fonte oficial agora é content/incidents/day01.ts */
-export { incidents } from "@/content/incidents/day01";
+/** Compatibilidade: o banco oficial agora vive em content/incidents/caseBank.ts. */
+export { caseBank as incidents, caseById } from "@/content/incidents/caseBank";
+export { getIncidentsForDay, getDayPressure } from "@/content/incidents/dailyPool";

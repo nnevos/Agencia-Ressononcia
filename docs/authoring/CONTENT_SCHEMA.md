@@ -87,3 +87,80 @@ Não reutilize uma flag para dois significados diferentes.
 3. Não escrever cânone novo sem registrar na Bíblia da AU.
 4. Texto narrativo fica em `content/`, não em motor de simulação.
 5. Alterações de regra mecânica devem atualizar GDD + failsafe.
+
+## Conversa pós-expediente longa — v0.1.2
+
+Uma cena continua começando com `opening + choices`, mas pode ganhar quantos turnos adicionais forem necessários em `followUps`:
+
+```ts
+{
+  id: "dia2-personagem-cena-01",
+  day: 2,
+  characterId: "personagem",
+  speaker: "Nome",
+  timeLabel: "19:10 · NEXO",
+  opening: "Primeira mensagem autorada.",
+  availability: { minDay: 2, maxDay: 2 },
+  completionFlag: "scene:dia2-personagem-cena-01:complete",
+  choices: [
+    {
+      id: "a",
+      text: "Resposta autorada do jogador.",
+      response: "Resposta autorada do personagem.",
+      delta: { trust: 1 },
+      romanceAffinity: 100,
+      flag: "dia2_personagem_a"
+    },
+    {
+      id: "b",
+      text: "Outra resposta.",
+      response: "Resposta correspondente.",
+      delta: {},
+      romanceAffinity: 50,
+      flag: "dia2_personagem_b"
+    },
+    {
+      id: "c",
+      text: "Terceira resposta.",
+      response: "Resposta correspondente.",
+      delta: {},
+      romanceAffinity: 30,
+      flag: "dia2_personagem_c"
+    }
+  ],
+  followUps: [
+    {
+      id: "assunto-02",
+      incoming: "Próxima mensagem autorada do personagem.",
+      choices: [/* novamente 3 escolhas autoradas */]
+    }
+  ]
+}
+```
+
+Regras:
+- `romanceAffinity` aceita `100 | 50 | 30` e mede contribuição relativa para a rota romântica; não é chance aleatória.
+- O orçamento romântico diário é dividido entre os turnos da cena para que conversas longas não gerem progresso extra só pelo tamanho.
+- `exclusiveOutingDay: 3` ou `exclusiveOutingDay: 6` marca uma escolha que confirma o único encontro presencial daquele marco.
+- `vnSceneId` pode apontar futuramente para uma cena presencial/VN autorada.
+- Não criar fala automática para preencher `followUps`; cada mensagem continua escrita explicitamente em `content/`.
+
+
+## Ocorrência v0.2.1
+
+Campos adicionais do banco ativo:
+
+```ts
+{
+  caseCode: "H-07",
+  tier: "hard",
+  minDay: 3,
+  weight: 2,
+  cooldownDays: 10,
+  powerAffinityHeroIds: ["demetria"],
+  effectSuggestion: "...",
+  designIntent: "..."
+}
+```
+
+`attributeWeights` usa 3=ESSENCIAL, 2=IMPORTANTE e 1=APOIO. `powerAffinityHeroIds` concede vantagem contextual; não é requisito exclusivo. `spawnMinute` do banco fica 0 e é materializado pelo gerador diário ao criar o turno.

@@ -2,9 +2,11 @@
 export const MAIN_MENU_TEXT = {
   title: "Ressonância",
   eyebrow: "AGÊNCIA RESSONÂNCIA",
-  tagline: "Você não luta nas ruas. Você decide quem vai.",
+  tagline: "Gerencie pessoas extraordinárias em uma cidade que nunca espera você estar pronto.",
+  subline: "Dispatch · Estratégia · Relações",
   continueLabel: "Continuar",
   newGameLabel: "Novo jogo",
-  accessLabel: "Entrar",
-  versionLabel: "v0.1.0 · baseline de conteúdo",
+  accessLabel: "Acesso",
+  versionLabel: "v0.2.3 · First Dispatch",
+  artPlaceholder: "ÁREA RESERVADA PARA ARTE PRINCIPAL",
 } as const;

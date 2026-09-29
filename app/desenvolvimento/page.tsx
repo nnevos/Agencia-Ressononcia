@@ -31,17 +31,26 @@ function nextXp(progress: HeroProgression) {
   return LEVEL_XP[progress.level + 1];
 }
 
+function firstPendingHeroId(progressions: Record<string, HeroProgression>) {
+  return heroes.find((item) => {
+    const progress = progressions[item.id];
+    return progress && (canLevelUp(progress) || progress.unspentAttributePoints > 0);
+  })?.id ?? null;
+}
+
 export default function DevelopmentPage() {
   const router = useRouter();
   const [save, setSave] = useState<SaveGame | null>(null);
   const [heroId, setHeroId] = useState("yuki");
-  const [message, setMessage] = useState("Revise a evolução conquistada neste expediente antes do pós-expediente.");
+  const [message, setMessage] = useState("XP é acumulado ao arquivar relatórios. Quando um nível é alcançado, escolha a melhoria do agente destacado antes de seguir.");
 
   useEffect(() => {
     const current = loadSave();
     if (!current) return router.replace("/novo-jogo");
     if (!current.player.developmentRequired || current.shift.status !== "finished") return router.replace("/agencia");
     setSave(current);
+    const pendingHero = firstPendingHeroId(current.heroProgression);
+    if (pendingHero) setHeroId(pendingHero);
   }, [router]);
 
   const hero = useMemo(() => heroes.find((item) => item.id === heroId) ?? heroes[0], [heroId]);
@@ -58,6 +67,8 @@ export default function DevelopmentPage() {
     writeSave(next);
     setSave(next);
     setMessage(text);
+    const pendingHero = firstPendingHeroId(next.heroProgression);
+    if (pendingHero) setHeroId(pendingHero);
   }
 
   function chooseTechnique(techniqueId: string) {
@@ -74,6 +85,17 @@ export default function DevelopmentPage() {
     const leveled = confirmAttributeLevel(progress, nextLevel as 3 | 5);
     const next = spendAttributePoint(leveled, attribute);
     commitProgress(next, `${hero.name} alcançou o nível ${nextLevel}: ${attributeLabels[attribute]} aumentou para ${next.attributes[attribute]}.`);
+  }
+
+  function focusNextPendingUpgrade() {
+    if (!save) return;
+    const pendingHero = firstPendingHeroId(save.heroProgression);
+    if (pendingHero) {
+      setHeroId(pendingHero);
+      const pendingProgress = save.heroProgression[pendingHero];
+      const pendingHeroData = heroes.find((item) => item.id === pendingHero);
+      setMessage(`${pendingHeroData?.name ?? pendingHero} possui uma evolução pendente. Escolha a melhoria abaixo.`);
+    }
   }
 
   function continueToPostShift() {
@@ -98,7 +120,7 @@ export default function DevelopmentPage() {
     <main className="developmentPage">
       <header className="developmentHeader">
         <div><span className="eyebrow">DIA {String(save.player.currentDay).padStart(2,"0")} · PÓS-EXPEDIENTE</span><h1>Desenvolvimento da Equipe</h1><p>Experiência obtida durante o expediente é consolidada agora. Resolva os upgrades antes das cenas de pós-expediente; tudo ficará ativo no próximo dia.</p></div>
-        <button className="button primary" onClick={continueToPostShift}>{anyPending ? "CONCLUIR UPGRADES" : "SEGUIR PARA PÓS-EXPEDIENTE"}</button>
+        <button className="button primary" onClick={anyPending ? focusNextPendingUpgrade : continueToPostShift}>{anyPending ? "VER PRÓXIMO UPGRADE" : "SEGUIR PARA PÓS-EXPEDIENTE"}</button>
       </header>
 
       <section className="developmentShell">
@@ -120,7 +142,7 @@ export default function DevelopmentPage() {
           </div>
 
           <div className="developmentStats">
-            <div className="developmentRadarCard"><div className="developmentLevel"><span>NÍVEL</span><strong>{progress.level}</strong><small>{progress.xp} XP total</small></div><HeroRadar attributes={progress.attributes} /></div>
+            <div className="developmentRadarCard"><div className="developmentLevel"><span>NÍVEL</span><strong>{progress.level}</strong><small>{progress.xp} XP total · MAESTRIA {progress.masteryRank}/5</small></div><HeroRadar attributes={progress.attributes} /></div>
             <div className="developmentXpCard">
               <span className="sectionLabel">PROGRESSÃO</span>
               {progress.level >= MAX_HERO_LEVEL ? <><strong>Nível máximo atual</strong><p>O arco de progressão disponível termina no nível 6 nesta versão.</p></> : <>
@@ -134,7 +156,7 @@ export default function DevelopmentPage() {
           </div>
 
           <div className="developmentAction">
-            {!nextLevel && <div className="developmentNoUpgrade"><strong>Nenhum level up pendente</strong><p>{progress.level >= MAX_HERO_LEVEL ? "Progressão atual concluída." : `Faltam ${Math.max(0,(target ?? 0)-progress.xp)} XP para o próximo nível.`}</p></div>}
+            {!nextLevel && <div className="developmentNoUpgrade"><strong>Nenhum level up pendente</strong><p>{progress.level >= MAX_HERO_LEVEL ? "Nível principal concluído. XP futuro aumenta a Maestria automaticamente (até 5), melhorando a consistência solo no Dispatch." : `Faltam ${Math.max(0,(target ?? 0)-progress.xp)} XP para o próximo nível.`}</p></div>}
             {nextLevel && [3,5].includes(nextLevel) && <div><span className="sectionLabel">NÍVEL {nextLevel} · +1 ATRIBUTO</span><h3>Escolha onde investir</h3><p>O ponto é permanente. O limite atual de cada atributo é 5.</p><div className="attributeUpgradeGrid">{(Object.keys(attributeLabels) as AttributeKey[]).map((key)=><button key={key} disabled={progress.attributes[key]>=5} onClick={()=>chooseAttribute(key)}><span>{attributeLabels[key]}</span><strong>{progress.attributes[key]} → {Math.min(5,progress.attributes[key]+1)}</strong></button>)}</div></div>}
             {nextLevel && [2,4,6].includes(nextLevel) && <div><span className="sectionLabel">NÍVEL {nextLevel} · {rewardLabelForLevel(nextLevel)}</span><h3>{nextLevel===6?"Escolha a evolução":"Escolha uma nova abordagem"}</h3><p>A escolha amplia as soluções possíveis no Dispatch e passa a fazer parte da build deste personagem.</p><div className="techniqueChoiceGrid">{techniques.map((technique)=><button key={technique.id} onClick={()=>chooseTechnique(technique.id)}><small>{technique.category.toUpperCase()}</small><strong>{technique.name}</strong><p>{technique.description}</p>{technique.grantedTags?.length ? <em>Nova capacidade: {technique.grantedTags.join(", ")}</em> : null}</button>)}</div></div>}
           </div>

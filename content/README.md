@@ -7,8 +7,10 @@ Esta pasta é a **fonte oficial para autoria**. Se você quer mudar texto, event
 | Quero alterar... | Arquivo/pasta |
 |---|---|
 | dados/poderes/atributos/técnicas dos heróis | `content/characters/heroes.ts` |
-| ocorrências, horários, requisitos, risco e duração | `content/incidents/day01.ts` |
-| números de Vida/Energia, XP, chance e custos | `content/config/balance.ts` |
+| banco de ocorrências, requisitos, risco, duração e afinidades | `content/incidents/caseBank.ts` |
+| composição diária, pesos/cooldown e sorteio | `content/incidents/dailyPool.ts` |
+| números de Vida/Energia, XP, chance, custos e curva de dificuldade diária | `content/config/balance.ts` |
+| orçamento social, thresholds de romance e pesos 100/50/30 | `content/config/social.ts` |
 | duração do expediente e tamanho da equipe | `content/config/gameplay.ts` |
 | Ressonância e combos | `content/relationships/resonance.ts` |
 | mensagens NEXO ligadas a eventos | `content/messages/operations.ts` → `eventComments` |
@@ -16,6 +18,7 @@ Esta pasta é a **fonte oficial para autoria**. Se você quer mudar texto, event
 | mensagens do grupo sem relação com eventos | `content/messages/operations.ts` → `ambientMessages` |
 | conversas privadas pós-expediente | `content/dialogues/post-shift/` |
 | opções que o jogador pode responder | dentro de cada cena em `content/dialogues/post-shift/` |
+| conversas longas / turnos adicionais | `followUps` dentro da cena pós-expediente |
 | introdução | `content/narrative/introduction.ts` |
 | tutorial | `content/narrative/tutorial.ts` |
 | textos do menu principal | `content/ui/menu.ts` |
@@ -27,3 +30,38 @@ Esta pasta é a **fonte oficial para autoria**. Se você quer mudar texto, event
 - `app/` e `components/` = como o jogo mostra na tela.
 
 Evite colocar falas novas diretamente em `app/*.tsx`. Se um texto faz parte da história, evento ou UI persistente, ele deve morar aqui.
+
+## v0.1.4 — campanha social de QA D1-D6
+
+- Todas as conversas atuais do pós-expediente são **PLACEHOLDER** de QA. `dialogues/post-shift/placeholders.ts`: conversas dos Dias 2–6 para os sete personagens. Servem para testar historico, romance, thresholds e exclusividade ate o Dia 6. Nao sao dialogos finais/canonicos.
+- `narrative/outings.ts`: cenas presenciais **PLACEHOLDER** dos Dias 3 e 6. A rota `/encontro` consome background + texto diretamente daqui.
+- Ao substituir pelo conteudo final, preserve IDs sempre que possivel para que saves de teste continuem reconhecendo escolhas ja feitas.
+
+Meta de arquitetura: `docs/design/CONTENT_COMPLETE_ROADMAP.md`.
+
+### Regra de romance por mensagem
+
+- 100: +7 pontos;
+- 50: +5 pontos;
+- 30: +3 pontos;
+- teto diário: 18 por personagem;
+- o tamanho da conversa não reduz o valor de cada resposta; ao atingir o teto, mensagens extras continuam narrativamente, mas não aumentam romance naquele dia;
+- a própria resposta de aceitar uma saída/date pode completar o threshold necessário.
+
+
+## v0.2.1 — banco de ocorrências
+
+- `incidents/caseBank.ts`: 48 casos aprovados, 12 por faixa.
+- `incidents/dailyPool.ts`: respiro/normal/pressão/pico, sorteio determinístico por jogador+dia, `minDay`, `weight` e `cooldownDays`.
+- `powerAffinityHeroIds`: vantagem contextual forte de poder. Cada afinidade ativa vale +10 p.p., com teto +15 p.p. por equipe. Não é requisito exclusivo.
+- pesos de atributo: 3=ESSENCIAL, 2=IMPORTANTE, 1=APOIO.
+- o antigo `day01.ts` permanece apenas como referência/compatibilidade histórica; não é mais a agenda ativa do Dispatch.
+
+## v0.2.3 — ritmo e pressão
+
+O expediente dura 10 minutos reais. Perfis diários usam 10/11/12/13 ocorrências e o gerador aproxima parte dos spawns em pequenas ondas. Custos de Energia: Sucesso -2, Sucesso com custo -3, Sucesso parcial -4, Falha -5. Afinidade contextual vale +8 p.p., cap +12.
+
+No social, concluir uma etapa bloqueia a próxima etapa daquela mesma personagem até a próxima noite global. Isso impede consumir uma rota inteira no Dia 1 sem impedir conversar com todos os sete no mesmo pós-expediente.
+
+### v0.2.5 — onboarding
+`content/narrative/tutorial.ts` controla a cópia do primeiro despacho. Durante tutorial ativo, o motor isola E-04 e só libera o banco normal após o relatório; essa regra mecânica fica em `app/agencia/page.tsx`. O NEXO coletivo é corporativo/supervisionável; DMs privadas não são supervisionadas.

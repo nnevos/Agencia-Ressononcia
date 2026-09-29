@@ -16,4 +16,6 @@ Cronologia exata em relação ao livro; cidade/capital principal; idade exata de
 6. NEXO passa a ser a interface social cotidiana principal; canal operacional é somente leitura durante o trabalho.
 7. Pós-expediente permite falar com múltiplos personagens ou nenhum, sem conversa obrigatória única.
 8. Cenas presenciais/VN são reservadas para momentos narrativos especiais.
-9. Introdução atual usa `Coordenação` apenas como placeholder editorial até a chefia da Agência ser definida explicitamente.
+9. **SUPERSEDIDO em v0.2.3:** o placeholder `Coordenação` foi substituído por Edison.
+10. [AU-APROVADO] Edison é a supervisora que recebe o Despachante, apresenta a equipe/NEXO e acompanha o primeiro despacho do Dia 1.
+11. [AU-APROVADO · v0.2.4] NEXO funciona como mensageiro corporativo: grupos/canais operacionais podem ser supervisionados pela Agência; DMs privadas entre participantes não são supervisionadas.

@@ -5,7 +5,7 @@
 export const GAMEPLAY_CONFIG = {
   shiftStartHour: 8,
   shiftEndHour: 18,
-  shiftRealDurationMinutes: 15,
+  shiftRealDurationMinutes: 10,
   minTeamSize: 1,
   maxTeamSize: 3,
   maxVisibleOperationalMessages: 18,

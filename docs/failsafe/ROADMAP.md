@@ -42,3 +42,11 @@
 - [ ] acessibilidade
 - [ ] QA e balanceamento
 - [ ] publicação
+
+## v0.1.3 — alvo CONTENT-READY
+
+O roadmap detalhado para chegar ao ponto em que a campanha fecha apenas substituindo arquivos de dialogo/texto/mensagens/opcoes esta em:
+
+`docs/design/CONTENT_COMPLETE_ROADMAP.md`
+
+A prioridade estrutural seguinte e o pipeline de ocorrencias D1-D6 data-driven.

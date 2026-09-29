@@ -31,6 +31,8 @@ export type HeroProgression = {
   heroId: string;
   level: number;
   xp: number;
+  /** Progressao pos-nivel 6. Derivada do XP total e limitada a 5 ranks. */
+  masteryRank: number;
   attributes: HeroAttributes;
   unspentAttributePoints: number;
   unlockedTechniqueIds: string[];
@@ -50,6 +52,7 @@ export type OperationalHero = Hero & HeroState & HeroProgression;
 
 export type IncidentPriority = "P1" | "P2" | "P3";
 export type IncidentReliability = "Alta" | "Média" | "Baixa";
+export type IncidentTier = "easy" | "medium" | "hard" | "crisis";
 
 export type Incident = {
   id: string;
@@ -64,6 +67,14 @@ export type Incident = {
   deadlineMinutes: number;
   missionDurationMinutes: number;
   risk: "Baixo" | "Médio" | "Alto";
+  caseCode?: string;
+  tier?: IncidentTier;
+  minDay?: number;
+  weight?: number;
+  cooldownDays?: number;
+  powerAffinityHeroIds?: string[];
+  effectSuggestion?: string;
+  designIntent?: string;
 };
 
 export type IncidentRuntimeStatus = "scheduled" | "waiting" | "dispatched" | "resolved" | "expired";
@@ -138,13 +149,26 @@ export type ShiftState = {
   reportQueue: DispatchResult[];
 };
 
+export type RomanceState = {
+  romanceProgress: Record<string, number>;
+  /** Etapa narrativa individual de cada personagem. Nao depende do dia global. */
+  routeStage: Record<string, number>;
+  /** Pontos de romance ganhos por etapa/personagem; limita farm em conversas longas. */
+  romanceEarnedByStage: Record<string, Record<string, number>>;
+  /** Personagem escolhido para uma saida em cada noite global; no maximo um encontro por noite. */
+  outingsByGlobalDay: Record<string, string>;
+  /** Marcos presenciais concluidos por personagem (primeiro/segundo date). */
+  outingMilestones: Record<string, number[]>;
+};
+
 export type SaveGame = {
-  version: 6;
+  version: 9;
   player: PlayerState;
   heroStates: Record<string, HeroState>;
   heroProgression: Record<string, HeroProgression>;
   relationships: Record<string, RelationshipStats>;
   resonance: Record<string, ResonancePair>;
+  social: RomanceState;
   shift: ShiftState;
   flags: string[];
   lastDispatch: DispatchResult | null;
@@ -158,10 +182,25 @@ export type DialogueChoice = {
   response: string;
   delta: RelationshipDelta;
   flag: string;
+  /** Qualidade romântica da resposta: melhor encaixe, intermediária ou fraca. Não é RNG. */
+  romanceAffinity?: 100 | 50 | 30;
+  /** Marca uma escolha que confirma a única saída permitida naquele dia. */
+  exclusiveOutingDay?: 3 | 6; // etapa da rota (marco 3 ou 6), nao dia global
+  /** Gancho editorial para futura transição a uma cena presencial/VN autorada. */
+  vnSceneId?: string;
+};
+
+export type DialogueTurn = {
+  id: string;
+  incoming: string;
+  timeLabel?: string;
+  choices: DialogueChoice[];
 };
 
 export type DialogueScene = {
   id: string;
+  /** Dia principal desta cena; usado para histórico, orçamento romântico e ordenação. */
+  day?: number;
   characterId: string;
   speaker: string;
   timeLabel: string;
@@ -171,6 +210,12 @@ export type DialogueScene = {
     whenHeroWasNotDispatched?: string;
   };
   choices: DialogueChoice[];
+  /** Turnos adicionais permitem conversas longas sem criar uma nova tela/rota. */
+  followUps?: DialogueTurn[];
+  /** Override opcional do teto diário de romance para esta cena/personagem. */
+  romanceBudget?: number;
+  /** Conteúdo temporário de QA. Deve ser substituído na etapa de autoria final. */
+  placeholder?: boolean;
   availability?: DialogueAvailability;
   completionFlag?: string;
 };
@@ -182,4 +227,19 @@ export type DialogueAvailability = {
   maxDay?: number;
   requiredFlags?: string[];
   blockedFlags?: string[];
+  minRomanceProgress?: number;
+};
+
+export type OutingScene = {
+  id: string;
+  day: 3 | 6; // etapa/marco da rota
+  characterId: string;
+  speaker: string;
+  title: string;
+  /** Imagem de fundo da cena. Pode ser substituida pelo autor sem mudar a tela. */
+  backgroundImage?: string;
+  /** Texto descritivo da saida/date exibido em uma caixa estilo light novel. */
+  paragraphs: string[];
+  continueLabel?: string;
+  completionFlag: string;
 };
