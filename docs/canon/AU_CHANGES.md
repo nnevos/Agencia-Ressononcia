@@ -1,0 +1,19 @@
+# Registro de mudanças da AU
+
+Este arquivo registra desvios/adições deliberadas em relação ao cânone-base disponível.
+
+## Aprovado
+1. Existe a Agência Ressonância como estrutura central de resposta a crises.
+2. O protagonista jogável é um Analista de Despacho nomeado pelo jogador e não substitui nenhum dos sete heróis.
+3. Os sete heróis são opções possíveis de romance com o Analista; romance é opcional e não apaga relações preexistentes.
+4. A experiência alterna operações e cenas narrativas, mas ambas compartilham estado e consequências.
+5. A AU utiliza um cenário pós-transformação/reconstrução e terá mistério principal próprio.
+
+## Ainda não definido
+Cronologia exata em relação ao livro; cidade/capital principal; idade exata de cada personagem nesta AU; detalhes íntimos e preferências românticas; mistério principal; antagonista central; grau inicial de vínculo de cada herói com a Agência. Não preencher sem decisão explícita.
+
+## Baseline v0.1.0 — comunicação e autoria
+6. NEXO passa a ser a interface social cotidiana principal; canal operacional é somente leitura durante o trabalho.
+7. Pós-expediente permite falar com múltiplos personagens ou nenhum, sem conversa obrigatória única.
+8. Cenas presenciais/VN são reservadas para momentos narrativos especiais.
+9. Introdução atual usa `Coordenação` apenas como placeholder editorial até a chefia da Agência ser definida explicitamente.

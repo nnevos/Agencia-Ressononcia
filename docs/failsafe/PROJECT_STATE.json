@@ -1,0 +1,40 @@
+{
+  "project": "RESSONANCIA",
+  "prototypeVersion": "0.1.0",
+  "baselineName": "Foundation",
+  "updatedAt": "2026-09-28",
+  "status": "baseline_refatorado_content_driven",
+  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation",
+  "obsoleteDoNotUse": "ressonancia-fase1-0.1.1",
+  "platform": "web",
+  "saveVersion": 6,
+  "persistence": "localStorage_save_v6",
+  "authoringRoot": "content/",
+  "architecture": {
+    "content": "autoria_e_balanceamento",
+    "game": "motores_e_regras",
+    "components": "ui_reutilizavel",
+    "app": "telas_e_rotas",
+    "lib": "infraestrutura_save",
+    "docs": "design_canon_autoria_failsafe"
+  },
+  "shift": { "gameTime": "08:00-18:00", "realDurationMinutes": 15, "teamSize": "1-3" },
+  "attributes": ["strength", "agility", "charisma", "intelligence", "vigor"],
+  "attributeScale": "1-5",
+  "condition": {
+    "healthMax": "9+vigor",
+    "energyMax": "9+agility",
+    "knockout": "health_or_energy_zero_until_next_day"
+  },
+  "postShift": "optional_multi_contact_nexo_hub",
+  "communication": "operations_read_only_nexo_plus_private_post_shift_dm",
+  "mustRead": [
+    "PROJECT_CONTEXT.md",
+    "content/README.md",
+    "docs/authoring/WHERE_TO_EDIT.md",
+    "docs/canon/AU_BIBLE.md",
+    "docs/failsafe/CURRENT_STATE.md",
+    "docs/failsafe/NEXT_SESSION.md"
+  ],
+  "nextTask": "smoke_test_foundation_then_day_specific_content_city_reputation_hidden_modifiers"
+}

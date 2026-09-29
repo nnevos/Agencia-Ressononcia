@@ -1,0 +1,7 @@
+RESSONÂNCIA v0.9.1 — COMO ABRIR
+
+1. Se `npm install` já foi executado nesta pasta, dê duplo clique em `Ressonancia.exe`.
+2. O launcher inicia o servidor Next.js e abre o jogo no navegador.
+3. Se o navegador abrir antes do servidor ficar pronto, aguarde alguns segundos e atualize a página.
+
+O executável é um launcher de desenvolvimento e requer Node.js/npm instalados.
