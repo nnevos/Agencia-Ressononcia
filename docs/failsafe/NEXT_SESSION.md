@@ -1,20 +1,17 @@
-# NEXT SESSION — v0.2.8
+# NEXT SESSION — v0.2.9
 
-## QA imediato — rota Yuki
-1. Novo save ou save em rota 1 de Yuki: confirmar que cada noite mostra somente uma etapa.
-2. Dia/etapa 1: validar mensagem inicial enviada pelo Analista + duas escolhas sequenciais.
-3. Etapa 2: foto do energético aparece dentro da bolha; clicar abre lightbox e fechar retorna ao mesmo ponto do histórico.
-4. Etapa 3: foto pós-missão aparece, as três respostas funcionam e, com romance suficiente, a escolha abre `outing-day3-yuki`.
-5. Confirmar que o date da cafeteria usa o texto autoral e volta ao NEXO avançando Yuki para rota 4.
-6. Etapas 4–5: validar sequências fixas entre as escolhas sem mensagens duplicadas ou ordem invertida.
-7. Etapa 6: foto em casa aparece; com romance suficiente, convite abre `outing-day6-yuki`.
-8. Confirmar que o segundo date termina exatamente em “Posso entrar mesmo?” e não inventa continuação.
-9. Depois do segundo date, confirmar que placeholders de recuperação 7–10 não aparecem como nova conversa/preview.
-10. Testar imagens e lightbox em desktop e mobile; confirmar que somente o histórico rola.
-
-## QA de balanceamento social
-- Testar caminho majoritariamente 50 para confirmar que os thresholds 30/70 são alcançáveis no ritmo atual.
-- Testar caminho 30 para observar a recuperação tardia sem hardlock; se necessário, ajustar somente depois do playtest.
+## QA imediato — NEXO / Yuki
+1. Validar que mensagens fixas aparecem uma por uma e nunca como rajada instantânea.
+2. Confirmar indicador de digitação entre bolhas e autoscroll restrito ao histórico interno.
+3. Confirmar que as três escolhas só aparecem depois que a sequência automática corrente termina.
+4. Etapa 2: foto do energético continua abrindo no lightbox.
+5. Etapa 3: testar caminho com escolhas 30; a primeira saída deve abrir mesmo abaixo de 30% de romance.
+6. Concluir cafeteria e confirmar avanço para etapa 4.
+7. Etapa 6: segundo date deve abrir mesmo abaixo de 70%, desde que nenhuma outra saída tenha sido marcada na mesma noite.
+8. Confirmar que ROMANCE % continua subindo e visível apenas dentro da conversa, sem mensagens de “requer X%”.
+9. Reabrir uma conversa concluída e confirmar que o histórico inteiro aparece normalmente.
+10. Testar desktop e mobile para garantir que o compositor não muda de altura de forma quebrada durante “digitando...”.
 
 ## Depois
 - Continuar substituindo placeholders por autoria final, personagem por personagem.
+- Usar o percentual/eixos relacionais futuramente para variações de tom, sem bloquear o arco principal.

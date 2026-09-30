@@ -1,6 +1,6 @@
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **v0.2.8**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **v0.2.9**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat
@@ -104,14 +104,14 @@ Prioridade P1/P2/P3 existe internamente, mas não é exibida como sigla ao jogad
 - Autoscroll acompanha novas mensagens usando scroll interno do histórico; header, lista de contatos e compositor permanecem fixos.
 - Romance possui progresso 0–100% por personagem, além dos eixos relacionais existentes.
 - Romance agora ganha pontos por mensagem (100=+7, 50=+5, 30=+3), com teto diário de 18 por personagem; conversas longas ajudam sem permitir farm infinito.
-- Meta de 35% no Dia 3 e 75% no Dia 6 para encontros exclusivos; a resposta que aceita o convite conta para alcançar o threshold.
+- O percentual de romance é feedback de afinidade e não bloqueia encontros. Chegar aos marcos de rota 3 e 6 libera as cenas presenciais; a exclusividade continua sendo uma saída por noite global.
 - Dias 3 e 6 permitem no máximo um encontro presencial cada; não escolher ninguém é válido.
 - O ritmo D1–D6 é direcional e pode variar por personagem.
 - A dificuldade do Dispatch cresce por dia (0,45/0,50/0,62/0,75/0,90/1,05). D1–D2 favorecem especialistas solo; D5–D6 cobram builds, cobertura complementar e combos.
 - Tamanho de equipe não concede bônus automático. Se um agente cobre sozinho os requisitos/capacidades, ele é viável solo; outros agentes entram para cobrir lacunas, condição, Ressonância e combos.
 - Técnicas desbloqueadas adicionam capacidades (`grantedTags`) ao cálculo de Dispatch e são visíveis na ficha/briefing.
 - Contatos permanecem acessiveis nos dias seguintes mesmo se uma mensagem antiga ficou sem resposta.
-- Todo o conteúdo social/operacional atual dos agentes é tratado como PLACEHOLDER de QA; D1-D6 servem para testar motor, histórico, romance e progressão antes da autoria final.
+- Yuki D1-D6 já usa autoria final aprovada; as demais rotas sociais continuam PLACEHOLDER de QA até receberem texto final.
 - Saidas dos Dias 3/6 usam uma tela presencial generica `/encontro` com background + caixa de texto data-driven.
 - Roadmap de fechamento: `docs/design/CONTENT_COMPLETE_ROADMAP.md`.
 
@@ -177,3 +177,10 @@ A abertura visual deixa de usar o retrato de Edison como key art. A introdução
 ## Atualização v0.2.8 (2026-09-29)
 
 A rota de Yuki, etapas 1–6, é o primeiro conteúdo social autoral real a substituir placeholders. O NEXO privado agora suporta fotos autoradas clicáveis/lightbox e sequências fixas de mensagens do Analista/personagem sem hardcode narrativo em React. Os três assets enviados para Yuki ficam em `public/nexo/yuki/`. Os encontros das etapas 3 e 6 usam texto autoral em `content/narrative/outings.ts`; o segundo termina exatamente em “Posso entrar mesmo?”, sem continuação inventada. Edison foi corrigido para o masculino na documentação textual. Save permanece v9.
+
+
+## Atualização v0.2.9 — cadência de mensagens + romance sem hardlock
+- Sequências fixas no NEXO são entregues bolha por bolha, com pequena pausa/indicador de digitação; as opções só aparecem depois que a sequência corrente terminou.
+- O romance 0–100% permanece visível como feedback e continua recebendo pontos 100/50/30, mas deixou de ser requisito para os dates.
+- Marcos presenciais são garantidos pela progressão da rota: etapa 3 = primeira saída; etapa 6 = segundo date, respeitando apenas a regra de uma saída presencial por noite global.
+- Nenhuma migração de save foi necessária; schema continua v9.

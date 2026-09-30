@@ -63,3 +63,9 @@ A prioridade estrutural seguinte e o pipeline de ocorrencias D1-D6 data-driven.
 - [ ] substituir placeholders dos outros seis personagens por autoria final
 - [ ] conteúdo final de grupo/canal operacional
 - [ ] backgrounds finais dos encontros
+
+
+## v0.2.9 — UX social sem hardlock
+- Entrega sequencial de bolhas no NEXO.
+- Percentual romântico preservado como feedback, sem bloquear dates.
+- Próximo foco continua autoria das demais rotas + QA de conteúdo real.

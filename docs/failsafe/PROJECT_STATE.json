@@ -1,10 +1,10 @@
 {
   "project": "RESSONANCIA",
-  "prototypeVersion": "0.2.8",
+  "prototypeVersion": "0.2.9",
   "baselineName": "Foundation",
   "updatedAt": "2026-09-29",
-  "status": "yuki_authored_route_media_runtime_qa_pending",
-  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation -> v0.1.1_nexo_multichat -> v0.1.2_nexo_longform -> v0.1.3_campaign_test_placeholders -> v0.1.4_social_progression_qa -> v0.1.5_nexo_dispatch_fixes -> v0.1.6_dev_perfect_shift -> v0.2.0_individual_routes_mastery -> v0.2.1_incident_pool_power_affinity -> v0.2.2_playtest_rebalance -> v0.2.3_first_dispatch_onboarding -> v0.2.4_tutorial_isolation_nexo_privacy -> v0.2.5_onboarding_polish -> v0.2.6_agency_intro_backgrounds -> v0.2.7_dialogue_speaker_avatar -> v0.2.8_yuki_authored_route_media",
+  "status": "nexo_paced_delivery_romance_no_hardlock_runtime_qa_pending",
+  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation -> v0.1.1_nexo_multichat -> v0.1.2_nexo_longform -> v0.1.3_campaign_test_placeholders -> v0.1.4_social_progression_qa -> v0.1.5_nexo_dispatch_fixes -> v0.1.6_dev_perfect_shift -> v0.2.0_individual_routes_mastery -> v0.2.1_incident_pool_power_affinity -> v0.2.2_playtest_rebalance -> v0.2.3_first_dispatch_onboarding -> v0.2.4_tutorial_isolation_nexo_privacy -> v0.2.5_onboarding_polish -> v0.2.6_agency_intro_backgrounds -> v0.2.7_dialogue_speaker_avatar -> v0.2.8_yuki_authored_route_media -> v0.2.9_nexo_pacing_romance_no_hardlock",
   "obsoleteDoNotUse": "ressonancia-fase1-0.1.1",
   "platform": "web",
   "saveVersion": 9,
@@ -36,7 +36,7 @@
     "energyMax": "9+agility",
     "knockout": "health_or_energy_zero_until_next_day"
   },
-  "postShift": "persistent_longform_threads_with_authored_yuki_d1_d6_and_media",
+  "postShift": "persistent_longform_threads_with_paced_bubble_delivery_and_authored_yuki_d1_d6",
   "communication": "operations_read_only_nexo_plus_private_longform_threads_with_author_images",
   "mustRead": [
     "PROJECT_CONTEXT.md",
@@ -46,10 +46,10 @@
     "docs/failsafe/CURRENT_STATE.md",
     "docs/failsafe/NEXT_SESSION.md"
   ],
-  "nextTask": "QA da rota Yuki D1-D6: ordem das mensagens, fotos/lightbox, outing D3, date D6 e thresholds 30/70.",
+  "nextTask": "QA NEXO: mensagens uma por vez, Yuki D3/D6 sem hardlock de romance e exclusividade de uma saída por noite.",
   "validation": {
     "syntaxTranspile": "56_TS_TSX_files_transpile_syntax_0_errors",
-    "runtimeSmoke": "pending_v028_yuki_route_media_qa",
+    "runtimeSmoke": "pending_v029_nexo_pacing_romance_no_hardlock_qa",
     "typescript": "full_typecheck_blocked_by_missing_next_react_type_packages_with_cascade_errors",
     "nextBuild": "not_attempted_missing_dependencies"
   },
@@ -61,11 +61,12 @@
       50,
       30
     ],
-    "firstOutingThreshold": 30,
-    "secondOutingThreshold": 70,
+    "firstOutingThreshold": null,
+    "secondOutingThreshold": null,
     "oneOutingPerGlobalNight": true,
     "completion": "both_outing_milestones_all_7",
-    "placeholderRouteStages": "other_characters_1-10_QA_yuki_7-10_recovery_only"
+    "placeholderRouteStages": "other_characters_1-10_QA_yuki_7-10_recovery_only",
+    "romanceGate": "none_percentage_is_feedback_only"
   },
   "dispatchDifficulty": {
     "days1to6": {
@@ -102,7 +103,9 @@
     "v0.2.4: tutorial isolates E-04 until report archive; 12-minute guided mission; NEXO groups supervised, private DMs unsupervised.",
     "v0.2.7: caixas VN da introdução mostram retrato circular pequeno de Edison ao lado do nome; foto continua sem uso como cenário ampliado.",
     "v0.2.8: Yuki D1-D6 substitui placeholders por autoria final; fotos no NEXO e dates D3/D6 autorados.",
-    "v0.2.8: Edison corrigido para masculino na documentação textual."
+    "v0.2.8: Edison corrigido para masculino na documentação textual.",
+    "v0.2.9: NEXO paced bubble delivery; fixed sequences no longer spawn in a single burst.",
+    "v0.2.9: romance percentage no longer gates outings; route stages 3/6 guarantee access subject only to one outing per global night."
   ],
   "progression": {
     "levels": "1-6",

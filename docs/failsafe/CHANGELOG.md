@@ -1,3 +1,13 @@
+# CHANGELOG
+
+## v0.2.9 — NEXO paced delivery + romance sem hardlock (2026-09-29)
+- Sequências automáticas do NEXO passam a chegar uma bolha por vez, com curta pausa e indicador de digitação.
+- As três respostas ficam ocultas até a sequência corrente terminar.
+- Encontros das etapas 3 e 6 deixam de exigir 30%/70%; o percentual de romance vira feedback/estado narrativo, não trava de conteúdo.
+- Pesos 100/50/30 e ganhos de romance permanecem para caracterização e futuras variações.
+- Regra de uma saída presencial por noite global permanece.
+- Save continua v9.
+
 
 ## v0.2.7 — Dialogue Speaker Avatar
 - Adicionado avatar circular de Edison ao lado do nome nas caixas de diálogo da introdução e apresentação do SDH.

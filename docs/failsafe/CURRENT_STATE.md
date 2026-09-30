@@ -1,8 +1,8 @@
-# CURRENT STATE — v0.2.8 · Yuki authored route + NEXO media
+# CURRENT STATE — v0.2.9 · NEXO paced delivery + romance sem hardlock
 
 ## Baseline
 - Base funcional: v0.1.0 Foundation.
-- Build incremental atual: **v0.2.8**.
+- Build incremental atual: **v0.2.9**.
 - Save schema: **v9**.
 - `content/` continua sendo a fonte oficial de autoria.
 
@@ -16,7 +16,9 @@
 - Cada personagem avança no máximo uma etapa de rota por noite global.
 - Lista de contatos continua sem barra/ROTA; romance aparece apenas dentro da conversa.
 - DMs privadas suportam **fotos autoradas**, com visualização ampliada dentro do NEXO.
-- O schema de diálogo agora suporta mensagens fixas do Analista antes/depois de mensagens do personagem, sem hardcode em React (`openingOutgoing`, `prefaceOutgoing`, `afterIncoming`, `afterResponse`).
+- O schema de diálogo suporta mensagens fixas do Analista antes/depois de mensagens do personagem, sem hardcode em React (`openingOutgoing`, `prefaceOutgoing`, `afterIncoming`, `afterResponse`).
+- Sequências fixas agora chegam **uma bolha por vez**, com pausa/indicador de digitação; as opções só aparecem depois do fim da sequência corrente.
+- Romance 0–100% é feedback visual e continua recebendo pontos 100/50/30, mas **não bloqueia** as saídas das etapas 3 e 6.
 - O scroll continua isolado ao histórico interno.
 
 ## Yuki — primeira rota autorada real

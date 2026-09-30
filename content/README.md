@@ -10,7 +10,7 @@ Esta pasta é a **fonte oficial para autoria**. Se você quer mudar texto, event
 | banco de ocorrências, requisitos, risco, duração e afinidades | `content/incidents/caseBank.ts` |
 | composição diária, pesos/cooldown e sorteio | `content/incidents/dailyPool.ts` |
 | números de Vida/Energia, XP, chance, custos e curva de dificuldade diária | `content/config/balance.ts` |
-| orçamento social, thresholds de romance e pesos 100/50/30 | `content/config/social.ts` |
+| orçamento social, feedback de romance e pesos 100/50/30 | `content/config/social.ts` |
 | duração do expediente e tamanho da equipe | `content/config/gameplay.ts` |
 | Ressonância e combos | `content/relationships/resonance.ts` |
 | mensagens NEXO ligadas a eventos | `content/messages/operations.ts` → `eventComments` |
@@ -33,7 +33,7 @@ Evite colocar falas novas diretamente em `app/*.tsx`. Se um texto faz parte da h
 
 ## v0.1.4 — campanha social de QA D1-D6
 
-- Todas as conversas atuais do pós-expediente são **PLACEHOLDER** de QA. `dialogues/post-shift/placeholders.ts`: conversas dos Dias 2–6 para os sete personagens. Servem para testar historico, romance, thresholds e exclusividade ate o Dia 6. Nao sao dialogos finais/canonicos.
+- Yuki etapas 1–6 já usa autoria final aprovada. As demais rotas permanecem **PLACEHOLDER** de QA em `dialogues/post-shift/placeholders.ts`, para testar histórico, romance, exclusividade e progressão até receberem roteiro final.
 - `narrative/outings.ts`: cenas presenciais **PLACEHOLDER** dos Dias 3 e 6. A rota `/encontro` consome background + texto diretamente daqui.
 - Ao substituir pelo conteudo final, preserve IDs sempre que possivel para que saves de teste continuem reconhecendo escolhas ja feitas.
 
@@ -46,7 +46,7 @@ Meta de arquitetura: `docs/design/CONTENT_COMPLETE_ROADMAP.md`.
 - 30: +3 pontos;
 - teto diário: 18 por personagem;
 - o tamanho da conversa não reduz o valor de cada resposta; ao atingir o teto, mensagens extras continuam narrativamente, mas não aumentam romance naquele dia;
-- a própria resposta de aceitar uma saída/date pode completar o threshold necessário.
+- o percentual de romance não bloqueia saída/date; etapas 3 e 6 liberam os marcos presenciais, respeitando uma saída por noite global.
 
 
 ## v0.2.1 — banco de ocorrências
@@ -66,7 +66,7 @@ No social, concluir uma etapa bloqueia a próxima etapa daquela mesma personagem
 ### v0.2.5 — onboarding
 `content/narrative/tutorial.ts` controla a cópia do primeiro despacho. Durante tutorial ativo, o motor isola E-04 e só libera o banco normal após o relatório; essa regra mecânica fica em `app/agencia/page.tsx`. O NEXO coletivo é corporativo/supervisionável; DMs privadas não são supervisionadas.
 
-## v0.2.8 — fotos e autoria social
+## v0.2.9 — fotos e autoria social
 
 Conversas privadas agora podem anexar imagens autoradas. Use `openingImage`/`openingImageAlt` no primeiro turno ou `incomingImage`/`incomingImageAlt` em `followUps`. Para sequências fixas entre escolhas, use `prefaceOutgoing`, `afterIncoming` e `afterResponse`. Esses campos existem para reproduzir roteiro escrito pelo autor sem hardcodar falas em React.
 

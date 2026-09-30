@@ -150,8 +150,7 @@ O pós-expediente deve se comportar como um mensageiro: lista de contatos e conv
 Cada turno pós-expediente oferece três respostas autoradas. Elas podem ser marcadas com `romanceAffinity: 100 | 50 | 30`, representando encaixe romântico alto, médio e baixo. O valor é determinístico e não é chance/RNG.
 
 ## D-031 — Marcos românticos dos Dias 3 e 6
-- Dia 3: encontro presencial exige pelo menos 35% de progresso romântico e o jogador pode escolher no máximo um personagem.
-- Dia 6: date/encontro presencial exige pelo menos 75% e o jogador pode escolher no máximo um personagem.
+**SUPERSEDIDO por D-050 (v0.2.9).** Historicamente, esta decisão exigia 35%/75%; esses thresholds não são mais gates ativos.
 - Conversar com os demais continua permitido.
 - O jogador pode não desenvolver romance com ninguém e terminar a campanha sem par.
 
@@ -178,3 +177,11 @@ Fotos em DMs são conteúdo autoral. O motor aceita imagem + alt text em turnos 
 
 ## D-049 — Yuki é a primeira rota social final (v0.2.8)
 Os estágios 1–6 de Yuki deixam de ser placeholder e passam a usar o roteiro autoral aprovado. A rota mantém o modelo slow burn de experiências → amizade → romance. Os marcos presenciais continuam nas etapas 3 e 6 e a narração do jogador evita gênero gramatical sempre que possível.
+
+
+## D-050 — Romance não bloqueia o arco principal (v0.2.9)
+**SUPERSEDE D-031 e qualquer regra ativa de threshold obrigatório para encontros.**
+O percentual 0–100% permanece como feedback de afinidade e como dado disponível para variações narrativas futuras. As escolhas continuam com `romanceAffinity` 100/50/30 e continuam alterando relações. Porém, chegar ao marco da rota é suficiente para o conteúdo principal: etapa 3 libera a primeira saída e etapa 6 libera o segundo date. A única exclusividade preservada é no máximo uma saída presencial por noite global.
+
+## D-051 — NEXO entrega sequências automáticas uma bolha por vez (v0.2.9)
+Mensagens fixas (`prefaceOutgoing`, `afterIncoming`, resposta do personagem e `afterResponse`) não devem surgir todas no mesmo frame. Durante a conversa ativa, o NEXO revela cada bolha em sequência com pequena pausa/indicador de digitação e só libera as três escolhas quando a sequência anterior terminou. Histórico já concluído pode ser exibido integralmente ao reabrir a thread.

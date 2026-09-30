@@ -39,7 +39,7 @@ O projeto entra em estado `CONTENT-READY` quando todos os itens abaixo forem ver
 2. Acumular todo o historico por personagem em uma unica thread.
 3. Preencher D2–D6 com placeholders claramente marcados para QA.
 4. Garantir 3 respostas por turno e pesos 100/50/30.
-5. Validar thresholds de 35% no Dia 3 e 75% no Dia 6.
+5. Validar que etapas 3 e 6 liberam os encontros sem hardlock de percentual, mantendo uma saída por noite.
 6. Manter apenas uma escolha exclusiva de saida em D3 e uma em D6.
 7. Abrir cena presencial data-driven por `vnSceneId`.
 
@@ -77,8 +77,8 @@ A tela nao deve conhecer Elysia, Yuki ou qualquer personagem especifico. Trocar 
 - ganho de romance e por resposta, nao dividido pelo tamanho da cena;
 - 100 = +7, 50 = +5, 30 = +3;
 - teto diario = 18 por personagem;
-- thresholds = 35 no D3 e 75 no D6;
-- aceitar o convite pode completar o threshold na propria mensagem;
+- percentual de romance não bloqueia os marcos; etapa 3 e 6 liberam as cenas presenciais;
+- escolhas continuam alterando afinidade, mas o convite não depende de threshold;
 - `ENCERRAR NOITE` permanece acessivel mesmo dentro de chat ativo;
 - conversa e opcional e nunca impede virar o dia.
 
@@ -151,7 +151,7 @@ Checklist minimo:
 4. romance forte com um personagem;
 5. tentar escolher duas saidas no Dia 3;
 6. tentar escolher dois dates no Dia 6;
-7. ficar abaixo dos thresholds;
+7. jogar com percentual baixo e ainda conseguir avançar pelos dates da rota;
 8. recarregar save em cada tela importante;
 9. historico NEXO longo no desktop e mobile;
 10. cenas presenciais com backgrounds de proporcoes diferentes;

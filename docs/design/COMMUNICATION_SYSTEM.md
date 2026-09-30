@@ -66,7 +66,7 @@ Essa sequência não obriga todos os personagens a flertarem no mesmo momento. A
 - As três respostas recebem peso romântico determinístico `100 / 50 / 30`, representando melhor encaixe, encaixe intermediário e encaixe fraco para a rota romântica. Não é uma rolagem aleatória.
 - O progresso romântico começa em `0%` por personagem e é separado dos eixos de confiança, respeito, intimidade, tensão e atração.
 - O orçamento romântico atual é distribuído pelos turnos da cena; conversas maiores não dão vantagem automática apenas por terem mais mensagens.
-- Meta de rota: pelo menos `35%` para a saída exclusiva do Dia 3 e `75%` para o date/saída exclusiva do Dia 6.
+- O percentual ROMANCE funciona como feedback de afinidade e não bloqueia os marcos. A etapa 3 libera a primeira saída e a etapa 6 libera o segundo date; continua valendo uma saída presencial por noite global.
 - O romance é opcional. O jogador pode não escolher ninguém e chegar ao fim sem par romântico.
 
 ### Exclusividade dos encontros presenciais
@@ -91,7 +91,7 @@ Essa sequência não obriga todos os personagens a flertarem no mesmo momento. A
 
 ## Atualização v0.1.4 — afinidade por mensagem e placeholders
 
-Todo texto atual de agentes é conteúdo PLACEHOLDER de QA até a entrega do roteiro final. O progresso romântico deixa de dividir um orçamento pelo número de turnos: cada resposta concede pontos fixos (100=7, 50=5, 30=3) até um teto de 18 por personagem/dia. Isso permite conversas extensas sem punir cenas longas e sem permitir farm infinito. A resposta que aceita uma saída/date conta para o threshold.
+Todo texto atual de agentes é conteúdo PLACEHOLDER de QA até a entrega do roteiro final. O progresso romântico deixa de dividir um orçamento pelo número de turnos: cada resposta concede pontos fixos (100=7, 50=5, 30=3) até um teto de 18 por personagem/dia. Isso permite conversas extensas sem punir cenas longas e sem permitir farm infinito. O percentual continua reagindo às respostas, mas não bloqueia saída/date; os encontros pertencem aos marcos da rota.
 
 `ENCERRAR NOITE` deve permanecer acessível mesmo com chat aberto e em mobile. Conversar é opcional e nunca é requisito para avançar o dia.
 
@@ -111,3 +111,7 @@ O NEXO funciona como um mensageiro corporativo. O grupo `Guerreiros Elementais` 
 - A rota de Yuki, etapas 1–6, é o primeiro pacote social a substituir os placeholders por autoria real.
 - Etapa 3 de Yuki abre a cena presencial da cafeteria; etapa 6 abre a cena do apartamento. Os textos pertencem a `content/narrative/outings.ts`.
 - As imagens da rota ficam em `public/nexo/yuki/` e são conteúdo substituível, não lógica de componente.
+
+
+## Cadência de entrega de mensagens — v0.2.9
+Mensagens automáticas/fixas não devem aparecer como um bloco instantâneo. O cliente revela uma bolha por vez, com curta pausa e indicador de digitação, e só disponibiliza as respostas do jogador depois que a sequência corrente foi entregue. O histórico concluído continua aparecendo integralmente ao reabrir uma conversa.

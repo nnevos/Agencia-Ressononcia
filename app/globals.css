@@ -7884,3 +7884,58 @@ input {
     max-height:320px;
   }
 }
+
+/* ========================================================================== */
+/* v0.2.9 - NEXO MESSAGE PACING                                               */
+/* Mensagens fixas chegam em sequencia, uma bolha por vez.                   */
+/* ========================================================================== */
+.nexoBubbleArrive {
+  animation:nexoBubbleArrive .18s ease-out both;
+}
+@keyframes nexoBubbleArrive {
+  from { opacity:0; transform:translateY(5px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.nexoPendingDelivery {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.nexoTypingIndicator {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  min-height:22px;
+  padding:7px 10px;
+  border:1px solid #1f4558;
+  background:#0c2531;
+  width:max-content;
+}
+.nexoTypingIndicator > span {
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#8db6c7;
+  animation:nexoTypingDot 1s infinite ease-in-out;
+}
+.nexoTypingIndicator > span:nth-child(2) { animation-delay:.14s; }
+.nexoTypingIndicator > span:nth-child(3) { animation-delay:.28s; }
+@keyframes nexoTypingDot {
+  0%,60%,100% { opacity:.35; transform:translateY(0); }
+  30% { opacity:1; transform:translateY(-2px); }
+}
+.nexoComposerWaiting {
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  color:#8db6c7;
+}
+.nexoComposerWaiting .nexoTypingIndicator {
+  padding:6px 9px;
+}
+.nexoComposerWaiting small {
+  font-size:.72rem;
+  letter-spacing:.03em;
+}

@@ -1,4 +1,4 @@
-# RECOVERY PROTOCOL — v0.2.8
+# RECOVERY PROTOCOL — v0.2.9
 
 Se o chat/contexto for perdido:
 

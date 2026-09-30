@@ -1,4 +1,4 @@
-# EDIT HERE — RESSONÂNCIA v0.2.8
+# EDIT HERE — RESSONÂNCIA v0.2.9
 
 Se você quer alterar o jogo sem procurar código, comece aqui.
 
@@ -41,7 +41,7 @@ Roadmap ate o estado em que so falta conteudo: `docs/design/CONTENT_COMPLETE_ROA
 
 ## Balanceamento social atual
 
-`content/config/social.ts`: 100 = +7, 50 = +5, 30 = +3 por mensagem; teto diário 18 por personagem; thresholds 30% (etapa 3) e 70% (etapa 6).
+`content/config/social.ts`: 100 = +7, 50 = +5, 30 = +3 por mensagem; teto por etapa 18 por personagem. O percentual é feedback de afinidade e NÃO bloqueia dates; etapas 3 e 6 liberam os encontros.
 
 ## Progressão atual
 

@@ -7,8 +7,8 @@ O dia global controla a cidade/Dispatch. O progresso social é individual por pe
 - Cada herói possui `routeStage` persistente.
 - A cena autorada usa `day` como etapa da rota (compatibilidade editorial), não como dia global.
 - O jogador pode desenvolver todos em paralelo ou focar um por vez.
-- Primeiro encontro: marco de rota 3, alvo de romance 30%.
-- Segundo date: marco de rota 6, alvo de romance 70%.
+- Primeiro encontro: marco de rota 3. O percentual de romance não bloqueia a cena; 30% fica apenas como referência histórica/de balanceamento.
+- Segundo date: marco de rota 6. O percentual de romance não bloqueia a cena; 70% fica apenas como referência histórica/de balanceamento.
 - Apenas uma saída presencial pode ser marcada por noite global.
 - Se o jogador não atingir o marco no convite original, o encontro continua recuperável em noites posteriores quando o requisito for alcançado.
 - Placeholders de QA incluem etapas 7–10 para testar rotas lentas. Conteúdo final pode ter ritmos e quantidades diferentes por personagem.
@@ -32,3 +32,7 @@ A agenda fixa foi substituída por banco data-driven de 48 casos aprovados, com 
 
 ## Cadência social v0.2.2
 Cada personagem avança no máximo uma etapa individual por noite global. É permitido conversar com todos os sete na mesma noite, mas nenhuma rota pode consumir duas etapas no mesmo pós-expediente. A lista de contatos não revela número da rota nem barra romântica; ROMANCE permanece visível somente dentro da conversa.
+
+
+## v0.2.9 — romance como feedback, não gate
+As escolhas 100/50/30 continuam alterando o percentual e os eixos relacionais, porém o arco principal não pode entrar em hardlock por pontuação. Ao alcançar a etapa 3 ou 6 da rota individual, o encontro correspondente pode ser escolhido independentemente do percentual atual. A única trava estrutural preservada é uma saída presencial por noite global.

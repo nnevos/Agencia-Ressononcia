@@ -205,5 +205,9 @@ Regras atuais:
 - `afterResponse`, `afterIncoming` e `prefaceOutgoing` existem para preservar sequências escritas pelo autor sem transformar cada frase em uma escolha;
 - cada personagem avança no máximo uma etapa de rota por noite global;
 - o teto romântico é por etapa social/personagem, não por calendário global;
-- marcos presenciais atuais ficam nas etapas 3 e 6 da rota individual, com thresholds 30% e 70%;
+- marcos presenciais atuais ficam nas etapas 3 e 6 da rota individual; o percentual de romance não bloqueia os encontros;
 - não adicionar texto narrativo em componentes React para completar lacunas de autoria.
+
+
+### v0.2.9 — entrega cadenciada
+`openingAfterIncoming` e `afterResponse` continuam sendo sequências autoradas, mas o cliente as entrega uma bolha por vez durante a conversa ativa. Não é necessário quebrar artificialmente o roteiro em choices só para criar pausas.
