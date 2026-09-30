@@ -70,7 +70,7 @@ O jogador pode conversar com vários personagens na mesma noite ou encerrar sem 
 - `content/narrative/introduction.ts`
 - `content/narrative/tutorial.ts`
 
-Edison é [AU-APROVADO] como supervisora do onboarding do Dia 1; falas e sequência ficam em `content/narrative/introduction.ts`.
+Edison é [AU-APROVADO] como supervisor do onboarding do Dia 1; falas e sequência ficam em `content/narrative/introduction.ts`.
 
 ### Menu
 `content/ui/menu.ts`

@@ -1,47 +1,43 @@
-# CURRENT STATE — v0.2.5 · First Dispatch onboarding
+# CURRENT STATE — v0.2.8 · Yuki authored route + NEXO media
 
-## Onboarding / menu
-- Novo jogo: nome do Despachante → apresentação da Agência com Edison → grupo NEXO → apresentação do SDH → Central.
-- `PULAR TUTORIAL` leva direto à Central e marca `tutorial_skipped`.
-- Com tutorial ativo, `pool-e-04` é o primeiro chamado, Hélio é a seleção guiada e o resultado é Sucesso controlado para ensinar o loop sem RNG punitivo.
-- Após arquivar o relatório, o tutorial é concluído e o restante do Dia 1 segue o banco normal.
-- Menu principal alinhado à esquerda com grande área livre à direita para futura key art/background.
-- Edison é [AU-APROVADO]. Save continua v9.
+## Baseline
+- Base funcional: v0.1.0 Foundation.
+- Build incremental atual: **v0.2.8**.
+- Save schema: **v9**.
+- `content/` continua sendo a fonte oficial de autoria.
 
+## Onboarding / Dispatch
+- Fluxo v0.2.7 preservado: menu → onboarding de Edison → grupo NEXO → SDH → primeiro incêndio guiado → Dia 1 normal.
+- Edison é homem e deve ser referido no masculino.
+- Tutorial continua pulável e o primeiro chamado continua isolado.
 
-## Social
-- Rotas continuam individuais e independentes do dia global.
-- Cada personagem pode avançar no máximo **uma etapa de rota por noite global**. O jogador pode conversar com vários/todos os personagens na mesma noite.
-- A lista de contatos do NEXO não mostra barra, porcentagem ou número de rota. O percentual de ROMANCE permanece no cabeçalho da conversa aberta.
-- Concluir saída/date também consome o avanço daquela personagem naquela noite.
-- Save permanece schema v9; o bloqueio diário usa flag estável `social:route-advanced:day:<dia>:<personagem>`.
+## NEXO / Social
+- Rotas são individuais por personagem e independentes do dia global.
+- Cada personagem avança no máximo uma etapa de rota por noite global.
+- Lista de contatos continua sem barra/ROTA; romance aparece apenas dentro da conversa.
+- DMs privadas suportam **fotos autoradas**, com visualização ampliada dentro do NEXO.
+- O schema de diálogo agora suporta mensagens fixas do Analista antes/depois de mensagens do personagem, sem hardcode em React (`openingOutgoing`, `prefaceOutgoing`, `afterIncoming`, `afterResponse`).
+- O scroll continua isolado ao histórico interno.
 
-## Relatórios
-- Resultado mostra CHAMADO ORIGINAL + COMO FOI RESOLVIDO.
-- O resumo de resolução usa equipe, ocorrência, capacidades cobertas e afinidade de poder quando ativa.
+## Yuki — primeira rota autorada real
+- Estágios 1–6 de Yuki substituem os placeholders de QA por texto autoral aprovado.
+- Estágio 2 usa foto de energético.
+- Estágio 3 usa foto pós-missão e abre a primeira saída na cafeteria.
+- Estágio 6 usa foto em casa e abre o segundo date no apartamento.
+- Dates 3/6 usam os textos enviados pelo autor em `content/narrative/outings.ts`.
+- Placeholders de recuperação 7–10 de Yuki permanecem apenas para QA de rota lenta quando o segundo marco ainda não foi concluído; ficam bloqueados após o segundo date.
+- As outras seis rotas continuam placeholder de QA.
 
-## Dispatch
-- Expediente: 08:00–18:00 em **10 minutos reais**.
-- Respiro: 10 casos (5 easy/4 medium/1 hard).
-- Normal: 11 (4/5/2).
-- Pressão: 12 (3/5/4).
-- Pico: 13 (2/5/5/1 crisis).
-- Spawns ocupam janela menor e usam pequenas ondas para aumentar simultaneidade.
-- Escala D1–D6: 0.60 / 0.68 / 0.76 / 0.86 / 0.96 / 1.05.
-- Chance base/floors foram reduzidos para evitar que um agente cubra quase tudo cedo apenas por atributos.
-- Energia: Sucesso -2; Sucesso com custo -3; parcial -4; falha -5. Vida permanece 0/-1/-2/-5.
-- Afinidade de poder: +8 p.p. por match, teto +12 p.p. por equipe. Técnicas permanecem +6 p.p., teto +12.
-- Alexandra agora possui afinidade explícita também em Enchente na Baixada Leste e Falha de Bombas na Estação de Drenagem.
+## Assets novos
+- `public/nexo/yuki/energetico-dia2.jpg`
+- `public/nexo/yuki/pos-missao-dia3.jpg`
+- `public/nexo/yuki/casa-dia6.jpg`
 
+## Cânone / AU
+- Fundamentos pessoais e ritmos românticos dos sete foram registrados na Bíblia markdown.
+- `RESSONANCIA_BIBLIA_AU_V3_4_LORE_ROTAS.docx` foi incorporada ao projeto.
+- Yuki: slow burn baseado em experiências → amizade → romance.
 
-## v0.2.5 — onboarding isolado e NEXO corporativo
-- Tutorial ativo inicia o turno somente com E-04; demais ocorrências não existem no runtime até o relatório ser arquivado.
-- E-04 tutorial resolve em 12 minutos diegéticos; depois o restante do Dia 1 é agendado no tempo restante.
-- Coach de Edison aparece dentro do briefing do primeiro caso.
-- Card TUTORIAL CONCLUÍDO ganhou layout responsivo sem corte de conteúdo/CTA.
-- Grupo/canais operacionais NEXO são corporativos e supervisionáveis; DMs privadas não são supervisionadas.
-- Save permanece v9.
-
-## Ajuste v0.2.7
-- O retrato de Edison agora aparece como avatar circular pequeno no cabeçalho das caixas de diálogo da introdução, ao lado do nome da personagem.
-- A foto continua tratada como retrato/avatar; os cenários permanecem `agencia-exterior.jpg` e `agencia-escritorio.jpg`.
+## Validação
+- TypeScript completo continua limitado pela ausência de pacotes React/Next no ambiente da entrega.
+- Nenhum save reset foi introduzido; schema continua v9.

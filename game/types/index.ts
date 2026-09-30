@@ -176,6 +176,13 @@ export type SaveGame = {
 
 export type RelationshipDelta = Partial<RelationshipStats>;
 
+export type DialogueMessage = {
+  direction: "incoming" | "outgoing";
+  text?: string;
+  image?: string;
+  imageAlt?: string;
+};
+
 export type DialogueChoice = {
   id: string;
   text: string;
@@ -188,11 +195,19 @@ export type DialogueChoice = {
   exclusiveOutingDay?: 3 | 6; // etapa da rota (marco 3 ou 6), nao dia global
   /** Gancho editorial para futura transição a uma cena presencial/VN autorada. */
   vnSceneId?: string;
+  /** Mensagens fixas exibidas depois da resposta desta escolha. */
+  afterResponse?: DialogueMessage[];
 };
 
 export type DialogueTurn = {
   id: string;
   incoming: string;
+  incomingImage?: string;
+  incomingImageAlt?: string;
+  /** Mensagem fixa do Analista imediatamente antes da mensagem recebida. */
+  prefaceOutgoing?: string;
+  /** Sequência fixa exibida depois da mensagem recebida e antes das escolhas. */
+  afterIncoming?: DialogueMessage[];
   timeLabel?: string;
   choices: DialogueChoice[];
 };
@@ -205,6 +220,10 @@ export type DialogueScene = {
   speaker: string;
   timeLabel: string;
   opening: string;
+  openingImage?: string;
+  openingImageAlt?: string;
+  openingOutgoing?: string;
+  openingAfterIncoming?: DialogueMessage[];
   contextLines?: {
     whenHeroWasDispatched?: string;
     whenHeroWasNotDispatched?: string;

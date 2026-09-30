@@ -1,6 +1,6 @@
 import type { DialogueScene, SaveGame } from "@/game/types";
 import { getRomanceProgress, hasAdvancedRouteToday } from "@/game/social/dialogue";
-import { yukiPostShift } from "./yuki";
+import { yukiPostShiftScenes } from "./yuki";
 import { elysiaPostShift } from "./elysia";
 import { lysandroPostShift } from "./lysandro";
 import { helioPostShift } from "./helio";
@@ -11,7 +11,7 @@ import { placeholderPostShiftScenes } from "./placeholders";
 
 /** Registro central. Mantenha a ordem cronológica de autoria. */
 export const postShiftScenes: DialogueScene[] = [
-  yukiPostShift, elysiaPostShift, lysandroPostShift, helioPostShift, demetriaPostShift, alexandraPostShift, erosPostShift,
+  ...yukiPostShiftScenes, elysiaPostShift, lysandroPostShift, helioPostShift, demetriaPostShift, alexandraPostShift, erosPostShift,
   ...placeholderPostShiftScenes,
 ];
 

@@ -203,3 +203,7 @@ Nenhuma dessas etapas deve exigir alterar componentes, motor de Dispatch, save o
 - textos de epílogo/final.
 
 Nenhum desses itens deve exigir nova tela específica ou regra codificada se o roadmap estiver concluído.
+
+## Estado v0.2.8
+
+O motor entrou na fase de conteúdo autorado. Yuki é a primeira rota final nas etapas 1–6, com imagens no NEXO e dois encontros data-driven. Os outros seis personagens continuam usando placeholders de QA até receberem roteiro final. O próximo gate é playtestar Yuki ponta a ponta, inclusive caminhos de afinidade mediana/baixa, antes de replicar o processo para as demais rotas.

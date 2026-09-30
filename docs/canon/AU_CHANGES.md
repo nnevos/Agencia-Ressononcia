@@ -17,5 +17,10 @@ Cronologia exata em relação ao livro; cidade/capital principal; idade exata de
 7. Pós-expediente permite falar com múltiplos personagens ou nenhum, sem conversa obrigatória única.
 8. Cenas presenciais/VN são reservadas para momentos narrativos especiais.
 9. **SUPERSEDIDO em v0.2.3:** o placeholder `Coordenação` foi substituído por Edison.
-10. [AU-APROVADO] Edison é a supervisora que recebe o Despachante, apresenta a equipe/NEXO e acompanha o primeiro despacho do Dia 1.
+10. [AU-APROVADO] Edison é a supervisor que recebe o Despachante, apresenta a equipe/NEXO e acompanha o primeiro despacho do Dia 1.
 11. [AU-APROVADO · v0.2.4] NEXO funciona como mensageiro corporativo: grupos/canais operacionais podem ser supervisionados pela Agência; DMs privadas entre participantes não são supervisionadas.
+
+## v0.2.8 — autoria social inicial
+- [AU-APROVADO] Fundamentos pessoais dos sete heróis e ritmos românticos individuais consolidados na Bíblia da AU.
+- [AU-APROVADO] Yuki usa slow burn baseado em experiências, amizade e intimidade progressiva.
+- [AU-APROVADO] Edison é homem e deve ser referido no masculino em texto e documentação.

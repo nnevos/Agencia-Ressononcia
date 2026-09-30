@@ -4,7 +4,7 @@
 Menu → Novo jogo/nome → Edison/Agência → grupo NEXO → SDH → E-04 com Hélio → relatório → Dia 1 livre.
 
 ## Regras
-- Edison é [AU-APROVADO] como supervisora do onboarding.
+- Edison é [AU-APROVADO] como supervisor do onboarding.
 - O jogador pode pular o tutorial a qualquer momento da apresentação.
 - O grupo NEXO é coletivo e separado das DMs privadas de relacionamento.
 - As quatro mensagens iniciais têm efeitos relacionais discretos; a UI não mostra “boa/neutra/ruim”.

@@ -380,3 +380,20 @@
 - Abertura visual em três estágios: exterior da Agência -> escritório -> sistema/SDH.
 - Novos assets: `public/agencia-exterior.jpg` e `public/agencia-escritorio.jpg`.
 - `public/edison.jpg` permanece como retrato/avatar, não como cenário.
+
+## v0.2.8 — Yuki authored route + NEXO media
+- Primeira rota social autorada real: Yuki, estágios 1–6.
+- Três imagens enviadas pelo autor integradas ao histórico do NEXO nos estágios 2, 3 e 6.
+- NEXO privado passa a suportar imagens clicáveis com lightbox, sem sair da conversa.
+- Schema de diálogo ganhou mensagens fixas data-driven antes/depois das escolhas, permitindo reproduzir roteiros longos sem hardcode de fala em React.
+- Primeiro outing de Yuki (cafeteria) e segundo date (apartamento) substituem os placeholders em `content/narrative/outings.ts`.
+- Outing do Dia/etapa 6 termina exatamente no texto autoral “Posso entrar mesmo?”, sem continuação inventada.
+- Placeholders D2–D6 de Yuki foram removidos do registro; estágios 7–10 permanecem apenas como recuperação de QA e são bloqueados após o segundo date.
+- Fundamentos de lore/ritmo romântico dos sete integrados à Bíblia da AU; Edison corrigido para masculino na documentação textual.
+- Save permanece v9.
+
+### Validação v0.2.8
+- 56 arquivos TS/TSX passaram por `transpileModule` do TypeScript com 0 diagnósticos de sintaxe.
+- `tsc --noEmit` completo continua não confiável neste ambiente por ausência/incompletude de Next/React e tipagens relacionadas.
+- CSS validado com 1638 chaves de abertura e 1638 de fechamento.
+- GDD v4.10 renderizado e revisado visualmente em 21 páginas; removido page break que gerava página em branco.

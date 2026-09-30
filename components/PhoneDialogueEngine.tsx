@@ -24,6 +24,7 @@ export function PhoneDialogueEngine({ scenes, save, lastDispatch, onBack, onSave
   const historyRef = useRef<HTMLDivElement | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
   const [showJumpToLatest, setShowJumpToLatest] = useState(false);
+  const [expandedImage, setExpandedImage] = useState<{ src: string; alt: string } | null>(null);
 
   const speaker = sortedScenes[sortedScenes.length - 1]?.speaker ?? "NEXO";
   const characterId = sortedScenes[sortedScenes.length - 1]?.characterId ?? "";
@@ -65,6 +66,18 @@ export function PhoneDialogueEngine({ scenes, save, lastDispatch, onBack, onSave
     if (!node) return;
     const distanceFromBottom = node.scrollHeight - node.scrollTop - node.clientHeight;
     setShowJumpToLatest(distanceFromBottom > 140);
+  }
+
+  function renderMessage(message: { direction: "incoming" | "outgoing"; text?: string; image?: string; imageAlt?: string }, key: string) {
+    if (!message.text && !message.image) return null;
+    const alt = message.imageAlt ?? "Imagem enviada no NEXO";
+    return <div className={`phoneBubble ${message.direction}`} key={key}>
+      {message.image && <button className="nexoChatImageButton" onClick={() => setExpandedImage({ src: message.image!, alt })} aria-label={`Abrir imagem: ${alt}`}>
+        <img className="nexoChatImage" src={message.image} alt={alt} />
+      </button>}
+      {message.text && <p>{message.text.replaceAll("{{playerName}}", save.player.name)}</p>}
+      <time>{message.direction === "outgoing" ? "enviada ✓✓" : "agora"}</time>
+    </div>;
   }
 
   function sendChoice() {
@@ -163,13 +176,15 @@ export function PhoneDialogueEngine({ scenes, save, lastDispatch, onBack, onSave
           {turns.map((turn) => {
             if (!canRenderTurn) return null;
             const completed = getCompletedChoice(turn, save);
-            const incoming = turn.incoming.replaceAll("{{playerName}}", save.player.name);
             const result = <div className="nexoTurnBlock" key={turn.id}>
               {turn.timeLabel && <div className="nexoInlineTime">{turn.timeLabel}</div>}
-              <div className="phoneBubble incoming"><p>{incoming}</p><time>agora</time></div>
+              {turn.prefaceOutgoing && renderMessage({ direction:"outgoing", text:turn.prefaceOutgoing }, `${turn.id}:preface`)}
+              {renderMessage({ direction:"incoming", text:turn.incoming, image:turn.incomingImage, imageAlt:turn.incomingImageAlt }, `${turn.id}:incoming`)}
+              {turn.afterIncoming?.map((message, index) => renderMessage(message, `${turn.id}:after-incoming:${index}`))}
               {completed && <>
-                <div className="phoneBubble outgoing"><p>{completed.text}</p><time>enviada ✓✓</time></div>
-                <div className="phoneBubble incoming"><p>{completed.response.replaceAll("{{playerName}}", save.player.name)}</p><time>agora</time></div>
+                {renderMessage({ direction:"outgoing", text:completed.text }, `${turn.id}:choice`)}
+                {renderMessage({ direction:"incoming", text:completed.response }, `${turn.id}:response`)}
+                {completed.afterResponse?.map((message, index) => renderMessage(message, `${turn.id}:after-response:${index}`))}
               </>}
             </div>;
             if (!completed) canRenderTurn = false;
@@ -226,5 +241,10 @@ export function PhoneDialogueEngine({ scenes, save, lastDispatch, onBack, onSave
         }}>MARCAR {pendingMilestone === 3 ? "PRIMEIRA SAÍDA" : "SEGUNDO DATE"}</button> : pendingMilestone && pendingOutingState?.threshold ? <small>Continue desenvolvendo a relação: este marco pede {pendingOutingState.threshold}%.</small> : <small>Sem novas mensagens nesta rota agora.</small>}
       </div>}
     </footer>
+
+    {expandedImage && <div className="nexoImageLightbox" role="dialog" aria-modal="true" aria-label={expandedImage.alt} onClick={() => setExpandedImage(null)}>
+      <button className="nexoImageLightboxClose" onClick={() => setExpandedImage(null)} aria-label="Fechar imagem">×</button>
+      <img src={expandedImage.src} alt={expandedImage.alt} onClick={(event) => event.stopPropagation()} />
+    </div>}
   </section>;
 }

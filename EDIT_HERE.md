@@ -1,4 +1,4 @@
-# EDIT HERE — RESSONÂNCIA v0.2.7
+# EDIT HERE — RESSONÂNCIA v0.2.8
 
 Se você quer alterar o jogo sem procurar código, comece aqui.
 
@@ -41,7 +41,7 @@ Roadmap ate o estado em que so falta conteudo: `docs/design/CONTENT_COMPLETE_ROA
 
 ## Balanceamento social atual
 
-`content/config/social.ts`: 100 = +7, 50 = +5, 30 = +3 por mensagem; teto diário 18 por personagem; thresholds 35% (D3) e 75% (D6).
+`content/config/social.ts`: 100 = +7, 50 = +5, 30 = +3 por mensagem; teto diário 18 por personagem; thresholds 30% (etapa 3) e 70% (etapa 6).
 
 ## Progressão atual
 
@@ -80,3 +80,12 @@ Fonte editorial aprovada: `docs/design/RESSONANCIA_BANCO_DE_CASOS_v0_2_1_APROVAD
 ## Atualização v0.2.6 (2026-09-29)
 
 Polimento do onboarding após playtest: texto de privacidade do NEXO reduzido à regra essencial; imagem autoral de Edison integrada à introdução e aos elementos do tutorial; card de conclusão redesenhado; chat operacional passa a acompanhar automaticamente a mensagem mais recente usando scroll interno; e a liberação do banco após E-04 usa cadência compacta, com último spawn bem antes do fim do turno para evitar vazios longos e chamados tardios. Save permanece v9.
+
+
+## Rota Yuki autorada — v0.2.8
+
+- Conversas etapas 1–6: `content/dialogues/post-shift/yuki.ts`.
+- Fotos: `public/nexo/yuki/`.
+- Primeiro outing e segundo date: `content/narrative/outings.ts` (`outing-day3-yuki` e `outing-day6-yuki`).
+- Os outros personagens ainda usam placeholders de QA.
+- Para anexar foto a uma DM, use os campos documentados em `content/README.md`; não hardcode imagem no componente.

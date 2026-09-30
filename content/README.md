@@ -65,3 +65,9 @@ No social, concluir uma etapa bloqueia a próxima etapa daquela mesma personagem
 
 ### v0.2.5 — onboarding
 `content/narrative/tutorial.ts` controla a cópia do primeiro despacho. Durante tutorial ativo, o motor isola E-04 e só libera o banco normal após o relatório; essa regra mecânica fica em `app/agencia/page.tsx`. O NEXO coletivo é corporativo/supervisionável; DMs privadas não são supervisionadas.
+
+## v0.2.8 — fotos e autoria social
+
+Conversas privadas agora podem anexar imagens autoradas. Use `openingImage`/`openingImageAlt` no primeiro turno ou `incomingImage`/`incomingImageAlt` em `followUps`. Para sequências fixas entre escolhas, use `prefaceOutgoing`, `afterIncoming` e `afterResponse`. Esses campos existem para reproduzir roteiro escrito pelo autor sem hardcodar falas em React.
+
+A rota de Yuki (estágios 1–6) é a primeira rota substituída por conteúdo autoral real. As imagens usadas ficam em `public/nexo/yuki/`; os dates vivem em `content/narrative/outings.ts`.

@@ -12,6 +12,10 @@ Atributos pessoais: Força, Agilidade, Carisma, Inteligência e Vigor. Escala 1�
 
 **[AU-APROVADO]** Combatente · Vanguarda. Adaptável · Corpo a corpo · Controle de campo.
 
+**[AU-APROVADO] Origem na Ressonância:** filho bastardo de dois heróis aposentados que não deveriam ter se envolvido. Entrou na Agência por indicação dos pais enquanto tenta descobrir seu próprio lugar no mundo. É versátil, focado quando decide algo e muito adaptável, mas ainda não sabe exatamente o que quer para a própria vida.
+
+**[AU-APROVADO] Ritmo romântico:** slow burn baseado em experiências compartilhadas, amizade, confiança e intimidade que só depois ganha nome romântico.
+
 **Atributos Nível 1:** FOR 2 · AGI 2 · CAR 1 · INT 2 · VIG 2.
 
 **Identidade:** generalista. Não possui pico extremo inicial; compensa pela versatilidade do Frio e variedade de tags.

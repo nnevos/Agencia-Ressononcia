@@ -180,12 +180,14 @@ function recoveryStage(profile: PlaceholderProfile, stage: 7 | 8 | 9 | 10): Dial
   return {
     placeholder:true, day:stage, id:`placeholder-rota${stage}-${profile.id}`, characterId:profile.id, speaker:profile.speaker, timeLabel:"19:40 · NEXO",
     opening:`[PLACEHOLDER] ${profile.speaker} retoma a conversa em outra noite. Esta etapa existe para testar rotas lentas sem perder o progresso individual.`,
-    availability:{minDay:stage,maxDay:stage}, completionFlag:`scene:placeholder-rota${stage}-${profile.id}:complete`,
+    availability:{minDay:stage,maxDay:stage,blockedFlags:[`scene:outing-day6-${profile.id}:complete`]}, completionFlag:`scene:placeholder-rota${stage}-${profile.id}:complete`,
     choices:standardChoices(profile,stage,1),
     followUps:[{ id:`placeholder-rota${stage}-${profile.id}:followup`, incoming:"[PLACEHOLDER] A conversa continua sem pressa e abre mais espaço para desenvolver a relação.", choices:standardChoices(profile,stage,2) }],
   };
 }
 
-export const placeholderPostShiftScenes: DialogueScene[] = profiles.flatMap((profile) => [
-  day2(profile), day3(profile), day4(profile), day5(profile), day6(profile), recoveryStage(profile,7), recoveryStage(profile,8), recoveryStage(profile,9), recoveryStage(profile,10),
-]);
+export const placeholderPostShiftScenes: DialogueScene[] = profiles.flatMap((profile) => {
+  const recovery = [recoveryStage(profile,7), recoveryStage(profile,8), recoveryStage(profile,9), recoveryStage(profile,10)];
+  if (profile.id === "yuki") return recovery;
+  return [day2(profile), day3(profile), day4(profile), day5(profile), day6(profile), ...recovery];
+});

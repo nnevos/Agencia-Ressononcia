@@ -13,7 +13,7 @@ Nunca reescrever personalidade, parentesco, poder ou limitação canônica só p
 ## Premissa da AU
 [AU-APROVADO] O jogador é um **Analista de Despacho** da Agência Ressonância, não um dos sete heróis.
 
-[AU-APROVADO] **Edison** é a supervisora que recebe o Analista no primeiro dia, apresenta os Guerreiros Elementais, adiciona o jogador ao NEXO e acompanha o primeiro despacho. O jogador escolhe seu nome no início. O Analista administra crises, monta equipes, recebe relatórios e convive com os heróis entre operações.
+[AU-APROVADO] **Edison** é a supervisor que recebe o Analista no primeiro dia, apresenta os Guerreiros Elementais, adiciona o jogador ao NEXO e acompanha o primeiro despacho. O jogador escolhe seu nome no início. O Analista administra crises, monta equipes, recebe relatórios e convive com os heróis entre operações.
 
 [AU-APROVADO] O mundo é pós-transformação: magia e poderes estão mais disseminados e a ordem política está em reconstrução. A Agência começa pequena. O mistério central da AU permanece **[A DEFINIR]** e não deve virar automaticamente uma continuação literal do enredo do livro.
 
@@ -56,3 +56,29 @@ Antes de criar cena, rota ou missão centrada em um herói: ler `CHARACTER_BIBLE
 
 ## Regra editorial v0.1.0
 Falas, opções do jogador e condições de cena são conteúdo autoral e devem ficar em `content/`. O motor não deve inventar texto narrativo dinamicamente. Cada opção precisa ter texto explícito escrito pelo autor e efeitos explícitos em flags/relacionamentos.
+
+## Fundamentos pessoais aprovados — v0.2.8
+
+[AU-APROVADO] Estes fundamentos vieram diretamente da autoria e passam a orientar diálogos, rotas e cenas presenciais. Não completar nomes, parentes ou eventos não definidos aqui sem nova aprovação.
+
+- **Yuki:** filho bastardo de dois heróis aposentados que não deveriam ter se envolvido. Adaptável, versátil e determinado, mas ainda sem saber exatamente o que quer para a própria vida. Entrou na Agência por indicação dos pais procurando seu lugar no mundo.
+- **Elysia:** filha de um grande inventor e empresário de tecnologia. Rejeita servir aos interesses comerciais da família e escolhe ajudar as pessoas diretamente como heroína. Estuda obsessivamente seus poderes, busca seus limites e tenta constantemente superá-los.
+- **Lysandro:** abandonado e criado no crime, cresceu dentro de uma gangue. Rompeu com ela ao se voltar contra abusos cometidos contra moradores locais e pessoas pobres. Treinou até conseguir derrubar a própria gangue e libertar a comunidade. A Agência reconheceu seu potencial e investiu em sua carreira heroica.
+- **Hélio:** filho de um grande vilão do passado, atualmente preso. Ama o pai como pai, mas repudia seus atos. Tenta construir um legado diferente e ainda sofre consequências sociais dos crimes paternos. Busca na Agência redenção e a chance de provar quem é por conta própria.
+- **Demétria:** vem de uma família de burocratas e se cansou desse ambiente e de suas disputas políticas. Sempre gostou de investigar casos e também de partir para o confronto físico. Entrou na Agência para se desenvolver como detetive e executora.
+- **Alexandra:** filha de uma grande heroína aposentada. Tem facilidade com questões morais, pessoas e combate. É ambiciosa: quer poder, controle e ascensão profissional, mas também genuinamente quer usar isso para ajudar pessoas. Entrou na Agência para ganhar experiência e crescer na carreira heroica.
+- **Eros:** filho de um grande herói aposentado. Valoriza liberdade e parece relaxado, mas cumpre suas responsabilidades; pode se atrasar ocasionalmente sem ser irresponsável. Entrou por indicação do pai procurando um caminho e acabou gostando de estar na Agência.
+
+## Direção romântica aprovada — v0.2.8
+
+- **Yuki — slow burn / experiências → amizade → romance.** A intimidade cresce por convivência e experiências compartilhadas. O romance demora a ficar explícito; a mudança de amizade para atração deve ter peso.
+- **Elysia — tímida → confortável → desinibida.** Começa com vergonha e hesitação; com confiança, revela um lado muito mais atrevido e sexualmente provocador.
+- **Lysandro — intensidade imediata.** Galanteador, atacante e provocador desde cedo. O desenvolvimento está mais em descobrir o que existe por baixo dessa intensidade do que em desbloquear o flerte.
+- **Hélio — reprimido / romântico / apego rápido.** Sente muito, tenta se controlar e busca segurança. Pode se apaixonar relativamente rápido, mas tem dificuldade em lidar com o que sente.
+- **Demétria — iniciativa e dominância social.** Inicia assuntos, conduz a conversa, provoca e flerta de brincadeira; parte da tensão vem de perceber quando as brincadeiras deixam de ser apenas brincadeiras.
+- **Alexandra — barreira → descongelamento.** Começa seca, controlada e difícil de ler, sem hostilidade gratuita. Conforme confia, revela um lado mais doce e afetivo.
+- **Eros — humor → brincadeira → intimidade quase sem perceber.** Piadas, provocações e situações cada vez mais íntimas escalam naturalmente até o momento em que fica claro que aquilo já virou romance.
+
+### Regra de ritmo
+
+[AU-APROVADO] Os marcos mecânicos podem ser compartilhados, mas as sete rotas não devem seguir a mesma cadência emocional. O percentual de romance desbloqueia possibilidades; a personalidade e a etapa narrativa determinam como cada personagem expressa interesse.

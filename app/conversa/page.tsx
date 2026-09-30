@@ -26,12 +26,14 @@ function latestPreview(contact: ConversationContact, save: SaveGame) {
   const scenes = [...contact.scenes].sort((a, b) => getSceneDay(a) - getSceneDay(b));
   const latest = scenes[scenes.length - 1];
   const turns = getDialogueTurns(latest);
-  let text = turns[0]?.incoming ?? latest.opening;
+  const firstTurn = turns[0];
+  let text = firstTurn?.incoming?.trim() || (firstTurn?.incomingImage ? "📷 Foto" : latest.opening);
   let replied = false;
   for (const turn of turns) {
     const completed = getCompletedChoice(turn, save);
     if (!completed) break;
-    text = completed.response;
+    const trailing = [...(completed.afterResponse ?? [])].reverse().find((message) => message.text || message.image);
+    text = trailing?.text?.trim() || (trailing?.image ? "📷 Foto" : completed.response);
     replied = true;
   }
   return { text: text.replaceAll("{{playerName}}", save.player.name), replied, time: latest.timeLabel.split(" · ")[0] };
@@ -61,7 +63,7 @@ export default function ConversationPage() {
       const stage = getRouteStage(save, scene.characterId);
       const sceneStage = getSceneDay(scene);
       if (sceneStage < stage) return true;
-      return sceneStage === stage && !hasAdvancedRouteToday(save, scene.characterId);
+      return sceneStage === stage && !hasAdvancedRouteToday(save, scene.characterId) && isSceneAvailable(scene, save);
     });
   }, [save]);
 

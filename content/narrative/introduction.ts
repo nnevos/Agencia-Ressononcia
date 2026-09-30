@@ -1,7 +1,7 @@
 import type { RelationshipDelta } from "@/game/types";
 
 /**
- * Abertura oficial do Dia 1. Edison e a supervisora do Analista na Agencia.
+ * Abertura oficial do Dia 1. Edison e a supervisor do Analista na Agencia.
  * Texto e estrutura narrativa ficam aqui; a tela apenas interpreta os blocos.
  */
 export const INTRO_HERO_IDS = ["yuki", "elysia", "lysandro", "helio", "demetria", "alexandra", "eros"] as const;

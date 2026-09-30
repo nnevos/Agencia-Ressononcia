@@ -39,3 +39,9 @@
 ## Documentos atuais v0.2.4
 - `RESSONANCIA_GDD_V4_8_v0_2_4.docx` — design consolidado com tutorial isolado e privacidade do NEXO.
 - `RESSONANCIA_BIBLIA_AU_V3_2_v0_2_4.docx` — Bíblia AU com regra corporativa/privada do NEXO.
+
+## Documentos atuais v0.2.8
+- `RESSONANCIA_GDD_V4_10_v0_2_8.docx` — GDD consolidado atual: NEXO com mídia autorada, Yuki final etapas 1–6, neutralidade do Analista e regras anteriores.
+- `RESSONANCIA_BIBLIA_AU_V3_4_LORE_ROTAS.docx` — Bíblia AU atual: lore pessoal e ritmo romântico aprovado dos sete; Edison no masculino.
+- `design/COMMUNICATION_SYSTEM.md` — schema e comportamento do NEXO atual.
+- `design/ROUTE_AND_LATEGAME_SYSTEM.md` — rotas individuais e campanha aberta.

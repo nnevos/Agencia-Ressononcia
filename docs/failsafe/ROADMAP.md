@@ -50,3 +50,16 @@ O roadmap detalhado para chegar ao ponto em que a campanha fecha apenas substitu
 `docs/design/CONTENT_COMPLETE_ROADMAP.md`
 
 A prioridade estrutural seguinte e o pipeline de ocorrencias D1-D6 data-driven.
+
+## v0.2.8 — fase de conteúdo autorado
+
+- [x] banco de 48 ocorrências data-driven
+- [x] campanha social por rota individual, sem depender do dia global
+- [x] cena presencial genérica consumindo dados de `content/`
+- [x] NEXO privado com imagens autoradas e lightbox
+- [x] mensagens fixas antes/depois das escolhas, sem hardcode narrativo em React
+- [x] primeira rota final: Yuki, etapas 1–6 + dois encontros
+- [ ] playtest completo da rota Yuki (incluindo caminhos 50/30 para evitar hardlock)
+- [ ] substituir placeholders dos outros seis personagens por autoria final
+- [ ] conteúdo final de grupo/canal operacional
+- [ ] backgrounds finais dos encontros

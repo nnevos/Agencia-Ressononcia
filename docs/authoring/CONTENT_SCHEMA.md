@@ -164,3 +164,46 @@ Campos adicionais do banco ativo:
 ```
 
 `attributeWeights` usa 3=ESSENCIAL, 2=IMPORTANTE e 1=APOIO. `powerAffinityHeroIds` concede vantagem contextual; não é requisito exclusivo. `spawnMinute` do banco fica 0 e é materializado pelo gerador diário ao criar o turno.
+
+## NEXO privado com mídia — v0.2.8
+
+O schema atual aceita mídia e mensagens fixas diretamente no conteúdo:
+
+```ts
+{
+  openingImage: "/nexo/personagem/foto.jpg",
+  openingImageAlt: "Descrição curta da foto.",
+  openingOutgoing: "Mensagem fixa anterior, quando necessária.",
+  openingAfterIncoming: [
+    { direction: "outgoing", text: "Mensagem fixa do Analista." }
+  ],
+  choices: [{
+    id: "a",
+    text: "Escolha interativa.",
+    response: "Resposta do personagem.",
+    romanceAffinity: 50,
+    afterResponse: [
+      { direction: "incoming", text: "Continuação fixa." },
+      { direction: "outgoing", text: "Resposta fixa do Analista." }
+    ]
+  }],
+  followUps: [{
+    id: "turno-02",
+    prefaceOutgoing: "Mensagem fixa antes do próximo incoming.",
+    incoming: "Nova mensagem.",
+    incomingImage: "/nexo/personagem/outra-foto.jpg",
+    incomingImageAlt: "Descrição da foto.",
+    afterIncoming: [{ direction: "outgoing", text: "Reação fixa." }],
+    choices: [/* três escolhas autoradas */]
+  }]
+}
+```
+
+Regras atuais:
+- imagem é conteúdo autorado e deve ter `Alt` descritivo;
+- a interface abre a imagem em lightbox, sem navegar para fora da conversa;
+- `afterResponse`, `afterIncoming` e `prefaceOutgoing` existem para preservar sequências escritas pelo autor sem transformar cada frase em uma escolha;
+- cada personagem avança no máximo uma etapa de rota por noite global;
+- o teto romântico é por etapa social/personagem, não por calendário global;
+- marcos presenciais atuais ficam nas etapas 3 e 6 da rota individual, com thresholds 30% e 70%;
+- não adicionar texto narrativo em componentes React para completar lacunas de autoria.

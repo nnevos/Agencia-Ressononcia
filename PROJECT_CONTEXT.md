@@ -1,6 +1,6 @@
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **v0.2.7**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **v0.2.8**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat
@@ -94,7 +94,7 @@ Prioridade P1/P2/P3 existe internamente, mas não é exibida como sigla ao jogad
 ## Save
 
 - localStorage
-- schema atual: v8
+- schema atual: v9
 - saves antigos são migrados; não apagar save para resolver mudança de schema.
 
 
@@ -155,7 +155,7 @@ Playtest D1-D6 rebalanceado. NEXO agora permite no máximo uma etapa de rota por
 
 ## Atualização v0.2.4 (2026-09-29)
 
-Onboarding definitivo do Dia 1 implementado a partir do roteiro autoral: Edison recebe o Despachante, apresenta os Guerreiros Elementais, primeiro contato ocorre no grupo NEXO e o SDH ensina o primeiro despacho usando o incêndio E-04 com Hélio. Tutorial pode ser pulado; primeiro caso tutorial é sucesso controlado e depois libera o banco normal. Menu principal foi redesenhado com navegação à esquerda e área reservada para arte futura. Edison passa a ser [AU-APROVADO] como supervisora/chefia de onboarding da Agência. Save permanece v9.
+Onboarding definitivo do Dia 1 implementado a partir do roteiro autoral: Edison recebe o Despachante, apresenta os Guerreiros Elementais, primeiro contato ocorre no grupo NEXO e o SDH ensina o primeiro despacho usando o incêndio E-04 com Hélio. Tutorial pode ser pulado; primeiro caso tutorial é sucesso controlado e depois libera o banco normal. Menu principal foi redesenhado com navegação à esquerda e área reservada para arte futura. Edison passa a ser [AU-APROVADO] como supervisor/chefia de onboarding da Agência. Save permanece v9.
 
 
 ## Atualização v0.2.4 (2026-09-29)
@@ -172,3 +172,8 @@ Polimento do onboarding após playtest: texto de privacidade do NEXO reduzido à
 A abertura visual deixa de usar o retrato de Edison como key art. A introdução agora começa com a imagem externa do prédio da Agência, muda para o interior do escritório a partir da segunda fala e, depois do NEXO, segue para a linguagem visual do sistema/SDH. `edison.jpg` permanece reservado a avatar/retrato em elementos de interface e orientação.
 
 - v0.2.7: caixas de diálogo da introdução exibem avatar pequeno de Edison ao lado do speaker, usando `public/edison.jpg` apenas como retrato.
+
+
+## Atualização v0.2.8 (2026-09-29)
+
+A rota de Yuki, etapas 1–6, é o primeiro conteúdo social autoral real a substituir placeholders. O NEXO privado agora suporta fotos autoradas clicáveis/lightbox e sequências fixas de mensagens do Analista/personagem sem hardcode narrativo em React. Os três assets enviados para Yuki ficam em `public/nexo/yuki/`. Os encontros das etapas 3 e 6 usam texto autoral em `content/narrative/outings.ts`; o segundo termina exatamente em “Posso entrar mesmo?”, sem continuação inventada. Edison foi corrigido para o masculino na documentação textual. Save permanece v9.

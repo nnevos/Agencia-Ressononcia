@@ -165,10 +165,16 @@ Um contato representa um histórico persistente através de vários dias/cenas. 
 O Dia 1 deve comportar mais soluções solo; a exigência cresce diariamente e o Dia 6 deve valorizar duplas/trios, Ressonância e combos. A curva atual usa multiplicadores de requisito por dia configuráveis em `content/config/balance.ts`.
 
 ## D-045 — Edison substitui Coordenação no onboarding (v0.2.3)
-**SUPERSEDE a decisão antiga de placeholder da chefia para a abertura.** Edison é [AU-APROVADO] como supervisora que recebe o Despachante, apresenta os Guerreiros Elementais/NEXO e acompanha o primeiro despacho. Aparência e histórico pessoal além dessa função permanecem [A DEFINIR].
+**SUPERSEDE a decisão antiga de placeholder da chefia para a abertura.** Edison é [AU-APROVADO] como supervisor que recebe o Despachante, apresenta os Guerreiros Elementais/NEXO e acompanha o primeiro despacho. Aparência e histórico pessoal além dessa função permanecem [A DEFINIR].
 
 ## D-046 — Primeiro despacho guiado e pulável
 Novo jogo passa por onboarding autorado, mas `PULAR TUTORIAL` deve sempre permitir entrada direta no Dispatch normal. Quando ativo, E-04 + Hélio formam o único caso rigidamente guiado; o resultado é Sucesso controlado com custo normal, e o restante do Dia 1 fica livre após arquivar o relatório.
 
 ## D-047 — Menu reserva área para key art
 A navegação principal fica concentrada à esquerda. A área direita do menu é intencionalmente livre para futura imagem/background, sem depender dessa arte para legibilidade ou navegação.
+
+## D-048 — Mídia autorada no NEXO privado (v0.2.8)
+Fotos em DMs são conteúdo autoral. O motor aceita imagem + alt text em turnos do NEXO e permite ampliação em lightbox. Assets vivem em `public/` e referências vivem em `content/`; componentes não conhecem personagem específico.
+
+## D-049 — Yuki é a primeira rota social final (v0.2.8)
+Os estágios 1–6 de Yuki deixam de ser placeholder e passam a usar o roteiro autoral aprovado. A rota mantém o modelo slow burn de experiências → amizade → romance. Os marcos presenciais continuam nas etapas 3 e 6 e a narração do jogador evita gênero gramatical sempre que possível.

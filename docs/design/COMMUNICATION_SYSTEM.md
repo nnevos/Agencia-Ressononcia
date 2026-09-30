@@ -102,3 +102,12 @@ Cenas placeholder de QA dos Dias 1-6 existem apenas para validar motor e serao s
 
 ## Atualização v0.2.4 — privacidade corporativa
 O NEXO funciona como um mensageiro corporativo. O grupo `Guerreiros Elementais` e o canal `AGÊNCIA // OPERAÇÕES` são espaços de trabalho e podem ser supervisionados pela Agência. As DMs privadas entre o Analista e cada herói não são supervisionadas pela Agência. A interface e o texto de onboarding devem deixar essa distinção clara sem transformar a conversa privada em canal operacional.
+
+## Atualização v0.2.8 — mídia autorada e primeira rota final
+
+- DMs privadas suportam fotos autoradas dentro do histórico (`openingImage` / `incomingImage`) e sequências fixas de mensagens antes/depois das escolhas.
+- Fotos podem ser abertas em visualização ampliada sem sair da conversa e sem quebrar o scroll interno do NEXO.
+- Mensagens fixas do Analista continuam data-driven; o motor não inventa texto entre escolhas.
+- A rota de Yuki, etapas 1–6, é o primeiro pacote social a substituir os placeholders por autoria real.
+- Etapa 3 de Yuki abre a cena presencial da cafeteria; etapa 6 abre a cena do apartamento. Os textos pertencem a `content/narrative/outings.ts`.
+- As imagens da rota ficam em `public/nexo/yuki/` e são conteúdo substituível, não lógica de componente.

@@ -2,7 +2,19 @@ import { SOCIAL_BALANCE } from "@/content/config/social";
 import type { DialogueChoice, DialogueScene, DialogueTurn, SaveGame } from "@/game/types";
 
 export type NormalizedDialogueTurn = DialogueTurn & { isOpeningTurn?: boolean };
-export function getDialogueTurns(scene: DialogueScene): NormalizedDialogueTurn[] { return [{ id:`${scene.id}:opening`, incoming:scene.opening, choices:scene.choices, timeLabel:scene.timeLabel, isOpeningTurn:true }, ...(scene.followUps ?? [])]; }
+export function getDialogueTurns(scene: DialogueScene): NormalizedDialogueTurn[] {
+  return [{
+    id:`${scene.id}:opening`,
+    incoming:scene.opening,
+    incomingImage:scene.openingImage,
+    incomingImageAlt:scene.openingImageAlt,
+    prefaceOutgoing:scene.openingOutgoing,
+    afterIncoming:scene.openingAfterIncoming,
+    choices:scene.choices,
+    timeLabel:scene.timeLabel,
+    isOpeningTurn:true,
+  }, ...(scene.followUps ?? [])];
+}
 export function getCompletedChoice(turn: DialogueTurn, save: SaveGame) { return turn.choices.find((choice)=>save.flags.includes(choice.flag)) ?? null; }
 export function getCurrentTurn(scene: DialogueScene, save: SaveGame) { const turns=getDialogueTurns(scene); for(let i=0;i<turns.length;i++){ if(!turns.slice(0,i).every(t=>Boolean(getCompletedChoice(t,save)))) return null; if(!getCompletedChoice(turns[i],save)) return {turn:turns[i],index:i,turns}; } return null; }
 export function isDialogueSceneComplete(scene: DialogueScene, save: SaveGame) { if(scene.completionFlag && save.flags.includes(scene.completionFlag)) return true; return getDialogueTurns(scene).every(t=>Boolean(getCompletedChoice(t,save))); }

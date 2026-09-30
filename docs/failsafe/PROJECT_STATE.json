@@ -1,10 +1,10 @@
 {
   "project": "RESSONANCIA",
-  "prototypeVersion": "0.2.7",
+  "prototypeVersion": "0.2.8",
   "baselineName": "Foundation",
   "updatedAt": "2026-09-29",
-  "status": "tutorial_isolation_runtime_qa_pending",
-  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation -> v0.1.1_nexo_multichat -> v0.1.2_nexo_longform -> v0.1.3_campaign_test_placeholders -> v0.1.4_social_progression_qa -> v0.1.5_nexo_dispatch_fixes -> v0.1.6_dev_perfect_shift -> v0.2.0_individual_routes_mastery -> v0.2.1_incident_pool_power_affinity -> v0.2.2_playtest_rebalance -> v0.2.3_first_dispatch_onboarding -> v0.2.4_tutorial_isolation_nexo_privacy -> v0.2.5_onboarding_polish -> v0.2.6_agency_intro_backgrounds -> v0.2.7_dialogue_speaker_avatar",
+  "status": "yuki_authored_route_media_runtime_qa_pending",
+  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation -> v0.1.1_nexo_multichat -> v0.1.2_nexo_longform -> v0.1.3_campaign_test_placeholders -> v0.1.4_social_progression_qa -> v0.1.5_nexo_dispatch_fixes -> v0.1.6_dev_perfect_shift -> v0.2.0_individual_routes_mastery -> v0.2.1_incident_pool_power_affinity -> v0.2.2_playtest_rebalance -> v0.2.3_first_dispatch_onboarding -> v0.2.4_tutorial_isolation_nexo_privacy -> v0.2.5_onboarding_polish -> v0.2.6_agency_intro_backgrounds -> v0.2.7_dialogue_speaker_avatar -> v0.2.8_yuki_authored_route_media",
   "obsoleteDoNotUse": "ressonancia-fase1-0.1.1",
   "platform": "web",
   "saveVersion": 9,
@@ -36,8 +36,8 @@
     "energyMax": "9+agility",
     "knockout": "health_or_energy_zero_until_next_day"
   },
-  "postShift": "persistent_all_contacts_longform_threads_d2_d6_placeholders_data_driven_day3_day6_outings",
-  "communication": "operations_read_only_nexo_plus_private_longform_threads",
+  "postShift": "persistent_longform_threads_with_authored_yuki_d1_d6_and_media",
+  "communication": "operations_read_only_nexo_plus_private_longform_threads_with_author_images",
   "mustRead": [
     "PROJECT_CONTEXT.md",
     "content/README.md",
@@ -46,11 +46,11 @@
     "docs/failsafe/CURRENT_STATE.md",
     "docs/failsafe/NEXT_SESSION.md"
   ],
-  "nextTask": "QA do onboarding v0.2.7: avatar pequeno de Edison no cabeçalho das caixas de diálogo, exterior -> escritório -> sistema.",
+  "nextTask": "QA da rota Yuki D1-D6: ordem das mensagens, fotos/lightbox, outing D3, date D6 e thresholds 30/70.",
   "validation": {
-    "syntaxTranspile": "passed_56_ts_tsx_parse_2026-09-29",
-    "runtimeSmoke": "pending_v021_pool_and_affinity_qa",
-    "typescript": "blocked_by_missing_next_react_type_packages_with_cascade_errors",
+    "syntaxTranspile": "56_TS_TSX_files_transpile_syntax_0_errors",
+    "runtimeSmoke": "pending_v028_yuki_route_media_qa",
+    "typescript": "full_typecheck_blocked_by_missing_next_react_type_packages_with_cascade_errors",
     "nextBuild": "not_attempted_missing_dependencies"
   },
   "social": {
@@ -65,7 +65,7 @@
     "secondOutingThreshold": 70,
     "oneOutingPerGlobalNight": true,
     "completion": "both_outing_milestones_all_7",
-    "placeholderRouteStages": "1-10_QA"
+    "placeholderRouteStages": "other_characters_1-10_QA_yuki_7-10_recovery_only"
   },
   "dispatchDifficulty": {
     "days1to6": {
@@ -100,7 +100,9 @@
     "v0.2.2: 10-minute shift, 10/11/12/13 cases, clustered spawns and stronger energy pressure.",
     "v0.2.3: Edison onboarding, NEXO group intro, guided Hélio fire dispatch, skippable tutorial and left-aligned menu.",
     "v0.2.4: tutorial isolates E-04 until report archive; 12-minute guided mission; NEXO groups supervised, private DMs unsupervised.",
-    "v0.2.7: caixas VN da introdução mostram retrato circular pequeno de Edison ao lado do nome; foto continua sem uso como cenário ampliado."
+    "v0.2.7: caixas VN da introdução mostram retrato circular pequeno de Edison ao lado do nome; foto continua sem uso como cenário ampliado.",
+    "v0.2.8: Yuki D1-D6 substitui placeholders por autoria final; fotos no NEXO e dates D3/D6 autorados.",
+    "v0.2.8: Edison corrigido para masculino na documentação textual."
   ],
   "progression": {
     "levels": "1-6",
