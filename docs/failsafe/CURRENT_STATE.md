@@ -1,3 +1,7 @@
+## Hotfix de build GitHub Pages — 2026-10-06
+
+A Beta 1 v0.3.0-beta.5 recebeu correção estritamente de tipagem para os 10 erros TypeScript observados no GitHub Actions. O comportamento do jogo permanece inalterado. O próximo deploy deve ser usado para validar o `next build` completo no runner do GitHub.
+
 # CURRENT STATE — Beta 1 · v0.3.0-beta.5 (2026-10-06)
 
 - Auth simplificado para beta fechado: CRIAR CONTA gera sessão imediata e entra automaticamente.

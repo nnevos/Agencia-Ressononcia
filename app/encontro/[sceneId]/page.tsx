@@ -155,6 +155,7 @@ export default function OutingPage() {
   }
 
   function finishScene() {
+    if (!scene) return;
     if (previewMode) { goBackToNexo(); return; }
     updateSave((current) => {
       const milestones = current.social.outingMilestones[scene.characterId] ?? [];

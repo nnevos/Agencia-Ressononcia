@@ -1,3 +1,11 @@
+## 2026-10-06 — GitHub Pages TypeScript build hotfix
+
+- Corrigidos os narrowing errors reportados pelo `next build` do GitHub Actions em `app/agencia/page.tsx`, `app/conversa/page.tsx` e `app/encontro/[sceneId]/page.tsx`.
+- Callbacks de tutorial agora revalidam `save` antes de montar `SaveGame`; `finishScene` revalida `scene` antes de closures que a utilizam.
+- Nenhuma regra de gameplay, conteúdo, save schema, autenticação ou persistência foi alterada.
+- QAs estáticos: flow 44/44, assets 35/35, arquitetura 17/17, refactor 15/15, GitHub Pages 12/12, auth 5/5.
+- `npm ci` voltou a expirar no ambiente de execução; o gate final continua sendo o `next build` no GitHub Actions.
+
 ## Beta 1 · v0.3.0-beta.5 — autenticação simples (2026-10-06)
 - Removido o fluxo de confirmação de e-mail da Beta 1.
 - Criar conta agora exige sessão imediata e faz login automático.

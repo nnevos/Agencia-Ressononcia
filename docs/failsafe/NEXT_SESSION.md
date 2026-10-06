@@ -1,3 +1,10 @@
+## Gate imediato — GitHub Pages build hotfix
+
+1. Subir o pacote hotfix no branch `main`.
+2. Confirmar que `Deploy GitHub Pages` conclui o `next build` sem os 10 erros de narrowing anteriores.
+3. Se o compilador revelar um erro subsequente que estava mascarado pelos anteriores, registrar o log exato antes de qualquer mudança funcional.
+4. Com deploy verde, abrir a URL de Pages e testar novo jogo, conta simples e reload de rota.
+
 # NEXT SESSION — Beta 1 · v0.3.0-beta.5 (auth simples + GitHub Pages)
 
 1. No Supabase de staging, desativar **Authentication > Providers > Email > Confirm email**.

@@ -327,9 +327,9 @@ export default function ConversationPage() {
     : null;
 
   function dismissProgressiveTutorial() {
-    if (!progressiveTutorialKey) return;
+    if (!progressiveTutorialKey || !save) return;
     const flag = PROGRESSIVE_TUTORIAL_FLAGS[progressiveTutorialKey];
-    const next = { ...save, flags: Array.from(new Set([...save.flags, flag])) };
+    const next: SaveGame = { ...save, flags: Array.from(new Set([...save.flags, flag])) };
     writeSave(next);
     setSave(next);
   }
