@@ -2,6 +2,8 @@ import { MissionRequirementRadar } from "@/components/MissionRequirementRadar";
 import { GAMEPLAY_CONFIG } from "@/content/config/gameplay";
 import { getHeroPortrait } from "@/game/data/heroPortraits";
 import { heroById } from "@/game/data/heroes";
+import { formatGameTime } from "@/game/simulation/shift";
+import type { OperationsChatMessage } from "@/components/agency/OperationsChatRail";
 import type { Incident, IncidentRuntime, OperationalHero, SaveGame } from "@/game/types";
 import type { getMissionAssessment } from "@/game/simulation/resolveIncident";
 
@@ -41,13 +43,14 @@ function BriefHeroCard({
     : "RECUPERAÇÃO";
 
   return <article className={`briefHero ${selected ? "selected" : ""} ${hero.status} ${tutorialTarget ? "tutorialTarget" : ""}`}>
-    <button className="briefHeroSelect" disabled={!selectable} onClick={onToggle}>
+    <button type="button" className="briefHeroSelect" disabled={!selectable} onClick={onToggle} aria-pressed={selected} aria-label={`${selected ? "Remover" : "Selecionar"} ${hero.name} da equipe`}>
       <span className="briefHeroPortrait">{portrait ? <img src={portrait} alt={`Retrato de ${hero.name}`} /> : hero.name.slice(0, 2).toUpperCase()}</span>
       <strong>{hero.name}</strong>
       <small>{hero.className} · {hero.trail}</small>
       <em>{statusLabel}</em>
+      <i className="briefHeroSelectionMark" aria-hidden="true">{selected ? "✓" : "+"}</i>
     </button>
-    <button className="briefHeroInfo" onClick={onOpen}>VER FICHA</button>
+    <button type="button" className="briefHeroInfo" onClick={onOpen}>FICHA</button>
   </article>;
 }
 
@@ -62,6 +65,7 @@ export function MissionBriefing({
   alerts,
   operationalHeroes,
   message,
+  recentOperationsMessages,
   tutorialActive,
   tutorialIncidentId,
   tutorialHeroId,
@@ -81,6 +85,7 @@ export function MissionBriefing({
   alerts: string[];
   operationalHeroes: OperationalHero[];
   message: string;
+  recentOperationsMessages: OperationsChatMessage[];
   tutorialActive: boolean;
   tutorialIncidentId: string;
   tutorialHeroId: string;
@@ -97,11 +102,12 @@ export function MissionBriefing({
     <section className={`missionBriefModal${expired ? " incidentExpiredModal" : ""}`} role="dialog" aria-modal="true" aria-labelledby="mission-brief-title">
       <header>
         <div><small>BRIEFING OPERACIONAL · {incident.district.toUpperCase()}</small><h2 id="mission-brief-title">{incident.title}</h2></div>
-        <button className="modalClose" onClick={onClose} aria-label="Fechar briefing">×</button>
+        <button type="button" className="modalClose" onClick={onClose} aria-label="Fechar briefing">×</button>
       </header>
 
       {expired && <div className="incidentExpiredBanner" role="status">TEMPO ESGOTADO · ESTA OCORRÊNCIA NÃO ACEITA MAIS DESPACHO</div>}
 
+      <div className="briefScrollBody">
       <div className="briefGrid">
         <div className="briefNarrative">
           <span className="sectionLabel">O QUE ESTÁ ACONTECENDO</span>
@@ -128,6 +134,14 @@ export function MissionBriefing({
         </div>
       </div>
 
+      {recentOperationsMessages.length > 0 && <section className="briefOpsMessages" aria-label="Mensagens operacionais recentes">
+        <header><div><small>NEXO · OPERAÇÕES</small><strong>Mensagens recentes</strong></div><span>somente leitura</span></header>
+        <div className="briefOpsMessageList">{recentOperationsMessages.map((chat) => <article key={chat.id} className={`briefOpsMessage ${chat.kind ?? "agent"}`}>
+          <div><strong>{chat.sender}</strong><time>{formatGameTime(chat.minute)}</time></div>
+          <p>{chat.text}</p>
+        </article>)}</div>
+      </section>}
+
       <div className="briefTeam mobileBriefTeam">
         <div className="briefTeamHeader">
           <div><span className="sectionLabel">SELECIONE {GAMEPLAY_CONFIG.minTeamSize}–{GAMEPLAY_CONFIG.maxTeamSize} HERÓIS</span><strong>{selectedIds.length}/{GAMEPLAY_CONFIG.maxTeamSize} selecionados</strong></div>
@@ -143,6 +157,7 @@ export function MissionBriefing({
           onOpen={() => onOpenHero(hero.id)}
         />)}</div>
       </div>
+      </div>
 
       <footer>
         <div className="briefFooterCopy">
@@ -151,7 +166,7 @@ export function MissionBriefing({
           <p>{message}</p>
           <div className="briefDesktopAlerts">{alerts.map((alert) => <span key={alert}>{alert}</span>)}</div>
         </div>
-        <button className={`briefDispatch ${isTutorialIncident && tutorialHeroSelected ? "tutorialTarget" : ""}`} disabled={selectedIds.length === 0 || runtime?.status !== "waiting" || save.shift.status !== "running"} onClick={onDispatch}>DESPACHAR EQUIPE →</button>
+        <button type="button" className={`briefDispatch ${isTutorialIncident && tutorialHeroSelected ? "tutorialTarget" : ""}`} disabled={selectedIds.length === 0 || runtime?.status !== "waiting" || save.shift.status !== "running"} onClick={onDispatch}>DESPACHAR EQUIPE →</button>
       </footer>
     </section>
   </div>;

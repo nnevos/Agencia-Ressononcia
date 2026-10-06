@@ -1,3 +1,38 @@
+## Beta 1 · v0.3.0-beta.10 — Confirmação de encerramento + clareza do NEXO (2026-10-06)
+
+- Encerrar a noite agora sempre exige confirmação explícita, inclusive na campanha completa.
+- O NEXO informa que conversar é opcional e que o jogador pode falar com todos os contatos disponíveis.
+- Para avançar uma rota, a UI/tutorial explicita que é preciso abrir o contato e enviar/responder a mensagem disponível.
+- Ao fim do expediente, avançar para Desenvolvimento agora passa por confirmação explícita de encerramento do turno.
+- Nenhuma regra de Dispatch, social, Supabase ou save schema foi alterada.
+
+## Beta 1 · v0.3.0-beta.9 — Dispatch responsive messaging (2026-10-06)
+- Feed NEXO operacional endurecido para telas estreitas/baixas: scroll, min-height e wrapping corrigidos.
+- Briefing passa a espelhar as 3 mensagens operacionais mais recentes em layouts comprimidos e mobile.
+- Chrome do NEXO é compactado em desktop baixo sem reduzir legibilidade do feed.
+- Novo QA `qa:dispatch-responsive` com 9 verificações. Save schema permanece v10.
+
+## Beta 1 · v0.3.0-beta.8 — Pausa contextual de leitura (2026-10-06)
+- FICHA de agente congela o relógio operacional enquanto aberta, inclusive com ocorrência ativa.
+- Tutoriais bloqueantes de Ressonância/Combo/Condição congelam o relógio até serem fechados.
+- Retomada reancora `startedAtEpochMs` uma única vez pelo tempo real pausado, preservando deadlines e duração de missão.
+- Cabeçalho sinaliza `PAUSADO · LEITURA`.
+- Novo QA estático `qa:clock-pause`.
+
+## Beta 1 · v0.3.0-beta.7 — Dispatch mobile reliability (2026-10-06)
+- Corrigido bug estrutural: briefing é filho do MAPA e podia ficar invisível ao abrir um chamado pela aba CHAMADOS; abertura agora ativa MAPA antes do modal.
+- Fechar briefing restaura aba de origem; despacho/expiração retornam a CHAMADOS.
+- Briefing mobile reorganizado em header + scroll interno + action bar, sem footer fixed cobrindo conteúdo.
+- Agentes ganham alvos touch maiores, lista vertical em telas estreitas, estado `aria-pressed` e marcador +/✓.
+- Edison do primeiro caso fica no topo no mobile para não cobrir DESPACHAR.
+- Nenhuma fórmula, chance, duração, conteúdo ou save schema foi alterado.
+
+## Beta 1 · v0.3.0-beta.6 — hotfix cadastro mobile (2026-10-06)
+- ENTRAR/CRIAR CONTA migrados para controles de modo `type="button"`, sem semântica de submit.
+- Área de toque e z-index/pointer-events reforçados; mobile empilha os modos para evitar sobreposição.
+- Atalho redundante no formulário permite alternar login/cadastro mesmo se o controle superior estiver fora da área confortável.
+- Supabase, RLS, save v10 e gameplay sem mudanças.
+
 ## 2026-10-06 — GitHub Pages TypeScript build hotfix
 
 - Corrigidos os narrowing errors reportados pelo `next build` do GitHub Actions em `app/agencia/page.tsx`, `app/conversa/page.tsx` e `app/encontro/[sceneId]/page.tsx`.

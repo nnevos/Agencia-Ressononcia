@@ -1,3 +1,27 @@
+## Beta 1 · v0.3.0-beta.10 — Responsividade das mensagens no Dispatch (2026-10-06)
+
+- NEXO operacional agora mantém mensagens legíveis em monitores baixos/estreitos com feed realmente rolável e texto com quebra segura.
+- Briefing espelha as 3 mensagens operacionais mais recentes quando o rail lateral fica comprimido ou oculto; no mobile o espelho aparece dentro da região rolável do briefing.
+- Layouts desktop baixos reduzem chrome do NEXO antes de sacrificar a área de mensagens.
+- Gameplay, relógio, Supabase e save schema v10 permanecem inalterados.
+
+## Beta 1 · v0.3.0-beta.8 — Pausa contextual de leitura (2026-10-06)
+
+- A Central pausa o relógio operacional enquanto uma FICHA de agente está aberta, inclusive com ocorrência aguardando despacho.
+- Tutoriais progressivos bloqueantes do Dispatch (Ressonância, Combo e Condição) também congelam o relógio enquanto ocupam a leitura.
+- Ao fechar a ficha/tutorial, o relógio é reancorado uma única vez; deadlines e missões não consomem o período de leitura.
+- O cabeçalho mostra `PAUSADO · LEITURA` enquanto a pausa contextual está ativa.
+- Gameplay, duração nominal das missões, chance, Supabase e save schema v10 permanecem inalterados.
+
+## Beta 1 · v0.3.0-beta.7 — Dispatch mobile reliability (2026-10-06)
+- Abrir chamado no mobile agora monta o painel MAPA antes do briefing, eliminando o caso em que o modal era ocultado junto de um workspace inativo.
+- Briefing mobile usa uma região interna de scroll, footer não sobreposto, CTA amplo e lista touch de agentes em telas estreitas.
+- Fechar retorna à aba de origem; despachar/expirar retorna a CHAMADOS. Desktop, Dispatch mecânico, Supabase e save v10 permanecem inalterados.
+
+## Beta 1 · v0.3.0-beta.6 — auth mobile hotfix (2026-10-06)
+- ENTRAR/CRIAR CONTA agora usam controles touch independentes e redundantes no menu de acesso.
+- GitHub Pages, Supabase, save v10 e gameplay permanecem inalterados.
+
 ## Beta 1 · v0.3.0-beta.5 — GitHub Pages / static export (2026-10-06)
 - Next configurado com `output: export`, `trailingSlash` e `basePath` configurável por `NEXT_PUBLIC_BASE_PATH`.
 - Workflow `.github/workflows/pages.yml` publica `out/` via GitHub Pages em push para main/master ou manualmente.
@@ -14,7 +38,7 @@
 
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.5**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.10**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat

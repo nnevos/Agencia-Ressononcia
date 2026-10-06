@@ -711,3 +711,455 @@
 .heroBioFacts small{font-size:.66rem;letter-spacing:.11em;color:#7fa9bb;font-weight:800}
 .heroBioFacts strong{font-size:.88rem;color:#e8f7fb;white-space:nowrap}
 @media(max-width:430px){.heroBioFacts{grid-template-columns:1fr}.heroBioFacts span{flex-direction:row;align-items:center;justify-content:space-between}}
+
+/* ========================================================================== 
+   Beta 1 v0.3.0-beta.7 — Dispatch mobile reliability / touch layout
+   Keeps desktop geometry unchanged. On narrow screens the briefing becomes a
+   real full-screen workbench with one scroll region and a persistent action bar.
+   ========================================================================== */
+.briefScrollBody{display:contents}
+.briefHeroSelectionMark{display:none}
+
+@media(max-width:980px){
+  /* The modal is mounted inside the map workspace; once the map panel is active
+     this layer owns the viewport and must not inherit the compact desktop grid. */
+  .mapBriefingLayer{
+    inset:0;
+    padding:0;
+    align-items:stretch;
+    background:#06111a;
+    overscroll-behavior:contain;
+  }
+  .mapBriefingLayer .missionBriefModal{
+    height:100dvh;
+    min-height:100dvh;
+    max-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    background:#07131d;
+  }
+  .mapBriefingLayer .missionBriefModal>header{
+    position:relative;
+    top:auto;
+    flex:0 0 auto;
+    min-height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:calc(10px + env(safe-area-inset-top)) 14px 10px;
+    border-bottom:1px solid #173344;
+    background:#07131d;
+    z-index:5;
+  }
+  .mapBriefingLayer .missionBriefModal>header>div{min-width:0}
+  .mapBriefingLayer .missionBriefModal>header small{display:block;font-size:.56rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mapBriefingLayer .missionBriefModal h2{margin:3px 0 0;font-size:1.08rem;line-height:1.16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mapBriefingLayer .modalClose{
+    flex:0 0 44px;
+    width:44px;
+    height:44px;
+    min-width:44px;
+    min-height:44px;
+    display:grid;
+    place-items:center;
+    padding:0;
+    font-size:1.45rem;
+    touch-action:manipulation;
+  }
+  .mapBriefingLayer .incidentExpiredBanner{flex:0 0 auto}
+  .mapBriefingLayer .briefScrollBody{
+    display:block;
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-gutter:stable;
+    padding-bottom:8px;
+  }
+  .mapBriefingLayer .briefGrid{display:block;min-height:0;overflow:visible}
+  .mapBriefingLayer .briefNarrative,
+  .mapBriefingLayer .briefRequirements{
+    padding:14px;
+    border:0;
+    border-bottom:1px solid #173344;
+  }
+  .mapBriefingLayer .briefNarrative>p{margin:8px 0 12px;font-size:.78rem;line-height:1.5}
+  .mapBriefingLayer .briefMeta{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+  }
+  /* All four operational facts matter on touch devices. Earlier mobile CSS hid
+     reliability and duration, which made the decision harder rather than simpler. */
+  .mapBriefingLayer .briefMeta span:nth-child(2),
+  .mapBriefingLayer .briefMeta span:nth-child(4){display:grid}
+  .mapBriefingLayer .briefMeta span{min-width:0;padding:8px}
+  .mapBriefingLayer .briefMeta small{font-size:.48rem}
+  .mapBriefingLayer .briefMeta b{font-size:.68rem;overflow-wrap:anywhere}
+
+  .mapBriefingLayer .briefRequirements{display:flex;flex-direction:column;overflow:visible}
+  .mapBriefingLayer .requirementsHeading{gap:10px;align-items:flex-start}
+  .mapBriefingLayer .successEstimate{flex:0 0 auto;min-width:92px}
+  .mapBriefingLayer .successEstimate strong{font-size:1.35rem}
+  .mapBriefingLayer .missionRequirementRadarWrap{width:min(100%,300px);margin:4px auto 8px}
+  .mapBriefingLayer .missionTagNeeds{gap:5px;margin-top:3px}
+  .mapBriefingLayer .missionTagNeeds span{font-size:.54rem;padding:5px 7px}
+  .mapBriefingLayer .powerAffinityNeeds{margin-top:9px;padding:9px}
+  .mapBriefingLayer .powerAffinityNeeds small{font-size:.5rem}
+  .mapBriefingLayer .powerAffinityNeeds span{font-size:.58rem;line-height:1.3}
+  .mapBriefingLayer .briefHint{margin-top:9px;font-size:.58rem;line-height:1.42}
+
+  .mapBriefingLayer .mobileBriefTeam{
+    display:block!important;
+    padding:14px;
+    padding-bottom:16px;
+    background:#081923;
+  }
+  .mapBriefingLayer .briefTeamHeader{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .mapBriefingLayer .briefTeamHeader strong{display:block;margin-top:3px;font-size:.72rem;color:#dff6ff}
+  .mapBriefingLayer .briefAlerts{display:flex;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;gap:6px;padding-bottom:2px;scrollbar-width:none}
+  .mapBriefingLayer .briefAlerts::-webkit-scrollbar{display:none}
+  .mapBriefingLayer .briefAlerts span{flex:0 0 auto;max-width:78vw;padding:5px 7px;font-size:.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mapBriefingLayer .briefHeroGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .mapBriefingLayer .briefHero{position:relative;min-width:0;border:1px solid #24495d;background:#0a202b;overflow:hidden}
+  .mapBriefingLayer .briefHero.selected{border-color:#64d9f7;box-shadow:inset 0 0 0 1px rgba(100,217,247,.28)}
+  .mapBriefingLayer .briefHeroSelect{
+    min-height:112px;
+    padding:8px 6px;
+    touch-action:manipulation;
+  }
+  .mapBriefingLayer .briefHeroSelect>span{width:52px;height:52px}
+  .mapBriefingLayer .briefHeroSelect strong{font-size:.66rem}
+  .mapBriefingLayer .briefHeroSelect small{display:none}
+  .mapBriefingLayer .briefHeroSelect em{font-size:.48rem}
+  .mapBriefingLayer .briefHeroInfo{min-height:44px;padding:8px;font-size:.5rem;touch-action:manipulation}
+  .mapBriefingLayer .briefHeroSelectionMark{
+    position:absolute;
+    top:7px;
+    right:7px;
+    display:grid;
+    place-items:center;
+    width:24px;
+    height:24px;
+    border:1px solid #3e7187;
+    border-radius:50%;
+    background:#0b1e28;
+    color:#7aa9bb;
+    font-size:.9rem;
+    font-style:normal;
+    font-weight:1000;
+    pointer-events:none;
+  }
+  .mapBriefingLayer .briefHero.selected .briefHeroSelectionMark{border-color:#64d9f7;background:#123d4d;color:#dffbff}
+
+  .mapBriefingLayer .missionBriefModal>footer{
+    position:relative;
+    left:auto;
+    right:auto;
+    bottom:auto;
+    flex:0 0 auto;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(160px,42%);
+    gap:8px;
+    align-items:center;
+    padding:9px 12px calc(9px + env(safe-area-inset-bottom));
+    border-top:1px solid #23495b;
+    background:#051018;
+    box-shadow:0 -10px 28px rgba(0,0,0,.34);
+    z-index:6;
+  }
+  .mapBriefingLayer .briefFooterCopy{min-width:0}
+  .mapBriefingLayer .briefFooterCopy>small{font-size:.46rem}
+  .mapBriefingLayer .briefFooterCopy>strong{display:block;margin-top:2px;font-size:.62rem;line-height:1.25;white-space:normal;overflow:visible;text-overflow:clip}
+  .mapBriefingLayer .briefFooterCopy>p,
+  .mapBriefingLayer .briefDesktopAlerts{display:none}
+  .mapBriefingLayer .briefDispatch{
+    width:100%;
+    min-height:52px;
+    height:52px;
+    padding:0 12px;
+    font-size:.62rem;
+    white-space:nowrap;
+    touch-action:manipulation;
+  }
+
+  /* The standard Edison bubble must never cover the dispatch CTA on mobile. */
+  .dispatchCoreTutorial.firstCaseTutorialBubble,
+  .dispatchCoreTutorial.firstResultTutorialBubble{
+    top:calc(70px + env(safe-area-inset-top));
+    right:10px;
+    left:10px;
+    bottom:auto;
+    width:auto;
+    max-height:31dvh;
+    overflow:auto;
+  }
+}
+
+@media(max-width:600px){
+  .mapBriefingLayer .briefHeroGrid{grid-template-columns:1fr;gap:7px}
+  .mapBriefingLayer .briefHero{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 72px;
+    grid-template-rows:auto;
+    min-height:72px;
+  }
+  .mapBriefingLayer .briefHeroSelect{
+    min-height:72px;
+    display:grid;
+    grid-template-columns:52px minmax(0,1fr) auto;
+    grid-template-rows:auto auto;
+    grid-template-areas:"portrait name status" "portrait meta status";
+    column-gap:10px;
+    row-gap:2px;
+    align-items:center;
+    justify-items:start;
+    padding:9px 8px;
+    text-align:left;
+  }
+  .mapBriefingLayer .briefHeroSelect>span{grid-area:portrait;width:52px;height:52px}
+  .mapBriefingLayer .briefHeroSelect strong{grid-area:name;font-size:.72rem;align-self:end}
+  .mapBriefingLayer .briefHeroSelect small{grid-area:meta;display:block;min-height:0;font-size:.47rem;line-height:1.2;color:#7ea0af;align-self:start;text-align:left}
+  .mapBriefingLayer .briefHeroSelect em{grid-area:status;font-size:.45rem;justify-self:end;align-self:center;text-align:right;padding-right:22px}
+  .mapBriefingLayer .briefHeroInfo{
+    min-width:72px;
+    min-height:72px;
+    border-top:0;
+    border-left:1px solid #24495d;
+    display:grid;
+    place-items:center;
+    font-size:.5rem;
+  }
+  .mapBriefingLayer .briefHeroSelectionMark{top:50%;right:78px;transform:translateY(-50%)}
+  .mapBriefingLayer .missionBriefModal>footer{
+    grid-template-columns:1fr;
+    gap:7px;
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+  .mapBriefingLayer .briefFooterCopy{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .mapBriefingLayer .briefFooterCopy>small{flex:0 0 auto}
+  .mapBriefingLayer .briefFooterCopy>strong{text-align:right;font-size:.6rem;max-width:68%}
+  .mapBriefingLayer .briefDispatch{height:54px;min-height:54px;font-size:.66rem}
+}
+
+@media(max-width:390px){
+  .mapBriefingLayer .briefNarrative,
+  .mapBriefingLayer .briefRequirements,
+  .mapBriefingLayer .mobileBriefTeam{padding-left:11px;padding-right:11px}
+  .mapBriefingLayer .missionRequirementRadarWrap{width:min(100%,278px)}
+  .mapBriefingLayer .briefMeta span{padding:7px}
+  .mapBriefingLayer .briefHeroSelect{grid-template-columns:48px minmax(0,1fr) auto;column-gap:8px}
+  .mapBriefingLayer .briefHeroSelect>span{width:48px;height:48px}
+  .mapBriefingLayer .briefHeroInfo{min-width:68px}
+  .mapBriefingLayer .briefHero{grid-template-columns:minmax(0,1fr) 68px}
+  .mapBriefingLayer .briefHeroSelectionMark{right:74px}
+}
+
+/* v0.3.0-beta.8 - pausa contextual de leitura */
+.shiftClock.isPaused strong{color:#bfefff;text-shadow:0 0 26px rgba(84,216,255,.32)}
+.shiftClock.isPaused span{color:#8edcf2;font-weight:900;letter-spacing:.14em}
+.heroInfoBackdrop,.dispatchTutorial{--operational-clock-paused:1}
+
+/* ========================================================================== 
+   Beta 1 v0.3.0-beta.9 — Dispatch responsive messaging
+   Operational messages must remain readable on short/narrow desktop screens
+   and while the briefing owns the viewport on touch devices.
+   ========================================================================== */
+.opsChatRail{
+  min-width:0;
+  min-height:0;
+}
+.opsChatRail .chatHeader{
+  min-width:0;
+  overflow:hidden;
+}
+.opsChatRail .chatHeader>div:first-child{
+  min-width:0;
+}
+.opsChatRail .chatHeaderBadges{
+  min-width:0;
+  display:flex;
+  justify-content:flex-end;
+  gap:5px;
+  flex-wrap:wrap;
+}
+.opsChatRail .chatFeed{
+  min-height:0;
+  min-width:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+  -webkit-overflow-scrolling:touch;
+}
+.opsChatRail .chatMessage,
+.opsChatRail .chatBubble{
+  min-width:0;
+}
+.opsChatRail .chatBubble p{
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+.opsChatRail .chatLocked{
+  min-width:0;
+  overflow:hidden;
+}
+.opsChatRail .chatLocked div{
+  min-width:0;
+}
+.opsChatRail .chatLocked small{
+  overflow-wrap:anywhere;
+}
+
+/* The briefing mirrors only the most recent operational messages when the
+   normal right-hand NEXO rail is likely to be cramped or completely hidden. */
+.briefOpsMessages{
+  display:none;
+  min-width:0;
+  margin:0;
+  padding:10px 14px 12px;
+  border-top:1px solid #173344;
+  border-bottom:1px solid #173344;
+  background:#06131c;
+}
+.briefOpsMessages>header{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+.briefOpsMessages>header>div{
+  min-width:0;
+  display:grid;
+  gap:2px;
+}
+.briefOpsMessages>header small{
+  color:#66cce9;
+  font-size:.5rem;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+.briefOpsMessages>header strong{
+  color:#e5f8ff;
+  font-size:.7rem;
+}
+.briefOpsMessages>header>span{
+  flex:0 0 auto;
+  color:#668493;
+  font-size:.48rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.briefOpsMessageList{
+  display:grid;
+  gap:6px;
+  min-width:0;
+}
+.briefOpsMessage{
+  min-width:0;
+  padding:8px 9px;
+  border:1px solid #1d3b4b;
+  border-radius:7px;
+  background:#0a1d28;
+}
+.briefOpsMessage>div{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
+}
+.briefOpsMessage strong{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#8bdcf4;
+  font-size:.62rem;
+}
+.briefOpsMessage time{
+  flex:0 0 auto;
+  color:#688594;
+  font-size:.52rem;
+}
+.briefOpsMessage p{
+  margin:4px 0 0;
+  color:#cbdce5;
+  font-size:.7rem;
+  line-height:1.42;
+  overflow-wrap:anywhere;
+}
+.briefOpsMessage.system{
+  border-style:dashed;
+  background:#08151d;
+}
+.briefOpsMessage.alert{
+  border-color:#71424a;
+  background:#1a1117;
+}
+.briefOpsMessage.alert strong{color:#ff9aa3}
+
+/* Mid-size and low-height desktop layouts are where the right chat rail loses
+   the most usable height. Mirror recent messages inside the briefing there. */
+@media (min-width:981px) and (max-width:1400px),
+       (min-width:981px) and (max-height:900px){
+  .mapBriefingLayer .briefOpsMessages{display:block}
+}
+
+@media (min-width:981px) and (max-width:1220px){
+  .opsChatRail .placeholderBadge{display:none}
+  .opsChatRail .chatHeaderBadges{flex-wrap:nowrap}
+}
+
+@media (min-width:981px) and (max-height:760px){
+  .opsChatRail{grid-template-rows:48px minmax(0,1fr) 38px}
+  .opsChatRail .chatHeader{padding:6px 9px}
+  .opsChatRail .chatAppIcon{width:32px;height:32px}
+  .opsChatRail .chatFeed{padding:8px 8px 10px;gap:7px}
+  .opsChatRail .chatLocked{min-height:38px;padding:6px 9px}
+  .opsChatRail .chatLocked small{display:none}
+  .opsChatRail .chatLocked strong{font-size:.68rem}
+}
+
+@media(max-width:980px){
+  .mapBriefingLayer .briefOpsMessages{
+    display:block;
+    padding:11px 14px 12px;
+  }
+  .mapBriefingLayer .briefOpsMessages>header{
+    position:sticky;
+    top:0;
+    z-index:2;
+    margin:-11px -14px 8px;
+    padding:9px 14px 7px;
+    background:rgba(6,19,28,.97);
+    border-bottom:1px solid #173344;
+  }
+  .mapBriefingLayer .briefOpsMessageList{
+    grid-template-columns:1fr;
+  }
+  .mapBriefingLayer .briefOpsMessage p{
+    font-size:.72rem;
+    line-height:1.45;
+  }
+  .opsChatRail .chatFeed{padding-bottom:max(14px,env(safe-area-inset-bottom))}
+}
+
+@media(max-width:430px){
+  .mapBriefingLayer .briefOpsMessages{padding-left:11px;padding-right:11px}
+  .mapBriefingLayer .briefOpsMessages>header{margin-left:-11px;margin-right:-11px;padding-left:11px;padding-right:11px}
+  .mapBriefingLayer .briefOpsMessage{padding:8px}
+  .mapBriefingLayer .briefOpsMessage strong{font-size:.6rem}
+  .mapBriefingLayer .briefOpsMessage time{font-size:.5rem}
+  .mapBriefingLayer .briefOpsMessage p{font-size:.69rem}
+}

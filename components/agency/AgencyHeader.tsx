@@ -6,6 +6,7 @@ export function AgencyHeader({
   gameMinute,
   playerName,
   settingsOpen,
+  clockPaused = false,
   onToggleSettings,
   onSaveNow,
   onRestartShift,
@@ -17,6 +18,7 @@ export function AgencyHeader({
   gameMinute: number;
   playerName: string;
   settingsOpen: boolean;
+  clockPaused?: boolean;
   onToggleSettings: () => void;
   onSaveNow: () => void;
   onRestartShift: () => void;
@@ -34,7 +36,7 @@ export function AgencyHeader({
 
   return <header className="opsHeader">
     <div className="brandLockup"><span className="brandMark">R</span><div><span>AGÊNCIA</span><strong>RESSONÂNCIA</strong></div></div>
-    <div className="shiftClock"><small>DIA {String(day).padStart(2, "0")} · EXPEDIENTE</small><strong>{formatGameTime(gameMinute)}</strong><span>08:00 — 18:00</span></div>
+    <div className={`shiftClock ${clockPaused ? "isPaused" : ""}`}><small>DIA {String(day).padStart(2, "0")} · EXPEDIENTE</small><strong>{formatGameTime(gameMinute)}</strong><span>{clockPaused ? "PAUSADO · LEITURA" : "08:00 — 18:00"}</span></div>
     <div className="headerActions settingsHost">
       <button className={`settingsButton ${settingsOpen ? "active" : ""}`} onClick={onToggleSettings} aria-expanded={settingsOpen} aria-haspopup="menu" aria-label="Abrir configurações">⚙<span>CONFIGURAÇÕES</span></button>
       {settingsOpen && <div className="settingsMenu" role="menu" aria-label="Configurações e salvamento">

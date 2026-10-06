@@ -312,11 +312,7 @@ export default function ConversationPage() {
   }
 
   function requestFinishDay() {
-    if (postShiftOnly) {
-      setConfirmNextDay(true);
-      return;
-    }
-    finishDay();
+    setConfirmNextDay(true);
   }
 
   if (!save) return <main className="centerPage"><p>Carregando NEXO...</p></main>;
@@ -389,8 +385,12 @@ export default function ConversationPage() {
         </div>
 
         <footer className="nexoNightFooter">
-          <div><strong>{postShiftOnly ? `Noite ${save.player.currentDay}` : `Dia ${save.player.currentDay} concluído`}</strong><small>{nightStatus.pendingOutings ? `${nightStatus.pendingOutings} convite${nightStatus.pendingOutings === 1 ? "" : "s"} pendente${nightStatus.pendingOutings === 1 ? "" : "s"}` : nightStatus.unread ? `${nightStatus.unread} conversa${nightStatus.unread === 1 ? "" : "s"} não lida${nightStatus.unread === 1 ? "" : "s"}` : "Conversar é opcional."}</small></div>
-          <button onClick={requestFinishDay}>{postShiftOnly ? "PRÓXIMA NOITE" : "ENCERRAR NOITE"}</button>
+          <div>
+            <strong>{postShiftOnly ? `Noite ${save.player.currentDay}` : `Dia ${save.player.currentDay} concluído`}</strong>
+            <small>Você pode conversar com todos. É opcional; abra um contato e envie/responda para avançar a rota.</small>
+            {(nightStatus.pendingOutings || nightStatus.unread) ? <small className="nexoNightPending">{nightStatus.pendingOutings ? `${nightStatus.pendingOutings} convite${nightStatus.pendingOutings === 1 ? "" : "s"} pendente${nightStatus.pendingOutings === 1 ? "" : "s"}` : ""}{nightStatus.pendingOutings && nightStatus.unread ? " · " : ""}{nightStatus.unread ? `${nightStatus.unread} conversa${nightStatus.unread === 1 ? "" : "s"} não lida${nightStatus.unread === 1 ? "" : "s"}` : ""}</small> : null}
+          </div>
+          <button onClick={requestFinishDay}>{postShiftOnly ? "ENCERRAR NOITE" : "ENCERRAR NOITE"}</button>
         </footer>
       </aside>
 
@@ -424,7 +424,7 @@ export default function ConversationPage() {
         /> : <div className="nexoEmptyConversation">
           <div className="nexoEmptyIcon">N</div>
           <h1>NEXO</h1>
-          <p>Selecione uma conversa para ler ou responder.</p>
+          <p>Você pode conversar com todos os contatos disponíveis, mas não é obrigatório. Abra alguém e envie/responda para avançar aquela rota.</p>
         </div>}
       </section>
     </div>
@@ -438,13 +438,12 @@ export default function ConversationPage() {
 
     {confirmNextDay && <div className="nexoNextDayBackdrop" role="presentation" onMouseDown={() => setConfirmNextDay(false)}>
       <section className="nexoNextDayConfirm" role="dialog" aria-modal="true" aria-labelledby="nexo-next-day-title" onMouseDown={(event) => event.stopPropagation()}>
-        <h2 id="nexo-next-day-title">Deseja ir para o próximo dia?</h2>
-        <p>{nightStatus.pendingOutings || nightStatus.unread
-          ? <>Ainda há {nightStatus.unread ? `${nightStatus.unread} conversa${nightStatus.unread === 1 ? "" : "s"} não lida${nightStatus.unread === 1 ? "" : "s"}` : ""}{nightStatus.unread && nightStatus.pendingOutings ? " e " : ""}{nightStatus.pendingOutings ? `${nightStatus.pendingOutings} convite${nightStatus.pendingOutings === 1 ? "" : "s"} pendente${nightStatus.pendingOutings === 1 ? "" : "s"}` : ""}. Se avançar, o NEXO seguirá para a próxima noite; convites persistentes continuarão disponíveis.</>
-          : <>As conversas disponíveis desta noite foram verificadas. O NEXO avançará para a próxima noite.</>}</p>
+        <h2 id="nexo-next-day-title">Encerrar esta noite?</h2>
+        <p>Conversar no NEXO é opcional. Você pode falar com todos os contatos disponíveis antes de encerrar; para avançar uma conversa, abra o contato e envie a mensagem ou resposta disponível.</p>
+        {(nightStatus.pendingOutings || nightStatus.unread) && <p className="nexoNextDayWarning">Ainda há {nightStatus.unread ? `${nightStatus.unread} conversa${nightStatus.unread === 1 ? "" : "s"} não lida${nightStatus.unread === 1 ? "" : "s"}` : ""}{nightStatus.unread && nightStatus.pendingOutings ? " e " : ""}{nightStatus.pendingOutings ? `${nightStatus.pendingOutings} convite${nightStatus.pendingOutings === 1 ? "" : "s"} pendente${nightStatus.pendingOutings === 1 ? "" : "s"}` : ""}. Encerrar agora não é obrigatório; convites persistentes continuarão disponíveis quando aplicável.</p>}
         <div className="nexoNextDayActions">
-          <button type="button" className="button primary" autoFocus onClick={finishDay}>Ir para próximo dia</button>
-          <button type="button" className="button" onClick={() => setConfirmNextDay(false)}>Voltar</button>
+          <button type="button" className="button primary" onClick={finishDay}>CONFIRMAR E ENCERRAR</button>
+          <button type="button" className="button" autoFocus onClick={() => setConfirmNextDay(false)}>VOLTAR ÀS CONVERSAS</button>
         </div>
       </section>
     </div>}

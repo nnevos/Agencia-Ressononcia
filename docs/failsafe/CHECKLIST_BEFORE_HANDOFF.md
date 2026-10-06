@@ -1,3 +1,35 @@
+## Checklist específico beta.9
+- [x] Mensagens recentes espelhadas no briefing em layouts comprimidos/mobile.
+- [x] Feed operacional aceita shrink/scroll sem overflow horizontal.
+- [x] Textos longos usam wrapping seguro.
+- [x] Desktop baixo prioriza espaço de feed.
+- [x] QA `qa:dispatch-responsive` 9/9.
+- [ ] QA visual em browser real: 1366x768, 1440x900, 360/390/430 px.
+
+## Checklist específico beta.8
+- [x] FICHA pausa tick operacional.
+- [x] Ressonância/Combo/Condição pausam tick operacional.
+- [x] Fechamento reancora relógio uma vez.
+- [x] Indicador visual de pausa no cabeçalho.
+- [ ] QA runtime/browser: sem salto ao fechar e sem consumo de deadline durante leitura.
+
+## Beta 1 · v0.3.0-beta.8 — Pausa contextual de leitura
+- [x] Baseline v0.3.0-beta.6 usada sem regressão de conteúdo.
+- [x] Briefing mobile deixa de depender de painel MAPA oculto.
+- [x] Fechar/despachar possuem retorno de painel previsível.
+- [x] Scroll interno + footer não sobreposto + safe-area.
+- [x] Seleção de agentes tem alvos touch e feedback explícito.
+- [x] Desktop permanece sob media query >=981 sem mudança de regra.
+- [x] QA estático existente + QA mobile executados.
+- [ ] QA visual/runtime em 360/390/430 px no GitHub Pages.
+
+## Beta 1 · v0.3.0-beta.6 — auth mobile hotfix
+- [x] Botões ENTRAR/CRIAR CONTA são `type="button"`.
+- [x] Modo de cadastro possui fallback clicável dentro do formulário.
+- [x] CSS mobile aumenta área de toque e impede captura indevida de pointer events.
+- [x] Supabase/save/gameplay não alterados.
+- [ ] Validar clique em dispositivo real após deploy GitHub Pages.
+
 ## Beta 1 · v0.3.0-beta.5 — auth simples
 - [x] Criar conta sem confirmação de e-mail no fluxo do produto.
 - [x] Signup com sessão imediata entra automaticamente.

@@ -76,6 +76,12 @@ export default function Home() {
     setPanel(next);
   }
 
+  function setAuthMode(next: "login" | "create") {
+    if (accountBusy) return;
+    setNotice("");
+    setAccountMode(next);
+  }
+
   function createGame(event: FormEvent) {
     event.preventDefault();
     if (save && !window.confirm("Iniciar um novo jogo? O progresso local atual será substituído.")) return;
@@ -261,16 +267,26 @@ export default function Home() {
             {panel === "account" && <div className="menuPanelStack">
               <p className="menuPanelEyebrow">CONTA / ACESSO</p><h2>Como você quer jogar?</h2>
               {account ? <div className="accountCurrentCard"><span>SESSÃO ATUAL</span><strong>{account.mode === "guest" ? "Sem conta" : account.displayName || account.email}</strong><p>{account.mode === "guest" ? "Progresso salvo apenas neste navegador." : "Conta Supabase conectada · save local-first com sincronização cloud."}</p>{cloudConflict && <div className="menuWarning"><strong>CONFLITO DE SAVE</strong><span>Nuvem: {cloudConflict.remotePlayerName}, Dia {cloudConflict.remoteDay}. Escolha qual arquivo será a fonte desta conta.</span><div className="menuButtonRow"><button disabled={accountBusy} onClick={() => void chooseConflict("local")}>USAR LOCAL</button><button disabled={accountBusy} onClick={() => void chooseConflict("cloud")}>USAR NUVEM</button></div></div>}<button className="menuSecondaryButton" disabled={accountBusy} onClick={() => void signOut()}>ENCERRAR SESSÃO</button></div> : <>
-                <div className="accountTabs"><button className={accountMode === "login" ? "active" : ""} onClick={() => setAccountMode("login")}>ENTRAR</button><button className={accountMode === "create" ? "active" : ""} onClick={() => setAccountMode("create")}>CRIAR CONTA</button></div>
-                <form className="menuPanelForm compact" onSubmit={submitAccount}>
+                <div className="accountModeSwitch" role="tablist" aria-label="Escolha entre entrar ou criar conta">
+                  <button type="button" role="tab" aria-selected={accountMode === "login"} className={accountMode === "login" ? "active" : ""} onClick={() => setAuthMode("login")}>
+                    <strong>ENTRAR</strong><span>Já tenho conta</span>
+                  </button>
+                  <button type="button" role="tab" aria-selected={accountMode === "create"} className={accountMode === "create" ? "active" : ""} onClick={() => setAuthMode("create")}>
+                    <strong>CRIAR CONTA</strong><span>Primeiro acesso</span>
+                  </button>
+                </div>
+                <form className="menuPanelForm compact accountForm" onSubmit={submitAccount}>
                   {accountMode === "create" && <label>Nome de exibição<input required minLength={2} value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Como quer aparecer" /></label>}
                   <label>E-mail<input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="analista@exemplo.com" /></label>
                   <label>Senha<input required type="password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" autoComplete={accountMode === "create" ? "new-password" : "current-password"} /></label>
                   <button className="menuPrimaryButton" disabled={accountBusy || !accountBackendAvailable()} type="submit">{accountBusy ? "CONECTANDO..." : accountMode === "create" ? "CRIAR CONTA" : "ENTRAR"}</button>
+                  <button className="accountModeFallback" type="button" disabled={accountBusy} onClick={() => setAuthMode(accountMode === "login" ? "create" : "login")}>
+                    {accountMode === "login" ? "NÃO TEM CONTA? CRIAR CONTA" : "JÁ TEM CONTA? ENTRAR"}
+                  </button>
                   <small>{accountBackendAvailable() ? "Conta simples via Supabase: criar conta entra automaticamente. O jogo continua local-first e sincroniza o save quando a conta está ativa." : "Supabase ainda não configurado nesta instalação. Jogue sem conta ou configure .env.local."}</small>
                 </form>
                 <div className="accountDivider"><span>OU</span></div>
-                <button className="menuSecondaryButton wide" onClick={useGuest}>JOGAR SEM CONTA</button>
+                <button type="button" className="menuSecondaryButton wide" onClick={useGuest}>JOGAR SEM CONTA</button>
               </>}
             </div>}
 

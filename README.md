@@ -1,8 +1,24 @@
+## Beta 1 · v0.3.0-beta.10
+
+Hotfix de responsividade do Dispatch: mensagens operacionais permanecem acessíveis em telas baixas/estreitas e são espelhadas no briefing quando o NEXO lateral não tem espaço suficiente.
+
 # Agência Ressonância — Beta 1
 
-## Beta 1 · v0.3.0-beta.5
+## Beta 1 · v0.3.0-beta.8
 
 A Beta 1 introduz arquitetura de persistência **local-first** preparada para Supabase. O jogo continua funcional sem backend; ao configurar `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` e aplicar `supabase/migrations/001_beta1_game_saves.sql`, o menu de conta ativa Auth e save cloud com RLS. Veja `docs/design/BETA1_SUPABASE_ARCHITECTURE.md`.
+
+### Dispatch mobile reliability · beta.7
+- Abrir um chamado pela aba CHAMADOS monta o briefing corretamente no mobile, mesmo ele sendo renderizado dentro do workspace do MAPA.
+- Briefing passa a usar scroll interno, action bar sem sobreposição e CTA de despacho com alvo touch maior.
+- Em telas estreitas os agentes viram uma lista vertical com seleção explícita e botão FICHA.
+- Fechar volta à aba de origem; despachar/expirar retorna a CHAMADOS. Desktop e regras de Dispatch não mudaram.
+
+### Hotfix de cadastro mobile · beta.6
+- ENTRAR e CRIAR CONTA agora são botões de modo independentes, com `type="button"`, área de toque ampliada e estado ativo acessível.
+- Em telas estreitas os dois controles ficam empilhados para evitar sobreposição.
+- O formulário oferece um segundo atalho explícito para alternar entre login e cadastro.
+- Nenhuma regra de Supabase, save ou gameplay foi alterada.
 
 Para o beta fechado, a conta é propositalmente simples: **e-mail + senha, sem confirmação de e-mail**. Em Supabase, desative `Authentication > Providers > Email > Confirm email`; ao criar a conta, o jogo entra automaticamente e vincula o save cloud.
 

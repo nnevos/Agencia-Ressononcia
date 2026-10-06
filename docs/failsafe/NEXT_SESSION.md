@@ -1,3 +1,53 @@
+# NEXT SESSION — Beta 1 · v0.3.0-beta.10
+
+1. QA em browser: fim do expediente → confirmação → Desenvolvimento → NEXO.
+2. No NEXO, confirmar que ENCERRAR NOITE sempre abre confirmação.
+3. Verificar em mobile que o texto de orientação e o modal de confirmação permanecem legíveis.
+4. Confirmar que conversar com um contato não bloqueia os demais e que nenhuma conversa é obrigatória para encerrar a noite.
+
+
+## Gate imediato — browser/GitHub Pages
+1. Testar Central em 1366x768, 1440x900 e 1920x1080: mensagens do NEXO devem permanecer roláveis e sem cortar texto.
+2. Abrir briefing com mensagens recentes e confirmar o espelho NEXO em 1366x768/1440x900; em 1920x1080 o rail lateral pode continuar como fonte principal.
+3. Em 360/390/430 px, abrir chamado, receber mensagens, rolar o briefing inteiro e confirmar que `NEXO · OPERAÇÕES` e CTA de despacho permanecem acessíveis.
+4. Validar textos longos e mensagens `alert/system`: nenhuma deve escapar horizontalmente.
+5. Confirmar que a pausa contextual beta.8 continua funcionando ao abrir FICHA/tutorial.
+6. Depois continuar o gate de save cloud em segundo dispositivo/perfil.
+
+# NEXT SESSION — Beta 1 · v0.3.0-beta.8 (Pausa contextual)
+
+## Primeiro gate — pausa contextual no browser
+- Com um chamado aguardando, abrir FICHA por 15–30s e confirmar que relógio e deadline não avançam.
+- Fechar a FICHA e confirmar retomada sem salto de tempo.
+- Selecionar 2 agentes para disparar tutorial de Ressonância; deixar o tutorial aberto e confirmar relógio congelado.
+- Registrar o tutorial e confirmar retomada sem consumir o período de leitura.
+- Repetir em 360/390/430 px e desktop.
+
+## Implementado em 2026-10-06
+- Abrir briefing a partir de CHAMADOS ativa o painel MAPA antes de mostrar o modal.
+- Mobile usa briefing full-screen com uma região rolável e action bar não sobreposta.
+- Em <=600 px, agentes usam lista touch; seleção fica visualmente explícita.
+- Fechar retorna à aba anterior; despachar/expirar retorna a CHAMADOS.
+- QA estático específico: `npm run qa:mobile-dispatch`.
+
+## Próximo gate obrigatório
+1. No GitHub Pages, testar 360/390/430 px: CHAMADOS → abrir caso → selecionar/remover 1–3 agentes → FICHA → DESPACHAR.
+2. Confirmar que o primeiro E-04 abre imediatamente a partir de CHAMADOS e que o balão de Edison não cobre o CTA.
+3. Testar scroll completo do briefing e safe-area em Android/iPhone; nenhuma seção ou botão pode ficar inacessível.
+4. Fechar briefing deve voltar à aba de origem; despacho/expiração devem retornar a CHAMADOS.
+5. Repetir com ocorrência normal, agente indisponível e equipe de 3 para confirmar estados disabled/selecionados.
+6. Depois continuar o gate Beta 1 de save cloud em segundo dispositivo/perfil.
+
+---
+
+# NEXT SESSION — Beta 1 · v0.3.0-beta.6 (auth mobile hotfix)
+
+1. Publicar a beta.6 no GitHub Pages e testar ENTRAR/CRIAR CONTA em ao menos um desktop e celulares 360/390/430 px.
+2. Confirmar que tocar em CRIAR CONTA revela Nome de exibição e troca o CTA para CRIAR CONTA.
+3. Criar uma conta real sem confirmação de e-mail, fazer logout e login novamente.
+4. Confirmar que JOGAR SEM CONTA permanece funcional.
+5. Se houver falha apenas em um navegador/dispositivo, registrar navegador, sistema e screenshot antes de mudar Supabase.
+
 ## Gate imediato — GitHub Pages build hotfix
 
 1. Subir o pacote hotfix no branch `main`.

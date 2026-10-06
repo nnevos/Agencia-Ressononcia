@@ -8,7 +8,7 @@ const exists = (file) => fs.existsSync(path.join(root, file));
 const check = (label, pass) => checks.push({ label, pass: Boolean(pass) });
 
 const pkg = JSON.parse(read("package.json"));
-check("Beta 1 refactor version", pkg.version === "0.3.0-beta.5");
+check("Beta 1 refactor version", pkg.version === "0.3.0-beta.9");
 check("Shared operational hero selector", exists("game/selectors/operationalHeroes.ts"));
 check("Agency uses shared operational selector", /buildOperationalHeroes/.test(read("app/agencia/page.tsx")));
 check("DEV tools use same operational selector", /findOperationalHero/.test(read("game/simulation/devTools.ts")));

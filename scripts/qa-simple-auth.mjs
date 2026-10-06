@@ -13,4 +13,6 @@ check("produto nao pede confirmacao", !files.page.includes("Confirme o e-mail"))
 check("signup exige sessao imediata", files.account.includes("if (!result.session)"));
 check("setup desativa Confirm email", files.setup.includes("desative Confirm email"));
 check("adapter nao expoe fluxo de confirmacao", !files.auth.includes("emailConfirmationRequired"));
-console.log(`\n${passed}/5 PASS`);
+check("alternador criar conta usa botao neutro", files.page.includes('type="button" role="tab"') && files.page.includes('setAuthMode("create")'));
+check("fallback de cadastro existe", files.page.includes("accountModeFallback") && files.page.includes("NÃO TEM CONTA? CRIAR CONTA"));
+console.log(`\n${passed}/7 PASS`);

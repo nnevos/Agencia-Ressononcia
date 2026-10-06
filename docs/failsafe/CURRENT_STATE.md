@@ -1,3 +1,23 @@
+# CURRENT STATE — Beta 1 · v0.3.0-beta.10 (2026-10-06)
+
+Confirmações explícitas de encerramento foram adicionadas ao fim do expediente e da noite. O NEXO agora comunica claramente que conversar é opcional, pode ser feito com todos os contatos disponíveis e exige abrir/enviar/responder para avançar cada rota. Save schema permanece v10.
+
+
+## Dispatch — mensagens responsivas
+- Feed NEXO operacional agora usa `min-height: 0`, scroll vertical estável e quebra segura de texto.
+- Em desktop <=1400px ou <=900px de altura, o briefing mostra as 3 mensagens operacionais mais recentes dentro do próprio modal.
+- Em <=980px, o espelho de mensagens faz parte do `briefScrollBody`, portanto continua acessível durante seleção/despacho sem trocar de aba.
+- Em <=760px de altura, header/footer do rail são compactados antes de reduzir a área das mensagens.
+- Nenhuma regra de Dispatch, relógio, save ou Supabase mudou.
+
+# CURRENT STATE — Beta 1 · v0.3.0-beta.8 (2026-10-06)
+
+Hotfix do Dispatch mobile aplicado sobre a v0.3.0-beta.6. Abrir um chamado agora força a montagem do painel MAPA antes do briefing, garantindo que o modal filho não seja escondido pelo painel mobile inativo. O briefing usa `100dvh`, scroll interno, footer persistente sem `position:fixed`, CTA de toque amplo e cards/lista de agentes mais claros em 360/390/430 px. Fechar volta à aba de origem; despachar ou expirar volta para CHAMADOS. Regras de Dispatch, tutorial, Supabase e save schema v10 permanecem inalterados.
+
+# CURRENT STATE — Beta 1 · v0.3.0-beta.6 (2026-10-06)
+
+Hotfix de acesso mobile aplicado sobre a build publicada do GitHub Pages. O seletor ENTRAR/CRIAR CONTA agora usa botões independentes de formulário, com área de toque maior, `touch-action: manipulation`, camada de interação explícita e fallback textual dentro do formulário. Supabase, save schema v10, gameplay e conteúdo permanecem inalterados.
+
 ## Hotfix de build GitHub Pages — 2026-10-06
 
 A Beta 1 v0.3.0-beta.5 recebeu correção estritamente de tipagem para os 10 erros TypeScript observados no GitHub Actions. O comportamento do jogo permanece inalterado. O próximo deploy deve ser usado para validar o `next build` completo no runner do GitHub.
@@ -574,3 +594,10 @@ Corrigido bug em que finalizar a etapa 2 podia exibir `MARCAR PRIMEIRA SAÍDA` p
 - Primeiro tutorial do Dispatch usa o mesmo balão flutuante do restante do Edison UX; não ocupa uma linha interna do briefing.
 - O primeiro caso e o resultado não escurecem a tela com spotlight global; apenas o alvo relevante pulsa.
 - O balão permanece acima do modal de resultado para ser visível durante revisão/captura.
+
+
+## Pausa contextual de leitura — beta.8
+- Abrir uma FICHA na Central pausa o relógio operacional localmente, mesmo com chamados ativos ou briefing aberto.
+- Tutorials progressivos bloqueantes do Dispatch (Ressonância, Combo e Condição) pausam o relógio até serem registrados.
+- O tempo de pausa é descontado do relógio real ao fechar a superfície; não altera duração nominal de ocorrência/missão.
+- Indicador `PAUSADO · LEITURA` aparece no relógio da Central.

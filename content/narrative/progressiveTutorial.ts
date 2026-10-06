@@ -67,8 +67,8 @@ export const progressiveTutorialCopy = {
   postShiftNexo: {
     eyebrow: "EDISON · PÓS-EXPEDIENTE",
     title: "O NEXO não é uma escolha única",
-    body: "Você pode conversar com vários contatos nesta noite. Cada rota avança no máximo uma etapa por noite, e conversar com alguém não bloqueia os demais.",
-    targetLabel: "Explore as conversas disponíveis",
+    body: "Você pode conversar com todos os contatos disponíveis nesta noite, se quiser. Não é obrigatório falar com ninguém; para avançar uma rota, abra o contato e envie a mensagem ou resposta disponível. Conversar com alguém não bloqueia os demais.",
+    targetLabel: "Abra qualquer contato e envie/responda para avançar a conversa",
     tone: "orientation" as const,
   },
   date: {

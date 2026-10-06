@@ -48,7 +48,11 @@ export default function AgencyPage() {
   const [expiredFlashIds, setExpiredFlashIds] = useState<string[]>([]);
   const [briefingExpiredId, setBriefingExpiredId] = useState<string | null>(null);
   const [mobilePanel, setMobilePanel] = useState<MobilePanel>("incidents");
+  const [confirmEndShift, setConfirmEndShift] = useState(false);
   const operationsFeedRef = useRef<HTMLDivElement | null>(null);
+  const briefingOriginPanelRef = useRef<MobilePanel>("incidents");
+  const clockPausedRef = useRef(false);
+  const clockPauseStartedAtRef = useRef<number | null>(null);
 
   useEffect(() => {
     const current = loadSave();
@@ -70,6 +74,7 @@ export default function AgencyPage() {
 
   useEffect(() => {
     const interval = window.setInterval(() => {
+      if (clockPausedRef.current) return;
       const current = loadSave();
       if (!current) return;
       const advanced = advanceOperationalState(current);
@@ -125,6 +130,7 @@ export default function AgencyPage() {
       setSelected([]);
       setBriefingExpiredId(null);
       setIncidentId(null);
+      setMobilePanel("incidents");
     }, 1500);
     return () => window.clearTimeout(timeout);
   }, [save?.shift.incidents, briefingOpen, incidentId]);
@@ -136,6 +142,50 @@ export default function AgencyPage() {
   const infoHero = useMemo(() => operationalHeroes.find((hero) => hero.id === heroInfoId) ?? null, [operationalHeroes, heroInfoId]);
   const chatMessages = useMemo(() => save ? getOperationalChatMessages(save) : [], [save]);
   const heroNameById = useMemo(() => Object.fromEntries(operationalHeroes.map((hero) => [hero.id, hero.name])), [operationalHeroes]);
+  const progressiveTutorialKey = !save || save.flags.includes("tutorial_active") || !briefingOpen ? null
+    : selectedHeroes.length >= 2 && !save.flags.includes(PROGRESSIVE_TUTORIAL_FLAGS.resonance) ? "resonance"
+    : missionAssessment?.combos.length && !save.flags.includes(PROGRESSIVE_TUTORIAL_FLAGS.combo) ? "combo"
+    : alerts.some((item) => item === "Agente cansado" || item === "Agente machucado") && !save.flags.includes(PROGRESSIVE_TUTORIAL_FLAGS.condition) ? "condition"
+    : null;
+  const clockPausedByUi = Boolean(heroInfoId || progressiveTutorialKey);
+
+  useEffect(() => {
+    const now = Date.now();
+
+    if (clockPausedByUi) {
+      if (clockPausedRef.current) return;
+      const current = loadSave();
+      if (current) {
+        const advanced = advanceOperationalState(current, now);
+        if (advanced !== current) {
+          if (shouldPersistOperationalAdvance(current, advanced)) writeSave(advanced);
+          setSave(advanced);
+        }
+      }
+      clockPauseStartedAtRef.current = now;
+      clockPausedRef.current = true;
+      return;
+    }
+
+    if (!clockPausedRef.current) return;
+    const pauseStartedAt = clockPauseStartedAtRef.current;
+    clockPausedRef.current = false;
+    clockPauseStartedAtRef.current = null;
+    if (pauseStartedAt == null) return;
+
+    const current = loadSave();
+    if (!current || current.shift.status !== "running" || current.shift.startedAtEpochMs == null) return;
+    const pauseDurationMs = Math.max(0, now - pauseStartedAt);
+    const resumed: SaveGame = {
+      ...current,
+      shift: {
+        ...current.shift,
+        startedAtEpochMs: current.shift.startedAtEpochMs + pauseDurationMs,
+      },
+    };
+    writeSave(resumed);
+    setSave(resumed);
+  }, [clockPausedByUi]);
 
   useEffect(() => {
     const feed = operationsFeedRef.current;
@@ -278,14 +328,30 @@ export default function AgencyPage() {
   }
 
   function openBriefingForIncident(id: string) {
+    briefingOriginPanelRef.current = mobilePanel;
     setIncidentId(id);
     setSelected([]);
+    // MissionBriefing lives inside TacticalMap. On mobile the map panel must be
+    // mounted while the full-screen briefing is open; otherwise the modal is
+    // hidden together with the inactive map workspace. Desktop ignores this
+    // panel switch because all workspaces remain visible there.
+    setMobilePanel("map");
     setBriefingOpen(true);
   }
 
   function closeBriefing() {
     setBriefingOpen(false);
     setSelected([]);
+    setMobilePanel(briefingOriginPanelRef.current);
+  }
+
+  function dispatchFromBriefing() {
+    dispatch();
+    setBriefingOpen(false);
+    setSelected([]);
+    // Returning to the queue makes the next operational decision immediately
+    // visible on narrow screens after a successful dispatch.
+    setMobilePanel("incidents");
   }
 
   function handleHeroBarClick(id: string) {
@@ -381,12 +447,6 @@ export default function AgencyPage() {
     : tutorialRuntime?.status === "waiting" ? { title: tutorialCopy.firstCaseTitle, body: tutorialCopy.firstCaseBody }
     : { title: "SISTEMA SDH", body: "Aguarde o primeiro chamado da Central." };
 
-  const progressiveTutorialKey = tutorialActive || !briefingOpen ? null
-    : selectedHeroes.length >= 2 && !save.flags.includes(PROGRESSIVE_TUTORIAL_FLAGS.resonance) ? "resonance"
-    : missionAssessment?.combos.length && !save.flags.includes(PROGRESSIVE_TUTORIAL_FLAGS.combo) ? "combo"
-    : alerts.some((item) => item === "Agente cansado" || item === "Agente machucado") && !save.flags.includes(PROGRESSIVE_TUTORIAL_FLAGS.condition) ? "condition"
-    : null;
-
   function dismissProgressiveTutorial() {
     if (!progressiveTutorialKey || !save) return;
     const flag = PROGRESSIVE_TUTORIAL_FLAGS[progressiveTutorialKey];
@@ -403,6 +463,7 @@ export default function AgencyPage() {
         gameMinute={gameMinute}
         playerName={save.player.name}
         settingsOpen={settingsOpen}
+        clockPaused={clockPausedByUi}
         onToggleSettings={() => setSettingsOpen((value) => !value)}
         onSaveNow={saveNow}
         onRestartShift={restartShift}
@@ -421,7 +482,7 @@ export default function AgencyPage() {
 
       {shiftFinished && <section className="shiftCompleteStrip" aria-label="Expediente encerrado">
         <div><span className="eyebrow">18:00 · EXPEDIENTE ENCERRADO</span><strong>{pendingReports ? `Há ${pendingReports} relatório(s) pendente(s).` : "Central pronta para o desenvolvimento da equipe."}</strong></div>
-        <button className="button primary" disabled={pendingReports > 0 || dispatchedCount > 0} onClick={() => { const next = { ...save, player: { ...save.player, developmentRequired: true } }; writeSave(next); setSave(next); router.push("/desenvolvimento"); }}>IR PARA DESENVOLVIMENTO</button>
+        <button className="button primary" disabled={pendingReports > 0 || dispatchedCount > 0} onClick={() => setConfirmEndShift(true)}>ENCERRAR TURNO → DESENVOLVIMENTO</button>
       </section>}
 
       {progressiveTutorialKey && <ProgressiveTutorialCoach className="dispatchTutorial" {...progressiveTutorialCopy[progressiveTutorialKey]} onDismiss={dismissProgressiveTutorial} actionLabel="REGISTRAR" />}
@@ -460,6 +521,7 @@ export default function AgencyPage() {
             alerts={alerts}
             operationalHeroes={operationalHeroes}
             message={message}
+            recentOperationsMessages={chatMessages.slice(-3)}
             tutorialActive={tutorialActive}
             tutorialIncidentId={FIRST_TUTORIAL_INCIDENT_ID}
             tutorialHeroId={FIRST_TUTORIAL_HERO_ID}
@@ -467,13 +529,25 @@ export default function AgencyPage() {
             onClose={closeBriefing}
             onToggleHero={toggleHero}
             onOpenHero={setHeroInfoId}
-            onDispatch={() => { dispatch(); setBriefingOpen(false); }}
+            onDispatch={dispatchFromBriefing}
           />}
         </TacticalMap>
 
         <OperationsChatRail messages={chatMessages} feedRef={operationsFeedRef} />
         <AgentRoster heroes={operationalHeroes} briefingOpen={briefingOpen} selectedIds={selected} availableCount={availableCount} onSelect={handleHeroBarClick} onInfo={setHeroInfoId} />
       </div>
+
+
+      {confirmEndShift && <div className="nexoNextDayBackdrop" role="presentation" onMouseDown={() => setConfirmEndShift(false)}>
+        <section className="nexoNextDayConfirm" role="dialog" aria-modal="true" aria-labelledby="agency-end-shift-title" onMouseDown={(event) => event.stopPropagation()}>
+          <h2 id="agency-end-shift-title">Encerrar o turno?</h2>
+          <p>O expediente operacional terminou. Ao confirmar, você seguirá para Desenvolvimento e depois para o NEXO da noite. Relatórios e missões em andamento precisam estar resolvidos antes de avançar.</p>
+          <div className="nexoNextDayActions">
+            <button type="button" className="button primary" onClick={() => { const next: SaveGame = { ...save, player: { ...save.player, developmentRequired: true } }; writeSave(next); setSave(next); setConfirmEndShift(false); router.push("/desenvolvimento"); }}>CONFIRMAR E ENCERRAR</button>
+            <button type="button" className="button" autoFocus onClick={() => setConfirmEndShift(false)}>VOLTAR À CENTRAL</button>
+          </div>
+        </section>
+      </div>}
 
       {reportResult && (() => { const reportIncident = caseById[reportResult.incidentId]; return reportIncident ? <MissionResultModal result={reportResult} incident={reportIncident} onClose={() => setReportResult(null)} onAcknowledge={acknowledgeResult} /> : null; })()}
       {infoHero && <HeroDossierModal hero={infoHero} onClose={() => setHeroInfoId(null)} />}
