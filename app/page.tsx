@@ -26,14 +26,14 @@ function saveStatus(save: SaveGame) {
   if (save.flags.includes("onboarding_pending")) return "Introdução pendente";
   if (save.player.developmentRequired) return "Desenvolvimento da equipe";
   if (save.shift.status === "finished") return "Pós-expediente";
-  if (save.shift.status === "active") return "Expediente em andamento";
+  if (save.shift.status === "running") return "Expediente em andamento";
   return "Próximo expediente";
 }
 
 export default function Home() {
   const router = useRouter();
   const importRef = useRef<HTMLInputElement | null>(null);
-  const [panel, setPanel] = useState<MenuPanel>("main");
+  const [panel, setPanel] = useState<MenuPanel>("account");
   const [save, setSave] = useState<SaveGame | null>(null);
   const [account, setAccount] = useState<AccountSession | null>(null);
   const [settings, setSettings] = useState<RessonanciaSettings>(DEFAULT_SETTINGS);
@@ -51,13 +51,17 @@ export default function Home() {
 
   useEffect(() => {
     setSave(loadSave());
-    setAccount(loadAccountSession());
+    const restoredAccount = loadAccountSession();
+    setAccount(restoredAccount);
+    setPanel(restoredAccount ? "main" : "account");
     setSettings(loadSettings());
     const requested = new URLSearchParams(window.location.search).get("panel");
-    if (requested === "new") setPanel("new");
-    if (requested === "load") setPanel("load");
-    if (requested === "account") setPanel("account");
-    if (requested === "settings") setPanel("settings");
+    if (restoredAccount) {
+      if (requested === "new") setPanel("new");
+      if (requested === "load") setPanel("load");
+      if (requested === "account") setPanel("account");
+      if (requested === "settings") setPanel("settings");
+    }
   }, []);
 
   const destination = useMemo(() => save ? resumeHref(save) : null, [save]);
@@ -122,6 +126,7 @@ export default function Home() {
       "in-sync": "Conta conectada. Save local e nuvem já estão sincronizados.",
     };
     setNotice(messages[result.status] ?? "Conta conectada.");
+    setPanel("main");
   }
 
   async function submitAccount(event: FormEvent) {
@@ -146,6 +151,7 @@ export default function Home() {
   function useGuest() {
     setAccount(startGuestSession());
     setNotice("Modo sem conta ativo. Seu save continua apenas neste navegador.");
+    setPanel("main");
   }
 
   async function signOut() {
@@ -153,6 +159,7 @@ export default function Home() {
     setAccount(null);
     setCloudConflict(null);
     setNotice("Sessão encerrada. O save local continua neste navegador.");
+    setPanel("account");
   }
 
   async function chooseConflict(choice: "local" | "cloud") {
@@ -162,6 +169,7 @@ export default function Home() {
       setSave(resolved);
       setCloudConflict(null);
       setNotice(choice === "local" ? "Save local mantido e enviado para a nuvem." : "Save da nuvem carregado neste dispositivo.");
+      setPanel("main");
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "Não foi possível resolver o conflito de save.");
     } finally {
@@ -209,7 +217,7 @@ export default function Home() {
           </nav>}
 
           {panel !== "main" && <section className="menuSubPanel" aria-live="polite">
-            <button className="menuBackButton" onClick={() => open("main")}>← MENU PRINCIPAL</button>
+            {(panel !== "account" || account) && <button className="menuBackButton" onClick={() => open("main")}>← MENU PRINCIPAL</button>}
 
             {panel === "new" && <form className="menuPanelForm" onSubmit={createGame}>
               <p className="menuPanelEyebrow">NOVO JOGO</p><h2>Primeiro dia.</h2>

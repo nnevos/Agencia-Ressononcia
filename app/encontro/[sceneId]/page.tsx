@@ -155,22 +155,24 @@ export default function OutingPage() {
   }
 
   function finishScene() {
-    if (!scene) return;
+    if (!scene || !save) return;
+    const activeScene = scene;
+    const activeDay = save.player.currentDay;
     if (previewMode) { goBackToNexo(); return; }
     updateSave((current) => {
-      const milestones = current.social.outingMilestones[scene.characterId] ?? [];
-      const nextMilestones = milestones.includes(scene.day) ? milestones : [...milestones, scene.day];
+      const milestones = current.social.outingMilestones[activeScene.characterId] ?? [];
+      const nextMilestones = milestones.includes(activeScene.day) ? milestones : [...milestones, activeScene.day];
       return {
         ...current,
         social: {
           ...current.social,
-          outingMilestones: { ...current.social.outingMilestones, [scene.characterId]: nextMilestones },
-          routeStage: { ...current.social.routeStage, [scene.characterId]: scene.day === 3 ? Math.max(current.social.routeStage[scene.characterId] ?? 3, 4) : Math.max(current.social.routeStage[scene.characterId] ?? 6, 7) },
+          outingMilestones: { ...current.social.outingMilestones, [activeScene.characterId]: nextMilestones },
+          routeStage: { ...current.social.routeStage, [activeScene.characterId]: activeScene.day === 3 ? Math.max(current.social.routeStage[activeScene.characterId] ?? 3, 4) : Math.max(current.social.routeStage[activeScene.characterId] ?? 6, 7) },
         },
-        flags: Array.from(new Set([...current.flags, scene.completionFlag, routeAdvanceFlag(current.player.currentDay, scene.characterId)])),
+        flags: Array.from(new Set([...current.flags, activeScene.completionFlag, routeAdvanceFlag(current.player.currentDay, activeScene.characterId)])),
       };
     });
-    sessionStorage.removeItem(`ressonancia:outing-progress:${scene.id}:day:${save.player.currentDay}`);
+    sessionStorage.removeItem(`ressonancia:outing-progress:${activeScene.id}:day:${activeDay}`);
     goBackToNexo();
   }
 
