@@ -33,7 +33,7 @@ check("Cloud conflict requires explicit resolution", /status:\s*"conflict"/.test
 check("Cloud sync is bound per user", /isCloudSyncBound/.test(cloud));
 
 const pkg = JSON.parse(read("package.json"));
-check("Package identifies Beta 1", pkg.version === "0.3.0-beta.4");
+check("Package identifies Beta 1", pkg.version === "0.3.0-beta.5");
 
 const failed = checks.filter((item) => !item.pass);
 for (const item of checks) console.log(`${item.pass ? "PASS" : "FAIL"} ${item.label}`);

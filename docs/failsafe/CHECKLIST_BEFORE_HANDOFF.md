@@ -1,3 +1,10 @@
+## Beta 1 · v0.3.0-beta.5 — auth simples
+- [x] Criar conta sem confirmação de e-mail no fluxo do produto.
+- [x] Signup com sessão imediata entra automaticamente.
+- [x] Setup exige `Confirm email` desativado.
+- [x] Login/logout/guest e save cloud preservados.
+- [ ] Validar signup/login/sync em Supabase real + GitHub Pages.
+
 ## Beta 1 · v0.3.0-beta.4 — GitHub Pages
 - [x] `output: export` e `trailingSlash`.
 - [x] basePath configurável sem quebrar execução local.

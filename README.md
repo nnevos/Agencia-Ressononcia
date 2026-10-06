@@ -1,8 +1,10 @@
 # Agência Ressonância — Beta 1
 
-## Beta 1 · v0.3.0-beta.4
+## Beta 1 · v0.3.0-beta.5
 
 A Beta 1 introduz arquitetura de persistência **local-first** preparada para Supabase. O jogo continua funcional sem backend; ao configurar `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` e aplicar `supabase/migrations/001_beta1_game_saves.sql`, o menu de conta ativa Auth e save cloud com RLS. Veja `docs/design/BETA1_SUPABASE_ARCHITECTURE.md`.
+
+Para o beta fechado, a conta é propositalmente simples: **e-mail + senha, sem confirmação de e-mail**. Em Supabase, desative `Authentication > Providers > Email > Confirm email`; ao criar a conta, o jogo entra automaticamente e vincula o save cloud.
 
 
 Novo baseline consolidado a partir da linha funcional v0.9.14.

@@ -1,3 +1,10 @@
+# CURRENT STATE — Beta 1 · v0.3.0-beta.5 (2026-10-06)
+
+- Auth simplificado para beta fechado: CRIAR CONTA gera sessão imediata e entra automaticamente.
+- Confirmação de e-mail não faz parte do produto; Supabase deve usar Email com `Confirm email` desativado.
+- Login, logout, guest e sync local-first/cloud permanecem; save schema continua v10.
+- Se o Supabase devolver signup sem sessão, a UI informa a configuração incorreta em vez de iniciar fluxo de confirmação.
+
 # CURRENT STATE — Beta 1 · v0.3.0-beta.4 (2026-10-06)
 
 - GitHub Pages/static export preparado com basePath automático por repositório.

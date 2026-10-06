@@ -1,3 +1,10 @@
+# NEXT SESSION — Beta 1 · v0.3.0-beta.5 (auth simples + GitHub Pages)
+
+1. No Supabase de staging, desativar **Authentication > Providers > Email > Confirm email**.
+2. No GitHub Pages, testar: criar conta -> login automático -> criar/alterar save -> reload -> logout -> login -> recuperar save cloud.
+3. Testar e-mail já cadastrado e senha incorreta; nenhum fluxo deve pedir confirmação de e-mail.
+4. Manter os gates de browser/mobile e Supabase já pendentes da Beta 1.
+
 # NEXT SESSION — Beta 1 · v0.3.0-beta.4 (GitHub Pages gate)
 
 ## Próximo item obrigatório

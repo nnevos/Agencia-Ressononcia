@@ -131,12 +131,7 @@ export default function Home() {
     setNotice("");
     try {
       if (accountMode === "create") {
-        const result = await createAccount(email.trim(), password, displayName.trim());
-        if (!result.session) {
-          setNotice("Conta criada. Confirme o e-mail e depois use ENTRAR para ativar o save cloud.");
-          return;
-        }
-        await finishCloudLogin(result.session);
+        await finishCloudLogin(await createAccount(email.trim(), password, displayName.trim()));
       } else {
         await finishCloudLogin(await signInAccount(email.trim(), password));
       }
@@ -264,7 +259,7 @@ export default function Home() {
                   <label>E-mail<input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="analista@exemplo.com" /></label>
                   <label>Senha<input required type="password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" autoComplete={accountMode === "create" ? "new-password" : "current-password"} /></label>
                   <button className="menuPrimaryButton" disabled={accountBusy || !accountBackendAvailable()} type="submit">{accountBusy ? "CONECTANDO..." : accountMode === "create" ? "CRIAR CONTA" : "ENTRAR"}</button>
-                  <small>{accountBackendAvailable() ? "Autenticação via Supabase. O jogo continua local-first e sincroniza quando a conta está ativa." : "Supabase ainda não configurado nesta instalação. Jogue sem conta ou configure .env.local."}</small>
+                  <small>{accountBackendAvailable() ? "Conta simples via Supabase: criar conta entra automaticamente. O jogo continua local-first e sincroniza o save quando a conta está ativa." : "Supabase ainda não configurado nesta instalação. Jogue sem conta ou configure .env.local."}</small>
                 </form>
                 <div className="accountDivider"><span>OU</span></div>
                 <button className="menuSecondaryButton wide" onClick={useGuest}>JOGAR SEM CONTA</button>

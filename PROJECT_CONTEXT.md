@@ -1,4 +1,4 @@
-## Beta 1 · v0.3.0-beta.4 — GitHub Pages / static export (2026-10-06)
+## Beta 1 · v0.3.0-beta.5 — GitHub Pages / static export (2026-10-06)
 - Next configurado com `output: export`, `trailingSlash` e `basePath` configurável por `NEXT_PUBLIC_BASE_PATH`.
 - Workflow `.github/workflows/pages.yml` publica `out/` via GitHub Pages em push para main/master ou manualmente.
 - Assets de `public/` passam por `lib/publicPath.ts`, preservando execução local e subdiretório `/repo` do Pages.
@@ -14,7 +14,7 @@
 
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.2**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.5**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat

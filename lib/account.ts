@@ -74,12 +74,15 @@ export async function signInAccount(email: string, password: string): Promise<Su
   return session;
 }
 
-export async function createAccount(email: string, password: string, displayName?: string): Promise<{ session: SupabaseAccountSession | null; emailConfirmationRequired: boolean }> {
+export async function createAccount(email: string, password: string, displayName?: string): Promise<SupabaseAccountSession> {
   if (!isSupabaseConfigured()) throw new Error("Supabase ainda não foi configurado nesta instalação.");
   const result = await signUpWithPassword(email, password, displayName);
-  const session = result.session ? fromTokens(result.session) : null;
-  if (session) persistSession(session);
-  return { session, emailConfirmationRequired: result.emailConfirmationRequired };
+  if (!result.session) {
+    throw new Error("A conta foi criada sem sessão automática. No Supabase, desative Confirm email em Authentication > Providers > Email e tente novamente.");
+  }
+  const session = fromTokens(result.session);
+  persistSession(session);
+  return session;
 }
 
 export async function getUsableAccountSession(): Promise<AccountSession | null> {

@@ -1,3 +1,9 @@
+## Beta 1 · v0.3.0-beta.5 — autenticação simples (2026-10-06)
+- Removido o fluxo de confirmação de e-mail da Beta 1.
+- Criar conta agora exige sessão imediata e faz login automático.
+- Setup documenta `Confirm email` desativado no Supabase.
+- Sem mudança de gameplay ou save schema (v10).
+
 ## Beta 1 · v0.3.0-beta.4 — GitHub Pages/static export (2026-10-06)
 - Next passa a gerar site estático em `out/`.
 - Deploy automático por GitHub Actions/Pages.
