@@ -2,6 +2,7 @@
 
 import type { DialogueScene, DispatchResult, SaveGame } from "@/game/types";
 import { updateSave } from "@/lib/save";
+import { formatPlayerText } from "@/lib/playerText";
 import { useMemo, useState } from "react";
 
 export function DialogueEngine({ scene, save, lastDispatch, onComplete }: {
@@ -13,7 +14,7 @@ export function DialogueEngine({ scene, save, lastDispatch, onComplete }: {
   const completedChoice = scene.choices.find((choice) => save.flags.includes(choice.flag));
   const [response, setResponse] = useState<string | null>(completedChoice?.response ?? null);
 
-  const opening = scene.opening.replaceAll("{{playerName}}", save.player.name);
+  const opening = formatPlayerText(scene.opening, save.player);
   const heroWasDispatched = lastDispatch?.selectedHeroIds.includes(scene.characterId) ?? false;
   const contextLine = useMemo(() => {
     if (!scene.contextLines) return null;
@@ -48,12 +49,12 @@ export function DialogueEngine({ scene, save, lastDispatch, onComplete }: {
   return (
     <section className="dialogueBox">
       <strong>{scene.speaker}</strong>
-      {contextLine && !response && <p className="contextLine">{contextLine}</p>}
-      <p>{response ?? opening}</p>
+      {contextLine && !response && <p className="contextLine">{formatPlayerText(contextLine, save.player)}</p>}
+      <p>{response ? formatPlayerText(response, save.player) : opening}</p>
       {!response ? (
         <div className="choiceList">
           {scene.choices.map((choice, index) => (
-            <button key={choice.id} onClick={() => choose(index)}>{choice.text}</button>
+            <button key={choice.id} onClick={() => choose(index)}>{formatPlayerText(choice.text, save.player)}</button>
           ))}
         </div>
       ) : (

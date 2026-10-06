@@ -84,7 +84,7 @@ Essa sequência não obriga todos os personagens a flertarem no mesmo momento. A
 - Um contato nao desaparece quando o dia muda, mesmo se a mensagem do dia anterior ficou sem resposta.
 - O historico mostra cenas passadas da thread; cenas futuras continuam ocultas.
 - O pacote de desenvolvimento inclui placeholders D2–D6 para todos os sete personagens. Eles existem apenas para QA e devem ser substituidos por autoria final preservando IDs sempre que possivel.
-- Escolhas com `vnSceneId` podem abrir `/encontro`, uma tela presencial generica alimentada por conteudo.
+- Escolhas finais com `vnSceneId` habilitam um CTA persistente no NEXO; `/encontro` só abre quando o jogador decide pressionar `IR PARA ENCONTRO`.
 - A cena presencial recebe background, titulo, paragrafos, personagem, dia e flag de conclusao via `content/narrative/outings.ts`.
 - O objetivo arquitetural e chegar ao estado CONTENT-READY: depois disso, completar a campanha deve exigir somente arquivos de conteudo, assets e QA, nao novas telas por personagem.
 
@@ -115,3 +115,36 @@ O NEXO funciona como um mensageiro corporativo. O grupo `Guerreiros Elementais` 
 
 ## Cadência de entrega de mensagens — v0.2.9
 Mensagens automáticas/fixas não devem aparecer como um bloco instantâneo. O cliente revela uma bolha por vez, com curta pausa e indicador de digitação, e só disponibiliza as respostas do jogador depois que a sequência corrente foi entregue. O histórico concluído continua aparecendo integralmente ao reabrir uma conversa.
+
+
+## v0.2.14 — iniciativa, recebimento e scroll de DM
+
+- A autoria define quem inicia cada turno. Se existe `openingOutgoing`/`prefaceOutgoing`, o Analista é o remetente inicial e a mensagem só entra no histórico quando o jogador pressiona Enviar.
+- Se o turno começa por `opening`/`incoming`, a mensagem do personagem é considerada já recebida: a lista de contatos pode exibir preview e indicador de não lida antes de abrir a thread.
+- Abrir uma thread nunca deve fabricar como recebida uma resposta que depende de uma mensagem do Analista ainda não enviada.
+- O histórico segue automaticamente novas bolhas enquanto o jogador está próximo do fim, como em mensageiros comuns. Se ele subir para reler, novas mensagens não arrancam a leitura da posição atual; a UI mostra um atalho para voltar às mensagens recentes.
+- Mensagens enviadas explicitamente pelo jogador forçam o acompanhamento ao fim; imagens carregadas mantêm o fundo visível apenas quando o usuário já estava acompanhando o fim do chat.
+- A persistência técnica do envio inicial usa flags estáveis no save v9 e não exige novo schema.
+
+
+## Atualização v0.2.33 — Elysia autorada e mensagem apagada
+- Elysia etapas 1–6 passa a ser autoria final, mantendo a cadência tímida → confortável → desinibida aprovada na Bíblia da AU.
+- Três fotos autoradas são entregues no NEXO por dados de conteúdo.
+- `DialogueMessage` pode definir `deleteAfterMs`/`deletedText`; o motor mostra a mensagem por um curto intervalo e depois preserva o estado excluído no histórico.
+- Dates da Elysia nos marcos 3/6 são narrativas lineares em `/encontro`, sem escolhas internas.
+
+
+## v0.2.36 — CTA persistente de encontro
+Quando uma conversa autorada termina oferecendo uma saída, a última mensagem permanece no histórico e o compositor é substituído por `IR PARA ENCONTRO`. O jogador pode adiar sem perder o convite. Se a cota global de uma saída presencial daquela noite já foi usada, o CTA permanece visível com explicação e volta a habilitar no próximo dia. O próximo estágio da rota não aparece antes da conclusão do encontro.
+
+
+## Identidade do protagonista em diálogos (v0.2.59)
+O NEXO e os Dates resolvem nome e pronomes do jogador em runtime. A escrita prioriza construções neutras para evitar triplicar roteiro. “Analista” continua válido como cargo, mas não deve ser usado como substituição automática do nome em tratamento pessoal. A seleção ocorre junto ao nome no Novo Jogo: Ele/dele, Ela/dela ou Elu/delu.
+
+
+## v0.2.61 — ordenação por atividade real e abertura do grupo
+- A lista de DMs deve ordenar por **última atividade efetiva**, não pelo maior `timeLabel` disponível no conteúdo.
+- Enviar uma mensagem registra atividade do contato e move a thread para o topo.
+- Mensagem recebida ainda não respondida pode usar o horário autorado como fallback de recência.
+- Turnos que começam pelo Analista e ainda aguardam o primeiro envio não contam como atividade nova.
+- No onboarding coletivo, respostas dos membros do grupo aparecem uma por vez com pequena cadência/indicador de digitação. O CTA para continuar só libera depois que toda a sequência foi entregue.

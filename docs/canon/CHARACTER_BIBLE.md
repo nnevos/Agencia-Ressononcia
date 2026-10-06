@@ -8,6 +8,8 @@ Atributos pessoais: Força, Agilidade, Carisma, Inteligência e Vigor. Escala 1�
 
 ## Yuki — Frio
 
+**[AU-APROVADO] Dados físicos:** 19 anos · 1,70 m · 73 kg.
+
 **[CÂNONE-BASE]** Frio versátil, congelamento, proteção, mobilidade sobre gelo, improvisação e risco de perda de controle sob emoção intensa. Relações importantes incluem Elysia, Alexandra e Eros.
 
 **[AU-APROVADO]** Combatente · Vanguarda. Adaptável · Corpo a corpo · Controle de campo.
@@ -24,6 +26,8 @@ Atributos pessoais: Força, Agilidade, Carisma, Inteligência e Vigor. Escala 1�
 
 ## Elysia — Energia
 
+**[AU-APROVADO] Dados físicos:** 19 anos · 1,60 m · 63 kg.
+
 **[CÂNONE-BASE]** Manipula Energia, absorve raios, usa garras/formas energéticas e possui manifestação avançada. É estudiosa, persistente e busca deixar de ser “princesa em perigo”. Sobrecarga cobra alto custo.
 
 **[AU-APROVADO]** Arcanista · Duelista. Ágil · Metamórfica · Corpo a corpo.
@@ -35,6 +39,8 @@ Atributos pessoais: Força, Agilidade, Carisma, Inteligência e Vigor. Escala 1�
 **Progressão:** Forma Aérea/Predadora, especialização em condução/projeções e evolução de Energia Pura.
 
 ## Lysandro — Força física + espada
+
+**[AU-APROVADO] Dados físicos:** 20 anos · 1,75 m · 80 kg.
 
 **[CÂNONE-BASE]** Não elemental. Espadachim excepcional, forte, veloz, livre e leal por escolha. Pode rivalizar com magia pela técnica física.
 
@@ -48,6 +54,8 @@ Atributos pessoais: Força, Agilidade, Carisma, Inteligência e Vigor. Escala 1�
 
 ## Hélio — Fogo
 
+**[AU-APROVADO] Dados físicos:** 21 anos · 1,80 m · 82 kg.
+
 **[CÂNONE-BASE]** Fogo e fogo azul, ligação ao legado de Agni, confronto inicial com o grupo e cooperação posterior.
 
 **[AU-APROVADO]** Especialista · Atirador. Longo alcance · Preciso · Versátil.
@@ -59,6 +67,8 @@ Atributos pessoais: Força, Agilidade, Carisma, Inteligência e Vigor. Escala 1�
 **Progressão:** rajada focal/impulso, cauterização/zona térmica e evolução de domínio do Fogo Azul.
 
 ## Demétria — Terra
+
+**[AU-APROVADO] Dados físicos:** 20 anos · 1,78 m · 77 kg.
 
 **[CÂNONE-BASE]** Controla terra existente, não cria do nada; poder dividido por ser gêmea; usa manoplas e evolui para materiais minerais mais resistentes. Pragmática e orientada à ação.
 
@@ -72,6 +82,8 @@ Atributos pessoais: Força, Agilidade, Carisma, Inteligência e Vigor. Escala 1�
 
 ## Alexandra — Água
 
+**[AU-APROVADO] Dados físicos:** 21 anos · 1,75 m · 65 kg.
+
 **[CÂNONE-BASE]** Água com flechas/lanças e controle fino; responsabilidade institucional; vínculo familiar complexo com Yuki e dificuldade de exteriorizar afeto.
 
 **[AU-APROVADO]** Arcanista · Suporte. Controle fino · Resgate · Múltiplos vetores.
@@ -83,6 +95,8 @@ Atributos pessoais: Força, Agilidade, Carisma, Inteligência e Vigor. Escala 1�
 **Progressão:** fluxo protetor/vetores, pressão/leitura hidráulica e evolução de duplicatas de água.
 
 ## Eros — Ar
+
+**[AU-APROVADO] Dados físicos:** 22 anos · 1,80 m · 76 kg.
 
 **[CÂNONE-BASE]** Voo, rajadas, redemoinhos, percepção de vibrações em estágio avançado; cordial, leve e ligado à liberdade; irmão de Yuki por parte de pai.
 

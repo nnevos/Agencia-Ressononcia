@@ -3,6 +3,7 @@ import type { Hero } from "@/game/types";
 export const heroes: Hero[] = [
   {
     id: "yuki", name: "Yuki", powerName: "Frio", className: "Combatente", trail: "Vanguarda",
+    age: 19, heightCm: 170, weightKg: 73,
     style: ["Adaptável", "Corpo a corpo", "Controle de campo"], tags: ["controle", "resgate", "mobilidade", "frio"],
     profile: "Manipula o Frio de forma extremamente versátil. Alterna entre armas, proteção e controle do terreno, improvisando conforme a missão e transformando o campo ao seu favor.",
     strengths: ["Cria armas, escudos e ferramentas de gelo", "Congela superfícies e remodela o terreno", "Combina Frio com combate corpo a corpo", "Aproveita água disponível para ampliar opções"],
@@ -18,6 +19,7 @@ export const heroes: Hero[] = [
   },
   {
     id: "elysia", name: "Elysia", powerName: "Energia", className: "Arcanista", trail: "Duelista",
+    age: 21, heightCm: 160, weightKg: 63,
     style: ["Ágil", "Metamórfico", "Corpo a corpo"], tags: ["energia", "velocidade", "precisao", "mobilidade"],
     profile: "Molda Energia ao redor do corpo para assumir garras, patas, asas e outras formas. Seu combate depende de movimento constante, adaptação e mudanças rápidas de abordagem.",
     strengths: ["Molda energia em características de animais", "Alta velocidade e mobilidade angular", "Projeta criaturas energéticas para ampliar ofensivas", "Grande conhecimento teórico sobre fenômenos elementais"],
@@ -33,6 +35,7 @@ export const heroes: Hero[] = [
   },
   {
     id: "lysandro", name: "Lysandro", powerName: "Força + Espada", className: "Combatente", trail: "Duelista",
+    age: 20, heightCm: 175, weightKg: 80,
     style: ["Espadachim", "Ágil", "Força bruta"], tags: ["interceptacao", "resistencia", "combate", "ruptura"],
     profile: "Um combatente não elemental que levou corpo, reflexos e domínio da espada a um nível capaz de rivalizar com magia. Luta quebrando o ritmo e as regras impostas pelo adversário.",
     strengths: ["Espadachim excepcional sem afinidade elemental", "Força e velocidade além dos limites comuns", "Cortes de impacto capazes de atingir além da lâmina", "Excelente em duelos e improvisação"],
@@ -48,6 +51,7 @@ export const heroes: Hero[] = [
   },
   {
     id: "helio", name: "Hélio", powerName: "Fogo", className: "Especialista", trail: "Atirador",
+    age: 21, heightCm: 180, weightKg: 82,
     style: ["Longo alcance", "Preciso", "Versátil"], tags: ["potencia", "combate", "ruptura", "fogo", "precisao"],
     profile: "Utiliza o Fogo de maneira direta e controlada, favorecendo pressão à distância. Seu fogo azul eleva drasticamente o poder destrutivo, enquanto técnicas de impulso e combate físico mantêm sua versatilidade.",
     strengths: ["Rajadas concentradas de alcance variável", "Fogo azul de potência excepcional", "Combina chamas com combate corpo a corpo", "Usa fogo para impulso, cauterização e interação ambiental"],
@@ -63,6 +67,7 @@ export const heroes: Hero[] = [
   },
   {
     id: "demetria", name: "Demétria", powerName: "Terra", className: "Combatente", trail: "Vanguarda",
+    age: 20, heightCm: 178, weightKg: 77,
     style: ["Corpo a corpo", "Resistente", "Força bruta"], tags: ["resgate", "contenção", "resistencia", "terra", "ruptura"],
     profile: "Usa a Terra como extensão da própria força. Especialista em confrontos diretos, proteção e manipulação do terreno, combinando resistência física com golpes de enorme impacto.",
     strengths: ["Manoplas de pedra para impacto e proteção", "Ergue barreiras e estabiliza estruturas", "Manipula terreno para impulsionar investidas", "Excelente resistência em confronto direto"],
@@ -78,6 +83,7 @@ export const heroes: Hero[] = [
   },
   {
     id: "alexandra", name: "Alexandra", powerName: "Água", className: "Arcanista", trail: "Suporte",
+    age: 21, heightCm: 175, weightKg: 65,
     style: ["Controle fino", "Resgate", "Múltiplos vetores"], tags: ["controle", "resgate", "precisao", "agua", "suporte"],
     profile: "Manipula Água com grande precisão, alternando entre armas, contenção e suporte. Sua capacidade de operar vários vetores simultaneamente a torna especialmente valiosa em resgate e controle ambiental.",
     strengths: ["Molda água em flechas, lanças e contenções", "Controle preciso de múltiplos vetores", "Excelente suporte ambiental e combate a incêndio", "Aplicações avançadas incluem duplicatas de água"],
@@ -93,6 +99,7 @@ export const heroes: Hero[] = [
   },
   {
     id: "eros", name: "Eros", powerName: "Ar", className: "Especialista", trail: "Mobilidade",
+    age: 22, heightCm: 180, weightKg: 76,
     style: ["Ágil", "Reconhecimento", "Controle de fluxo"], tags: ["mobilidade", "resgate", "reconhecimento", "ar", "evacuacao"],
     profile: "Manipula o Ar para voo, rajadas, controle de fluxo e reconhecimento. É especialmente eficiente em evacuação, resposta rápida e leitura do ambiente por vibrações.",
     strengths: ["Voo e deslocamento de alta mobilidade", "Rajadas e redemoinhos para controle de fluxo", "Evacuação e suporte de trajetória", "Percepção avançada de vibrações ambientais"],

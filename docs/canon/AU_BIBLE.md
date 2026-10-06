@@ -82,3 +82,15 @@ Falas, opções do jogador e condições de cena são conteúdo autoral e devem 
 ### Regra de ritmo
 
 [AU-APROVADO] Os marcos mecânicos podem ser compartilhados, mas as sete rotas não devem seguir a mesma cadência emocional. O percentual de romance desbloqueia possibilidades; a personalidade e a etapa narrativa determinam como cada personagem expressa interesse.
+
+
+## Rota autorada da Elysia — v0.2.33
+[AU-APROVADO] A rota final da Elysia nas etapas 1–6 concretiza o ritmo tímida → confortável → desinibida já aprovado. A progressão autoral é: apresentação pessoal; explicação nerd detalhada sobre os próprios poderes; primeiro date em um museu de história ligado ao surgimento dos poderes; flerte crescente; mensagem impulsiva apagada; convite para assistir VHS em casa e segundo date.
+
+[AU-APROVADO] O segundo date atual termina na fala “Você não quer saber qual é a recompensa?”. Não continuar a intimidade além desse ponto sem novo texto do autor.
+
+
+## Rota autorada de Lysandro — v0.2.42
+[AU-APROVADO] A rota final de Lysandro nas etapas 1–6 mantém a intensidade imediata já aprovada: o flerte existe desde o primeiro contato, enquanto a progressão revela responsabilidade, cuidado e dificuldade de desacelerar. A progressão autoral é: apresentação e ausência de poder aparente; apoio após um dia difícil e flerte protetor; primeiro date no Bar do Becos; conversa sobre patrulha vigilante e descanso; flerte explícito sobre “ajudinhas”; convite para um restaurante e segundo date que termina na casa de Lysandro.
+
+[AU-APROVADO] O Date 1 é uma cena linear no Bar do Becos. O Date 2 é uma cena linear em restaurante/casa de Lysandro e termina, no texto autoral atual, com a porta do quarto sendo fechada. Não continuar a intimidade além desse ponto sem novo texto do autor.

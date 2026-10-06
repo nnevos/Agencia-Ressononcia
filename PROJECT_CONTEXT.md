@@ -1,6 +1,6 @@
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **v0.2.9**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.2**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat
@@ -13,6 +13,68 @@ Leia, nesta ordem:
 5. `docs/design/*`
 6. `docs/failsafe/CURRENT_STATE.md`
 7. `docs/failsafe/NEXT_SESSION.md`
+
+
+
+
+## Beta 1 · v0.3.0-beta.2 (2026-10-06)
+## Hotfix visual do primeiro tutorial · v0.3.0-beta.2
+- No E-04, Edison usa apenas o balão flutuante padrão; o briefing não reserva mais uma faixa interna para tutorial.
+- O onboarding principal não aplica spotlight global escuro no primeiro caso nem no resultado; o alvo relevante continua pulsando.
+- Ao abrir o resultado do primeiro caso, o balão permanece visível acima do modal e orienta revisar/arquivar.
+- Save schema v10 e regras de Dispatch/tutorial permanecem inalterados.
+
+- Arquitetura de persistência passa a ser local-first: `lib/save.ts` continua como fachada do domínio e `lib/persistence/` separa armazenamento/metadados do backend.
+- Supabase Auth + save cloud implementados por adapters REST em `lib/supabase/`, ativados somente quando `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` estão configurados.
+- `CloudSyncBridge` sincroniza saves em background após escrita local somente para contas vinculadas; modo convidado e jogo offline continuam funcionais.
+- Primeiro vínculo não usa last-write-wins silencioso: se local e nuvem divergirem, o jogador escolhe explicitamente `USAR LOCAL` ou `USAR NUVEM`.
+- Migration/RLS versionada em `supabase/migrations/001_beta1_game_saves.sql`; nunca usar service role no cliente.
+- Build identificada como `BETA 1 · v0.3.0-beta.2`; save schema permanece v10.
+
+## Atualização v0.2.65 (2026-10-06)
+- Edison Tutorial UX v3 unifica a apresentação tutorial em `components/EdisonCoach.tsx`, usando retrato oficial, estados visuais, pista de alvo e spotlight sem bloquear a interface real.
+- Desenvolvimento registra aprendizado por ação: selecionar agente `UP`, escolher técnica e confirmar atributo; Maestria permanece confirmação informativa por não possuir escolha manual.
+- NEXO registra o tutorial pós-expediente ao abrir uma conversa e o tutorial de Date ao usar explicitamente `IR PARA ENCONTRO`.
+- `Manual da Agência` foi adicionado à Central, Desenvolvimento e NEXO; entradas contextuais desbloqueiam conforme flags já existentes.
+- Save schema permanece v10; nenhuma fórmula, balanceamento, conteúdo narrativo ou gate de Date foi alterado.
+
+## Atualização v0.2.64 (2026-10-06)
+- Tutorial Progressivo v2 implementado sem alterar balanceamento: explicações contextuais aparecem somente quando o sistema se torna acionável e usam flags persistentes no save v10.
+- Desenvolvimento agora ensina primeiro upgrade, técnica/especialização/evolução, ponto de atributo e Maestria pós-Nv6; upgrades continuam obrigatórios antes do pós-expediente.
+- Dispatch contextual ensina equipe/Ressonância ao selecionar 2+ agentes, combos somente quando descobertos e condição quando o briefing detectar agente cansado/machucado.
+- NEXO pós-expediente explica liberdade de conversar com vários contatos; convite de Date recebe tutorial próprio quando houver convite pendente.
+- Regras documentadas em `docs/design/TUTORIAL_PROGRESSIVO_V2.md`; save schema permanece v10.
+
+## Atualização v0.2.63 (2026-10-06)
+- NEXO operacional contextual v2 implementado sem alterar o cálculo de Dispatch: mensagens agora consideram ocorrência, afinidade, tags/especialidade, composição da equipe, relações/combos já registrados e resultado da missão.
+- Os **48/48 casos** do banco ativo possuem comentário pré-despacho, incluindo os dez IDs legados `inc-*` ainda válidos no banco.
+- Equipes diferentes recebem diálogo diferente: pares canônicos/ressonantes têm interações próprias e as demais composições usam fallback que referencia o colega realmente despachado.
+- Resultados distinguem sucesso, sucesso com custo, parcial e falha; em equipes com 2+ membros o segundo agente pode reagir ao retorno do primeiro.
+- `docs/authoring/chat-scripts/NEXO - Guerreiros Elementais.docx` passa a espelhar o catálogo operacional contextual para revisão autoral.
+- Save schema permanece v10; nenhuma chance, requisito, duração, recompensa ou resultado mecânico de ocorrência foi alterado.
+
+## Atualização v0.2.62 (2026-10-06)
+- Mensagens do grupo NEXO Guerreiros Elementais revisadas a partir das vozes já autoradas nos chats individuais.
+- `content/narrative/introduction.ts`: sete respostas iniciais do grupo reescritas mantendo a entrega sequencial da v0.2.61.
+- `content/messages/operations.ts`: comentários de ocorrências, atualizações de missão e conversa ambiente deixam de ser placeholder e passam a ter voz específica por personagem.
+- Documento revisável criado em `docs/authoring/chat-scripts/NEXO - Guerreiros Elementais.docx`; qualquer revisão futura deve ser refletida no runtime correspondente.
+- Nenhum evento, regra de Dispatch, Date, rota individual, cânone ou save schema foi alterado; save permanece v10.
+
+## Atualização v0.2.61 (2026-10-06)
+
+- NEXO ordena contatos pela atividade real mais recente: mensagens enviadas pelo jogador passam a registrar atividade persistente por contato; mensagens recebidas sem interação usam a hora autorada como fallback; conversas ainda não iniciadas não sobem artificialmente apenas por possuírem `timeLabel`.
+- A primeira conversa coletiva do grupo `Guerreiros Elementais` agora revela as respostas uma a uma, com indicador de digitação e avanço bloqueado até a sequência terminar.
+- Retrato principal de Alexandra substituído pelo asset fornecido nesta sessão em `public/heroes/alexandra.jpg`.
+- O primeiro caso guiado E-04 não pode mais expirar enquanto aguarda a decisão do jogador: o relógio operacional pausa nessa etapa e retoma do mesmo minuto após o despacho.
+- Save schema permanece v10; nenhum diálogo, Date, cânone ou balanceamento de casos foi alterado.
+
+## Atualização v0.2.60 (2026-10-06)
+
+- Hotfix de validação social após o primeiro runtime da v0.2.59.
+- Alexandra autorada não é mais duplicada pelos geradores placeholder D2–D6; os IDs autorais existentes foram preservados para compatibilidade de save.
+- Eros D1–D6 agora segue o contrato estrutural de exatamente 3 respostas por turno: a fala-base autoral permanece intacta como opção base e as duas alternativas adicionais apenas variam o tom do Analista, sem criar evento/cânone novo.
+- Todos os finais de D3/D6 do Eros preservam `exclusiveOutingDay` + `vnSceneId`, como exigido pelo gate de Date.
+- Save schema permanece v10.
 
 ## Identidade
 
@@ -94,7 +156,7 @@ Prioridade P1/P2/P3 existe internamente, mas não é exibida como sigla ao jogad
 ## Save
 
 - localStorage
-- schema atual: v9
+- schema atual: v10
 - saves antigos são migrados; não apagar save para resolver mudança de schema.
 
 
@@ -181,6 +243,284 @@ A rota de Yuki, etapas 1–6, é o primeiro conteúdo social autoral real a subs
 
 ## Atualização v0.2.9 — cadência de mensagens + romance sem hardlock
 - Sequências fixas no NEXO são entregues bolha por bolha, com pequena pausa/indicador de digitação; as opções só aparecem depois que a sequência corrente terminou.
-- O romance 0–100% permanece visível como feedback e continua recebendo pontos 100/50/30, mas deixou de ser requisito para os dates.
+- [SUPERSEDIDO em v0.2.11] O romance 0–100% permaneceu visível sem hardlock; desde v0.2.11 a porcentagem é derivada apenas das etapas concluídas e não recebe pontos 100/50/30.
 - Marcos presenciais são garantidos pela progressão da rota: etapa 3 = primeira saída; etapa 6 = segundo date, respeitando apenas a regra de uma saída presencial por noite global.
 - Nenhuma migração de save foi necessária; schema continua v9.
+
+
+## Hotfix v0.2.10 — convite presencial preso à conversa correta
+- Removido o botão genérico `MARCAR PRIMEIRA SAÍDA/SEGUNDO DATE` que podia aparecer assim que `routeStage` alcançava 3/6, mesmo antes da conversa daquela etapa.
+- Dates agora só são disparados pelas escolhas autoradas que possuem `vnSceneId` + `exclusiveOutingDay` dentro da própria etapa 3/6.
+- Concluir a etapa 2 nunca abre encontro nem consome a etapa 3.
+- A conclusão da cena presencial continua registrando `routeAdvanceFlag` para impedir abrir a etapa seguinte na mesma noite global.
+- Save schema permanece v9.
+
+- Compatibilidade: ao carregar, v0.2.10 detecta o estado impossível de v0.2.9 em que o outing 3 do Yuki foi concluído sem nenhuma escolha `yuki:r3:*`; nesse caso restaura Yuki para a etapa 3 e remove apenas o outing prematuro, preservando o restante do save.
+
+
+## Atualização v0.2.11 — percentual de romance derivado da rota
+
+- O percentual `ROMANCE` deixou de usar XP/pontos acumulados pelas escolhas.
+- O valor exibido agora é derivado somente das etapas concluídas da rota individual: `etapas principais concluídas / total de etapas principais da rota`.
+- Exemplo da rota atual de Yuki (6 etapas): 0% no início, ~17% após a etapa 1, ~33% após a etapa 2, 50% após o primeiro encontro/etapa 3, ~67% após a etapa 4, ~83% após a etapa 5 e 100% após concluir a etapa 6.
+- As marcações `romanceAffinity: 100 | 50 | 30` permanecem como metadado autoral e para deltas relacionais/futuras variações, mas não alteram a barra.
+- `romanceProgress` e `romanceEarnedByStage` continuam no save v9 apenas para compatibilidade com saves anteriores; o motor social atual não os usa para calcular a porcentagem.
+- `minRomanceProgress` fica legado/ignorado. Dates continuam vinculados ao convite autorado das etapas 3 e 6 e à exclusividade de uma saída presencial por noite.
+
+## Atualização v0.2.12 — retrato da Elysia
+- `public/heroes/elysia.jpg` foi substituído pela nova imagem fornecida pelo autor.
+- Sem mudança de mecânica, narrativa ou save.
+
+## QA de continuidade v0.2.12 (2026-09-30)
+
+A retomada foi feita exclusivamente a partir do ZIP v0.2.12. Antes de qualquer alteração foram relidos `PROJECT_CONTEXT.md`, `EDIT_HERE.md`, `content/README.md` e todos os arquivos de `docs/failsafe/`, `docs/authoring/`, `docs/design/` e `docs/canon/`.
+
+Auditoria estática do próximo bloco de `NEXT_SESSION.md` confirmou no código: entrega cadenciada de bolhas automáticas (620 ms, uma por vez), indicador de digitação entre bolhas, escolhas ocultas até a sequência corrente terminar, autoscroll usando somente o histórico interno, lightbox de imagem, porcentagem de romance derivada de `routeStage`, ausência de gate por `minRomanceProgress` e convites de Yuki nas etapas 3/6 disponíveis nas três afinidades 30/50/100.
+
+QA visual/runtime em navegador continua pendente: a instalação de dependências (`npm ci`) expirou no ambiente desta sessão. Nenhuma regra, conteúdo narrativo, save schema ou asset foi alterado.
+
+
+## Atualização v0.2.13 — fluxo diário e Desenvolvimento
+
+- Dias normais não exibem mais o modal meta `Preparar expediente`: ao entrar na Central com um turno ainda não iniciado, o expediente começa automaticamente às 08:00.
+- A única abertura manual preservada é o primeiro turno quando `tutorial_active` está ativo, porque faz parte do onboarding autorado de Edison.
+- O fim do expediente deixa de usar o CTA flutuante no centro inferior; a transição para Desenvolvimento passa a ocupar uma faixa integrada à shell da Central.
+- A tela Desenvolvimento usa os retratos oficiais já definidos em `content/characters/portraits.ts` tanto no roster quanto no painel do agente selecionado.
+- Nenhum conteúdo narrativo, cânone, regra de progressão ou save schema foi alterado.
+
+
+## Atualização v0.2.15 (2026-09-30)
+
+Fluxo de DMs do NEXO refinado sem alterar conteúdo autoral: quando um turno começa com `openingOutgoing`/`prefaceOutgoing`, a mensagem do Analista não nasce no histórico; ela fica preparada no compositor e só é enviada após ação explícita do jogador. Quando o personagem inicia o turno, a mensagem recebida já aparece na lista como conversa nova e pode carregar indicador de não lida. O autoscroll passa a seguir novas bolhas apenas quando o jogador está próximo do fim (ou acabou de enviar); se ele estiver relendo mensagens antigas, a posição é preservada e aparece um atalho de novas mensagens. Flags técnicas `social:intro-outgoing-sent:*` preservam o envio inicial em reloads sem novo schema. Save permanece v9.
+
+
+## Atualização v0.2.15 (2026-09-30)
+- Os dois encontros autorados de Yuki agora usam backgrounds fornecidos pelo autor: cafeteria no primeiro encontro e apartamento no segundo date.
+- Assets: `public/outings/yuki/date-1-cafeteria.jpg` e `public/outings/yuki/date-2-apartamento.jpg`.
+- Nenhum texto, flag, regra de rota ou save foi alterado. Save schema v9.
+
+
+## Atualização v0.2.16 (2026-09-30)
+
+Direção de UX consolidada: **simplificar a superfície sem simplificar o motor**. A Central/briefing passam a priorizar informação necessária para decidir; detalhes mecânicos permanecem disponíveis em superfícies secundárias. Dispatch mobile usa navegação por painéis (Chamados / Mapa / Agentes / NEXO), briefing em tela cheia e despacho fixo ao alcance do polegar. O mapa tático passa a usar `public/maps/central-city-map.jpg`, fornecido pelo autor, com marcadores dinâmicos sobre a imagem. Save permanece v9; nenhuma fórmula de Dispatch, narrativa, rota ou conteúdo canônico foi alterado.
+
+
+## Atualização v0.2.18 (2026-09-30)
+
+O briefing troca as cinco barras separadas de requisitos por um **radar comparativo**. O contorno pontilhado representa os valores necessários do caso e a área preenchida representa a soma dos atributos da equipe selecionada. Os cinco eixos permanecem Força, Agilidade, Carisma, Inteligência e Vigor; valores e requisitos continuam visíveis e reagem imediatamente à composição. Tags, afinidade contextual e chance estimada permanecem no briefing. Esta mudança é somente de apresentação: fórmulas, balanceamento e save schema v9 não mudaram.
+
+
+## Atualização v0.2.19 (2026-09-30)
+O briefing desktop passa a aceitar rolagem interna quando a altura útil não comporta todo o conteúdo, preservando cabeçalho e CTA de despacho sticky e evitando corte da seleção de agentes. Em alturas menores, o radar reduz moderadamente sem mudar dados ou cálculos. O dossiê de agente agora mostra o retrato oficial acima do nome, usando `content/characters/portraits.ts` como fonte única. Save permanece v9; nenhuma mecânica, fórmula ou narrativa foi alterada.
+
+
+## Atualização v0.2.20 (2026-09-30)
+O radar comparativo do briefing foi compactado visualmente: o pentágono ocupa uma parcela maior da área útil e os rótulos/valores foram aproximados dos respectivos vértices, reduzindo espaço vazio sem remover informação. Em viewports desktop mais baixas, o componente também usa largura menor para liberar espaço à seleção de equipe. Mudança somente de apresentação; cálculos, requisitos, chance e save schema v9 permanecem inalterados.
+
+
+## Atualização v0.2.21 (2026-09-30)
+
+Briefing desktop reorganizado para caber na primeira viewport sem depender de rolagem interna: a seleção da equipe ocupa o espaço antes ocioso sob a narrativa, enquanto requisitos/radar permanecem na coluna direita. Em alturas reduzidas, densidade e radar compactam moderadamente. Nenhuma mecânica, fórmula ou save mudou; schema permanece v9.
+
+
+## Atualização v0.2.22 (2026-09-30)
+
+Briefing desktop usa a faixa inferior em largura total para os sete agentes, em uma única linha, aproveitando o espaço antes vazio sem ampliar o modal. Requisitos de atributos do Dispatch passam a ser quantizados em pontos inteiros após a escala diária (`Math.round`), para corresponder à natureza discreta dos atributos e evitar alvos como 4.2/5.3 que nenhum atributo/equipe pode assumir exatamente. A chance passa a usar esses mesmos alvos inteiros; esta é uma pequena alteração mecânica deliberada de legibilidade/consistência. Alertas de equipe deixam de exibir a sigla técnica `p.p.`. Save permanece v9.
+
+
+## Atualização v0.2.23 (2026-09-30)
+
+O briefing desktop deixa de ocupar um modal global sobre toda a Central: ele passa a abrir contextualizado sobre o próprio Mapa Tático, preservando Ocorrências, NEXO e principalmente a barra persistente de agentes. Durante um briefing aberto, clicar no retrato de um agente na barra inferior adiciona/remove esse agente da composição; `ABRIR FICHA` continua abrindo o dossiê. O briefing mantém descrição, risco, confiabilidade, tempo, duração, radar equipe × necessário, tags, afinidade, chance, alertas de composição e CTA de despacho, mas não duplica os sete cards no desktop. Mobile mantém seleção dentro do briefing full-screen. Save permanece v9 e nenhuma fórmula de Dispatch, conteúdo narrativo ou balanceamento foi alterado.
+
+
+## v0.2.26 — consolidação técnica da Central
+- `app/agencia/page.tsx` foi reduzido a orquestração de estado/fluxo; superfícies de UI vivem em `components/agency/` (`AgencyHeader`, `IncidentRail`, `TacticalMap`, `MissionBriefing`, `OperationsChatRail`, `AgentRoster`, modais e navegação mobile).
+- O CSS ativo introduzido entre v0.2.16–v0.2.25 foi retirado de `app/globals.css` e centralizado em `app/agencia/agency.css`, importado após o global para preservar a cascata efetiva sem mudança visual deliberada.
+- Não alterar lógica de Dispatch ao editar esses componentes: a fonte de regras continua em `game/` e `content/`.
+
+## v0.2.27 — polish / acessibilidade / save / assets
+- Central: Escape fecha briefing/dossiê/resultado/configurações; estados importantes possuem anúncio `aria-live`; foco visível foi reforçado e controles touch principais têm alvo mínimo maior; `prefers-reduced-motion` reduz animações/transições.
+- Roster: seleção expõe `aria-pressed`; agente indisponível não pode ser selecionado durante briefing, mas `ABRIR FICHA` continua acessível.
+- Configurações: `EXPORTAR SAVE` baixa JSON legível; `IMPORTAR SAVE` valida/migra o arquivo antes de substituir o save local. Schema permanece v9.
+- Outings: `OutingScene` aceita `backgroundPositionDesktop` e `backgroundPositionMobile`; Yuki usa crop específico por viewport sem criar tela por personagem.
+- Assets pesados em uso foram convertidos para WebP e referências atualizadas (Yuki, mapa, backgrounds da Agência e dois outings de Yuki). Não houve mudança narrativa.
+
+
+## Hotfix v0.2.28 — briefing contextual após decomposição
+- Corrigida regressão visual introduzida pela decomposição da Central: `MissionBriefing` agora é filho de `TacticalMap`, portanto o overlay desktop precisa ser `position:absolute` dentro de `.mapStageWorkspace`.
+- O briefing volta a ocupar somente a área do mapa, por cima da cidade, sem criar coluna/linha implícita que comprimia a imagem e deslocava o conteúdo.
+- Nenhuma mecânica, conteúdo, balanceamento ou save foi alterado; schema permanece v9.
+
+## v0.2.29 — Desenvolvimento first-view desktop
+
+A tela `/desenvolvimento` foi compactada e redistribuída no desktop para priorizar uma primeira viewport completa, sem remover informação e sem alterar progressão. O cabeçalho, roster e identidade usam menos altura; radar e progressão continuam lado a lado; escolha pendente e técnicas desbloqueadas passam a compartilhar a faixa inferior em duas colunas. Em desktops de pouca altura existe uma compactação adicional. Mobile <=900 px preserva o fluxo responsivo anterior. Save schema permanece v9.
+
+
+## Atualização v0.2.31 (2026-09-30)
+
+Desenvolvimento foi reorganizado como workbench: em níveis 3/5 a escolha de atributo acontece ao lado do radar com preview +/− e confirmação explícita; a progressão, escolhas de técnica/evolução e técnicas desbloqueadas ficam concentradas na coluna direita. O objetivo é aproveitar a primeira viewport sem a faixa inferior quebrada da v0.2.29. Nenhuma regra de XP, thresholds, atributos, técnicas, Maestria ou save mudou. Save schema v9.
+
+
+## Atualização v0.2.33 — rota autorada da Elysia
+- Elysia substitui PLACEHOLDER por autoria final nas etapas 1–6.
+- A rota segue a cadência aprovada tímida → confortável → desinibida: apresentação, conversa nerd sobre poderes, museu, flerte crescente, mensagem apagada e convite para casa.
+- Etapa 3 abre o Date 1 no Museu de História; etapa 6 abre o Date 2 na casa de Elysia. Ambos são cenas lineares em `/encontro`, sem escolhas internas.
+- Três fotos autoradas foram integradas ao NEXO em `public/nexo/elysia/`.
+- `DialogueMessage` ganhou exclusão visual opcional data-driven (`deleteAfterMs`/`deletedText`): durante a entrega ao vivo a mensagem permanece legível por um curto intervalo e então vira “Mensagem excluída”; no histórico concluído ela permanece excluída.
+- Save schema permanece v9.
+
+
+## Atualização v0.2.34 — backgrounds dos dates da Elysia
+Os Dates 1 e 2 da Elysia usam backgrounds autorais próprios (Museu de História e casa), armazenados em `public/outings/elysia/` em WebP. Nenhuma regra narrativa/mecânica ou save foi alterada.
+
+
+## Atualização v0.2.35 — hotfix de validação da rota Elysia
+- Corrigido `elysia:r4:t3`: o turno do livro volta a respeitar a regra editorial de exatamente 3 respostas do Analista.
+- Nenhuma mudança de progressão, dates, save ou mecânicas.
+
+
+## Atualização v0.2.36 — convites de encontro persistentes
+
+- Finalizar o chat autorado que oferece um date não reserva mais automaticamente a noite nem abre `/encontro`.
+- Após a última mensagem, o NEXO exibe um CTA persistente `IR PARA ENCONTRO`; a última mensagem continua visível no histórico.
+- O jogador pode encerrar a noite sem aceitar. O convite permanece disponível em noites futuras enquanto o marco presencial não tiver sido concluído.
+- Se outra pessoa já ocupou a saída presencial daquela noite global, o chat continua normalmente e o CTA fica temporariamente indisponível, voltando a ficar utilizável no dia seguinte.
+- A rota daquele personagem permanece estacionada no estágio 3/6 até o date ser concluído; somente então `routeStage` avança.
+- Não há mudança de save schema; o estado é derivado das flags da escolha final + `outingMilestones`/`outingsByGlobalDay`. Save permanece v9.
+
+## Atualização v0.2.37 — Yuki no padrão conversacional da Elysia
+
+- A rota autorada de Yuki preserva os acontecimentos, voz, fotos e dates existentes, mas redistribui mensagens automáticas do Analista em mais turnos com 3 respostas.
+- O objetivo é manter o mesmo padrão interativo consolidado pela Elysia: beats curtos, opção neutra/casual e escalada de intimidade sem transformar a voz de Yuki.
+- Convites das etapas 3/6 continuam usando o CTA persistente `IR PARA ENCONTRO`; dates e save schema v9 não mudam.
+
+
+## Atualização v0.2.38 (2026-09-30)
+
+Menu principal redesenhado com a imagem autoral de cidade noturna em tela cheia. A interface usa uma camada de fade escuro horizontal contínuo sobre a imagem para garantir leitura do logo e das ações sem esconder completamente a cidade. `CONTINUAR` permanece visível e desabilitado quando não há save; `NOVO JOGO` e `CONTA / ACESSO` preservam os fluxos atuais. O asset vive em `public/menu/cidade-noturna.webp`. Save permanece v9.
+
+
+## Atualização v0.2.40 (2026-09-30)
+
+Menu principal passa a concentrar o fluxo de entrada: CONTINUAR, NOVO JOGO, CARREGAR JOGO, CONTA / ACESSO e CONFIGURAÇÕES em painéis sobre a cidade noturna. Conta continua preparada para backend futuro: a build local não armazena senha; sessão guest/preview guarda apenas metadados não sensíveis. CARREGAR integra slot local e import/export JSON. Configurações persistem redução de movimento e velocidade das mensagens do NEXO. Transições do menu usam fade/curtain e respeitam redução de movimento. `SALVAR E SAIR` grava o save e retorna ao menu principal na Central, Desenvolvimento e NEXO. Save schema permanece v9.
+
+
+## Atualização v0.2.42 (2026-09-30)
+
+Rota autorada de Lysandro implementada nas etapas 1–6, substituindo os placeholders principais. O fluxo segue o padrão consolidado do NEXO: beats curtos, três respostas do Analista por turno, convites persistentes nas etapas 3 e 6 e dates lineares. Três fotos autoradas foram integradas aos chats (milkshake no estágio 2, espelho no estágio 4 e foto antes do Date 2 no estágio 6). Os dates usam o texto fornecido pelo autor; backgrounds específicos ainda não foram fornecidos, então mantêm fallback visual existente. Save schema permanece v9.
+
+
+## Atualização v0.2.43 (2026-09-30)
+
+Mídia autoral de Lysandro atualizada: as três fotos do NEXO foram substituídas pelos arquivos mais recentes do autor e os dois dates agora usam backgrounds específicos (Bar do Becos no Date 1 e restaurante no Date 2). Falas, escolhas, progressão e save não foram alterados. Save schema permanece v9.
+
+
+## Atualização v0.2.44 (2026-09-30)
+- Date 2 de Lysandro agora possui dois beats lineares de apresentação: restaurante e casa.
+- A transição para o trecho “Voltando para casa...” troca o background para `public/outings/lysandro/date-2-casa.webp`.
+- O texto autoral e a progressão permanecem inalterados; save schema v9.
+
+
+## Atualização v0.2.45 (2026-10-01)
+
+- Retomada feita exclusivamente a partir do ZIP fornecido nesta sessão; `package.json` interno confirmou v0.2.44 como versão de origem, save schema v9.
+- QA estático do Date 2 de Lysandro confirmou dois beats lineares: restaurante primeiro e casa depois, com `date-2-casa.webp` somente no segundo beat.
+- O botão do primeiro beat apenas incrementa o beat ativo; `finishScene()` fica restrito ao último beat, portanto o encontro não é concluído na transição restaurante → casa.
+- O texto autoral permanece inalterado e termina em “fechando a porta.”; nenhuma continuação narrativa foi criada.
+- QA runtime/browser continua pendente porque `npm ci` expirou no ambiente; nenhum reset de save foi usado.
+- Save schema permanece v9; nenhuma mecânica, cânone ou conteúdo narrativo foi alterado.
+
+
+## Atualização v0.2.46 (2026-10-01)
+
+- `NOVO JOGO` agora oferece dois modos: **Campanha completa** e **Só pós-expediente**.
+- O modo `Só pós-expediente` reutiliza o mesmo save schema v9 e as mesmas rotas sociais; é identificado pela flag `mode:post-shift-only`.
+- Nesse modo, o save começa diretamente no NEXO pós-expediente, sem onboarding, Central ou Desenvolvimento.
+- `PRÓXIMA NOITE` avança o dia global e retorna ao NEXO, preservando a regra de no máximo uma etapa de rota por personagem por noite e uma saída presencial por noite.
+- Acesso manual a `/introducao`, `/agencia` ou `/desenvolvimento` redireciona de volta para `/conversa` quando o modo social-only está ativo.
+- Linhas contextuais dependentes do expediente (`contextLines`) ficam ocultas nesse modo para não afirmar operações que não ocorreram.
+- Campanha completa continua sendo o padrão e não teve regras alteradas. Save schema permanece v9.
+
+
+## Atualização v0.2.47 (2026-10-01)
+- Rota autoral D1–D6 de Demétria integrada ao NEXO, com três respostas por turno e dates lineares nos marcos 3/6.
+- Cinco mídias autorais de Demétria integradas: três fotos de chat e dois fundos de date.
+- Save schema permanece v9.
+
+
+## Atualização v0.2.49 (2026-10-01)
+
+- Hotfix do modo **Só pós-expediente**: o avanço entre noites atualiza o save persistido e o estado local de `/conversa`, evitando o travamento causado por navegação para a mesma rota.
+- `PRÓXIMA NOITE` agora abre confirmação com **Ir para próximo dia** e **Voltar**.
+- Nenhuma alteração de cânone, rotas sociais ou save schema (permanece v9).
+
+
+## Atualização v0.2.49 (2026-10-01)
+- Fotos da Demétria atualizadas: Dia 4/academia e Dia 6/convite do Date 2.
+- Sem mudanças de diálogo, lógica ou save schema (v9).
+
+
+## Atualização v0.2.51 (2026-10-01)
+
+Sistema de Dates recebeu leitor linear paginado sem escolhas: cenas longas são divididas apenas para leitura, preservando integralmente a ordem e o texto autoral. A tela exibe DATE 1/DATE 2, progresso da cena, transições entre páginas/beats, retoma a página atual dentro da mesma noite via sessionStorage e impede reabrir manualmente um encontro já concluído. Save permanece schema v9; nenhum conteúdo narrativo foi alterado.
+
+
+## Atualização v0.2.52 (2026-10-01)
+
+Pacote de polimento social/NEXO sem alteração de conteúdo narrativo: biblioteca de fotos desbloqueadas, arquivo oficial de Dates concluídos com replay sem mutação de save, estados persistentes de leitura no NEXO, contador de novidades, transição NEXO→Date, cartão de abertura do Date, navegação anterior/seguinte por páginas e suporte a teclado. Foi criado `content/social/routeManifest.ts` para padronizar a estrutura D1–D6 + Dates 3/6 e `content/validate.ts` agora valida essa estrutura. Nova rota interna `/qa/social` permite selecionar noite/etapa/personagem, abrir chat, visualizar Date em QA preview, inspecionar flags e limpar apenas progresso social. Save permanece schema v9. Adaptador de pronomes, reescrita dos grupos e hipótese de fechamento social continuam no backlog pós-conversas.
+
+
+## Atualização v0.2.53 (2026-10-01)
+Hotfix visual do NEXO: a introdução das abas Conversas/Fotos/Dates havia criado um sexto filho no grid lateral sem adicionar a sexta linha correspondente. As abas ocupavam indevidamente a linha flexível da lista de contatos. O grid agora reserva uma linha compacta própria para a navegação e a lista volta a preencher o espaço restante. Nenhuma regra social, conversa, Date ou save foi alterado. Save permanece v9.
+
+
+## Atualização v0.2.55 (2026-10-01)
+
+NEXO recebeu revisão de lista e autoscroll: contatos passam a ser ordenados pela atividade mais recente; o preview usa a mensagem mais recente realmente disponível/alcançada, distingue mensagens do Analista com `Você:` e padroniza truncamento/estado visual. O autoscroll agora usa limiar responsivo, acompanha mutações e mudanças de altura do compositor apenas quando o jogador está perto do fim, e mantém o botão de retorno às mensagens recentes acima do compositor dinâmico. Save permanece v9.
+
+
+## Atualização v0.2.56 (2026-10-01)
+
+Pacote de robustez social: validação editorial reforçada para flags/IDs/mídia/convites de Date, verificação de assets sociais em `npm run validate:social-assets`, normalização conservadora de saves v9 parciais e reparo de inconsistências entre milestones/flags de Date. `/qa/social` ganhou simulação de lido/não lido, atalhos D1–D6 + abrir, manipulação controlada de Date e diagnóstico/reload/reparo. Save permanece schema v9.
+
+
+## Atualização v0.2.57 (2026-10-01)
+
+- Hotfix do gatilho de Dates: concluir a última mensagem ou desbloquear um convite não autoriza mais abrir `/encontro`.
+- O Date normal recebe uma autorização efêmera de `sessionStorage` somente quando o jogador pressiona explicitamente `IR PARA ENCONTRO` no NEXO.
+- `/encontro` valida essa autorização antes de mostrar a abertura presencial; acesso antecipado retorna ao NEXO.
+- Reload durante um Date já iniciado continua permitido; sair voluntariamente para o NEXO remove a autorização e exige novo clique no CTA para reentrar.
+- Replay e QA preview continuam read-only e não usam esse gate. Save schema permanece v9; nenhum texto narrativo foi alterado.
+
+
+## Atualização v0.2.58 (2026-10-01)
+- Corrigido o gate de entrada em Dates introduzido na v0.2.57: `IR PARA ENCONTRO` não depende mais de `sessionStorage` para autorizar a mudança de rota.
+- O CTA agora navega explicitamente com `?launch=1`; `/encontro` exige esse parâmetro em cenas normais e continua validando `outingsByGlobalDay` antes de renderizar.
+- A última mensagem continua legível e nenhum Date abre automaticamente; replay/QA permanecem independentes do gate.
+- Save schema permanece v9 e nenhum conteúdo narrativo foi alterado.
+
+## Atualização autoral — Hélio (2026-10-02)
+- Para Hélio, usar o mesmo padrão textual aprovado a partir da rota Demétria: opção 1 preserva literalmente a fala-base fornecida; opções 2/3 são apenas variações do Analista, sem alterar acontecimentos.
+- Não normalizar ortografia/pontuação das falas-base ou dos Dates sem pedido explícito do autor.
+- Dates de Hélio permanecem lineares e sem opções; segmentação em parágrafos é apenas de apresentação.
+- Versão atual permanece 0.2.58; save schema v9.
+
+
+## Atualização autoral v0.2.58 — Alexandra (2026-10-05)
+- `content/dialogues/post-shift/alexandra.ts`: rota D1–D6 autorada com três opções por turno.
+- `content/narrative/outings.ts`: Dates de Alexandra nos marcos 3 e 6 substituem os placeholders.
+- Mídias: `public/nexo/alexandra/` (3 fotos) e `public/outings/alexandra/` (2 backgrounds).
+- Alexandra está `authored: true`; versão 0.2.58 e save schema v9 permanecem inalterados.
+
+
+## Atualização v0.2.59 — identidade textual do jogador (2026-10-06)
+- Novo Jogo coleta nome + pronomes: Ele/dele, Ela/dela ou Elu/delu.
+- Save schema v10 persiste `player.pronouns`; saves v9 migram para Ele/dele para preservar o comportamento histórico.
+- `lib/playerText.ts` centraliza nome, pronomes e flexões excepcionais. Conteúdo deve priorizar neutralidade e preservar “Analista” quando for cargo.
+- NEXO e Dates usam a mesma interpolação; não duplicar lógica em componentes.
+
+
+## Correção autoral Elysia/Yuki — 2026-10-06
+- Os DOCX reenviados nesta data são a única fonte válida para Elysia/Yuki.
+- Elysia tem 21 anos; o registro anterior de 19 anos foi superseded pela correção autoral.
+- Não transformar falas fixas do Analista em alternativas; só há escolha quando o DOCX declara alternativas/escolhas.

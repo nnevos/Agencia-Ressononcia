@@ -40,8 +40,11 @@
 - `RESSONANCIA_GDD_V4_8_v0_2_4.docx` — design consolidado com tutorial isolado e privacidade do NEXO.
 - `RESSONANCIA_BIBLIA_AU_V3_2_v0_2_4.docx` — Bíblia AU com regra corporativa/privada do NEXO.
 
-## Documentos atuais v0.2.9
-- `RESSONANCIA_GDD_V4_11_v0_2_9.docx` — GDD consolidado atual: NEXO com entrega cadenciada, romance sem hardlock, Yuki final etapas 1–6 e regras anteriores.
+## Documentos atuais v0.2.11
+- `RESSONANCIA_GDD_V4_12_v0_2_11.docx` — GDD consolidado atual: NEXO cadenciado, romance por etapa de rota, Yuki final etapas 1–6 e regras anteriores.
+- `RESSONANCIA_GDD_V4_11_v0_2_9.docx` — histórico da regra sem hardlock antes da mudança do percentual para estágio.
 - `RESSONANCIA_BIBLIA_AU_V3_4_LORE_ROTAS.docx` — Bíblia AU atual: lore pessoal e ritmo romântico aprovado dos sete; Edison no masculino.
 - `design/COMMUNICATION_SYSTEM.md` — schema e comportamento do NEXO atual.
 - `design/ROUTE_AND_LATEGAME_SYSTEM.md` — rotas individuais e campanha aberta.
+
+- `RESSONANCIA_GDD_V4_12_v0_2_11.docx` — GDD atual; romance % derivado da etapa da rota, sem XP social.

@@ -41,3 +41,17 @@ Atributos pessoais são só uma camada. Resultado combina:
 - Ressonância;
 - tamanho da equipe;
 - risco/contexto/informação.
+
+
+## Modo opcional: somente pós-expediente
+
+Ao criar um novo jogo, o jogador pode optar por jogar apenas o loop social pós-expediente. Nesse modo:
+
+1. onboarding, Central de despacho e Desenvolvimento são pulados;
+2. o jogador entra diretamente no NEXO;
+3. as mesmas rotas sociais, escolhas, convites e encontros da campanha completa são usadas;
+4. `PRÓXIMA NOITE` avança o dia global sem executar um expediente;
+5. continua valendo no máximo uma etapa de rota por personagem por noite e uma saída presencial por noite;
+6. a campanha completa continua sendo o modo padrão.
+
+O modo é uma alternativa de fluxo, não uma segunda versão do sistema social.

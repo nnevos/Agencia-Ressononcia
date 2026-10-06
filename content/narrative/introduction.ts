@@ -32,13 +32,13 @@ export const introNexoChoices: IntroNexoChoice[] = [
 ];
 
 export const introNexoReplies = [
-  { speaker: "Yuki", text: "Entendido. Prazer em conhecê-lo." },
-  { speaker: "Elysia", text: "Oi!! Finalmente mandaram alguém pra gente!" },
-  { speaker: "Lysandro", text: "Bem-vindo." },
-  { speaker: "Hélio", text: "E aí! Quando começa a ação?" },
-  { speaker: "Demétria", text: "Seja bem-vindo à equipe." },
-  { speaker: "Alexandra", text: "Prazer em conhecê-lo. Espero que possamos trabalhar bem juntos." },
-  { speaker: "Eros", text: "👋" },
+  { speaker: "Yuki", text: "Opa. Bem-vindo. Primeiro dia é meio caótico, mas cê pega o jeito." },
+  { speaker: "Elysia", text: "Oii!! Finalmente chegou alguém pra organizar a gente kkkkk. Bem-vindo!" },
+  { speaker: "Lysandro", text: "Opa, bem-vindo. Boa sorte tentando organizar esse povo." },
+  { speaker: "Hélio", text: "Opa! Bem-vindo. Quando começar a ação já sabe onde me achar." },
+  { speaker: "Demétria", text: "Oii, bem-vindo! Espero que a gente trabalhe bem junto 😊" },
+  { speaker: "Alexandra", text: "Prazer em conhecer você. Espero que possamos construir uma boa dinâmica de equipe." },
+  { speaker: "Eros", text: "Opa, bem-vindo kkkkk. Se precisar de vento eu resolvo, o resto a gente vê." },
 ] as const;
 
 export const introAfterNexo = [

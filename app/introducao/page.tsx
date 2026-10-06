@@ -1,9 +1,9 @@
 "use client";
 
 import { introAfterNexo, introductionSequence, introNexoChoices, introNexoReplies, INTRO_HERO_IDS } from "@/content/narrative/introduction";
-import { loadSave, writeSave } from "@/lib/save";
+import { isPostShiftOnlySave, loadSave, writeSave } from "@/lib/save";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Phase = "agency" | "nexo" | "replies" | "sdh";
 
@@ -13,10 +13,13 @@ export default function IntroductionPage() {
   const [index, setIndex] = useState(0);
   const [playerName, setPlayerName] = useState("Despachante");
   const [sentMessage, setSentMessage] = useState("");
+  const [replyRevealCount, setReplyRevealCount] = useState(0);
+  const repliesHistoryRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const save = loadSave();
     if (!save) return router.replace("/novo-jogo");
+    if (isPostShiftOnlySave(save)) return router.replace("/conversa");
     setPlayerName(save.player.name);
   }, [router]);
 
@@ -57,8 +60,26 @@ export default function IntroductionPage() {
       writeSave({ ...save, relationships, flags: [...save.flags.filter((f) => !f.startsWith("intro_nexo_")), `intro_nexo_${choice.tone}`] });
     }
     setSentMessage(choice.text);
+    setReplyRevealCount(0);
     setPhase("replies");
   }
+
+  useEffect(() => {
+    if (phase !== "replies" || replyRevealCount >= introNexoReplies.length) return;
+    const delay = replyRevealCount === 0 ? 520 : 760;
+    const timer = window.setTimeout(() => {
+      setReplyRevealCount((count) => Math.min(introNexoReplies.length, count + 1));
+    }, delay);
+    return () => window.clearTimeout(timer);
+  }, [phase, replyRevealCount]);
+
+  useEffect(() => {
+    if (phase !== "replies") return;
+    const node = repliesHistoryRef.current;
+    if (!node) return;
+    const frame = window.requestAnimationFrame(() => node.scrollTo({ top: node.scrollHeight, behavior: "smooth" }));
+    return () => window.cancelAnimationFrame(frame);
+  }, [phase, replyRevealCount]);
 
   function continueFromReplies() { setPhase("sdh"); setIndex(0); }
   function nextSdh() {
@@ -91,8 +112,8 @@ export default function IntroductionPage() {
 
     {phase === "replies" && <section className="introPhone">
       <header><div><small>NEXO</small><strong>Guerreiros Elementais</strong></div><span>online</span></header>
-      <div className="introPhoneHistory scroll"><div className="playerBubble"><small>{playerName}</small>{sentMessage}</div>{introNexoReplies.map((reply) => <div className="heroBubble" key={reply.speaker}><strong>{reply.speaker}</strong><span>{reply.text}</span></div>)}<div className="tutorialBubble">O grupo Guerreiros Elementais é usado em operações e pode ser supervisionado pela Agência. DMs privadas no NEXO não são supervisionadas.</div></div>
-      <footer><button onClick={continueFromReplies}>MINIMIZAR NEXO →</button></footer>
+      <div className="introPhoneHistory scroll" ref={repliesHistoryRef}><div className="playerBubble"><small>{playerName}</small>{sentMessage}</div>{introNexoReplies.slice(0, replyRevealCount).map((reply) => <div className="heroBubble nexoBubbleArrive" key={reply.speaker}><strong>{reply.speaker}</strong><span>{reply.text}</span></div>)}{replyRevealCount < introNexoReplies.length ? <div className="nexoTypingIndicator introGroupTyping" aria-label="Alguém está digitando"><span></span><span></span><span></span></div> : <div className="tutorialBubble">O grupo Guerreiros Elementais é usado em operações e pode ser supervisionado pela Agência. DMs privadas no NEXO não são supervisionadas.</div>}</div>
+      <footer><button onClick={continueFromReplies} disabled={replyRevealCount < introNexoReplies.length}>{replyRevealCount < introNexoReplies.length ? "AGUARDANDO RESPOSTAS..." : "MINIMIZAR NEXO →"}</button></footer>
     </section>}
   </main>;
 }

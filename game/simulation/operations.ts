@@ -1,15 +1,40 @@
 import { incidents } from "@/game/data/incidents";
 import { pairKey } from "@/game/data/resonance";
 import { applyMissionEffects } from "@/game/simulation/heroState";
-import { getElapsedGameMinutes, syncIncidentRuntime } from "@/game/simulation/shift";
+import { getElapsedGameMinutes, REAL_MS_PER_GAME_MINUTE, syncIncidentRuntime } from "@/game/simulation/shift";
+import { FIRST_TUTORIAL_INCIDENT_ID } from "@/content/narrative/tutorial";
 import { awardHeroXp } from "@/game/progression/heroProgression";
 import type { DispatchResult, SaveGame } from "@/game/types";
 
 export function advanceOperationalState(save: SaveGame, now = Date.now()): SaveGame {
   if (save.shift.status !== "running") return save;
-  const gameMinute = getElapsedGameMinutes(save.shift, now);
+  const tutorialRuntimeBeforeSync = save.shift.incidents[FIRST_TUTORIAL_INCIDENT_ID];
+  const tutorialDecisionPaused = save.player.currentDay === 1
+    && save.flags.includes("tutorial_active")
+    && (tutorialRuntimeBeforeSync?.status === "scheduled" || tutorialRuntimeBeforeSync?.status === "waiting");
+  const gameMinute = tutorialDecisionPaused ? save.shift.elapsedGameMinutes : getElapsedGameMinutes(save.shift, now);
   let shift = syncIncidentRuntime(save.shift, gameMinute);
-  let changed = shift.elapsedGameMinutes !== save.shift.elapsedGameMinutes || shift.status !== save.shift.status;
+
+  // O primeiro caso ensina a interface, portanto nao pode expirar enquanto o
+  // jogador ainda esta decidindo. Mantemos o relogio operacional pausado e
+  // rebalanceamos startedAtEpochMs para que, ao despachar, o turno continue
+  // exatamente do minuto em que o tutorial estava.
+  if (tutorialDecisionPaused) {
+    const tutorialRuntime = shift.incidents[FIRST_TUTORIAL_INCIDENT_ID];
+    shift = {
+      ...shift,
+      startedAtEpochMs: now - gameMinute * REAL_MS_PER_GAME_MINUTE,
+      status: "running",
+      incidents: tutorialRuntime ? {
+        ...shift.incidents,
+        [FIRST_TUTORIAL_INCIDENT_ID]: tutorialRuntime.status === "expired"
+          ? { ...tutorialRuntime, status: "waiting" as const }
+          : tutorialRuntime,
+      } : shift.incidents,
+    };
+  }
+
+  let changed = tutorialDecisionPaused || shift.elapsedGameMinutes !== save.shift.elapsedGameMinutes || shift.status !== save.shift.status;
   const reportQueue = [...shift.reportQueue];
 
   for (const incident of incidents) {

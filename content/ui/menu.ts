@@ -1,12 +1,12 @@
 /** Textos do menu principal. Não há lógica aqui. */
 export const MAIN_MENU_TEXT = {
-  title: "Ressonância",
-  eyebrow: "AGÊNCIA RESSONÂNCIA",
+  title: "RESSONÂNCIA",
+  eyebrow: "AGÊNCIA",
   tagline: "Gerencie pessoas extraordinárias em uma cidade que nunca espera você estar pronto.",
   subline: "Dispatch · Estratégia · Relações",
   continueLabel: "Continuar",
   newGameLabel: "Novo jogo",
-  accessLabel: "Acesso",
-  versionLabel: "v0.2.3 · First Dispatch",
-  artPlaceholder: "ÁREA RESERVADA PARA ARTE PRINCIPAL",
+  accessLabel: "Conta / acesso",
+  versionLabel: "BETA 1 · v0.3.0-beta.2",
+  artPlaceholder: "",
 } as const;

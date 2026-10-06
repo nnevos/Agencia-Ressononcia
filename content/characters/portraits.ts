@@ -1,6 +1,6 @@
 /** Retratos usados pela UI. Troque apenas o caminho/arquivo se quiser substituir uma arte. */
 export const HERO_PORTRAITS: Record<string, string> = {
-  yuki: "/heroes/yuki.png",
+  yuki: "/heroes/yuki.webp",
   elysia: "/heroes/elysia.jpg",
   lysandro: "/heroes/lysandro.jpg",
   helio: "/heroes/helio.png",

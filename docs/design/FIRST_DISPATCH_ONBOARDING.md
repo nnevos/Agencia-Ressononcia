@@ -22,3 +22,10 @@ Ensinar ficcionalmente: ocorrência → requisitos/afinidade → escolha → ind
 - Ao arquivar o relatório, os demais casos do Dia 1 são injetados como `scheduled` a partir de alguns minutos depois e distribuídos pelo restante do expediente.
 - A orientação de Edison aparece dentro do briefing quando E-04 está aberto; não pode ficar escondida atrás do modal.
 - O painel de conclusão precisa ser responsivo e nunca cortar checklist ou CTA.
+
+
+## Ajuste v0.2.61 — primeiro caso não pode falhar por tempo
+- Enquanto `tutorial_active` estiver ativo e E-04 ainda estiver em `scheduled`/`waiting`, o relógio operacional fica pausado no minuto atual.
+- E-04 não expira durante essa decisão e a UI comunica que o tutorial não possui limite de decisão.
+- Ao despachar Hélio, o relógio retoma a partir do mesmo minuto, preservando o restante do fluxo normal.
+- O resultado controlado e a liberação do banco após arquivar o relatório permanecem inalterados.

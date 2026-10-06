@@ -51,7 +51,7 @@ export function getMissionAssessment(incident: Incident, selectedHeroes: Operati
     .map(([attribute, weight]) => {
       const baseRequired = weight >= 3 ? MISSION_BALANCE.recommendedPoints.weight3 : weight >= 2 ? MISSION_BALANCE.recommendedPoints.weight2 : MISSION_BALANCE.recommendedPoints.weight1;
       const dayScale = getDayRequirementScale(day);
-      const required = Math.max(1, Number((baseRequired * dayScale).toFixed(1)));
+      const required = Math.max(1, Math.round(baseRequired * dayScale));
       const provided = selectedHeroes.reduce((sum, hero) => sum + hero.attributes[attribute], 0);
       const importance = weight >= 3 ? "ESSENCIAL" as const : weight >= 2 ? "IMPORTANTE" as const : "APOIO" as const;
       return { attribute, required, provided, importance };
@@ -107,9 +107,9 @@ export function analyzeTeam(incident: Incident, selectedHeroes: OperationalHero[
   const resonanceInfo = getTeamResonance(selectedHeroes, resonance);
   alerts.push(...resonanceInfo.labels);
   for (const hero of selectedHeroes) {
-    if (incident.powerAffinityHeroIds?.includes(hero.id)) alerts.push(`Afinidade de poder: ${hero.name} (+${Math.round(MISSION_BALANCE.powerAffinityChanceBonus * 100)} p.p.)`);
+    if (incident.powerAffinityHeroIds?.includes(hero.id)) alerts.push(`Afinidade de poder: ${hero.name}`);
     const activeTechniques = hero.techniques.filter((technique) => hero.unlockedTechniqueIds.includes(technique.id) && technique.grantedTags?.some((tag) => incident.recommendedTags.includes(tag)));
-    for (const technique of activeTechniques) alerts.push(`Técnica ativa: ${hero.name} · ${technique.name} (+${Math.round(MISSION_BALANCE.techniqueChanceBonus * 100)} p.p.)`);
+    for (const technique of activeTechniques) alerts.push(`Técnica ativa: ${hero.name} · ${technique.name}`);
   }
   for (const combo of getSpecialCombos(selectedHeroes)) alerts.push(`Ressonância: ${combo.name}`);
   if (selectedHeroes.some((hero) => hero.energy / getMaxEnergy(hero.attributes) <= CONDITION_BALANCE.tiredThreshold)) alerts.push("Agente cansado");

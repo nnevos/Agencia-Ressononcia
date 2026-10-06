@@ -2,7 +2,7 @@ import type { OperationalHero } from "@/game/types";
 import { getHeroPortrait } from "@/game/data/heroPortraits";
 import { getMaxEnergy, getMaxHealth } from "@/game/simulation/heroState";
 
-export function HeroCard({ hero, selected, disabled, onSelect, onInfo }: { hero: OperationalHero; selected: boolean; disabled?: boolean; onSelect: () => void; onInfo: () => void }) {
+export function HeroCard({ hero, selected, disabled, selectDisabled, onSelect, onInfo }: { hero: OperationalHero; selected: boolean; disabled?: boolean; selectDisabled?: boolean; onSelect: () => void; onInfo: () => void }) {
   const unavailable = hero.status !== "disponivel";
   const statusText = hero.status === "desmaiado" ? "DESMAIADO" : hero.status === "recuperacao" ? "RECUPERAÇÃO" : "EM CAMPO";
   const portrait = getHeroPortrait(hero.id);
@@ -11,8 +11,8 @@ export function HeroCard({ hero, selected, disabled, onSelect, onInfo }: { hero:
   const healthRatio = hero.health / maxHealth;
   const energyRatio = hero.energy / maxEnergy;
 
-  return <article className={`heroStripCard compactPortrait ${selected ? "selected" : ""} ${hero.status}`} title={`${hero.name} · abrir ficha`}>
-    <button className="heroPortraitButton" onClick={onInfo} disabled={disabled} aria-label={`Abrir ficha de ${hero.name}`}>
+  return <article className={`heroStripCard compactPortrait ${selected ? "selected" : ""} ${hero.status}`} title={`${hero.name} · selecionar agente ou abrir ficha`}>
+    <button className="heroPortraitButton" onClick={onSelect} disabled={disabled || selectDisabled} aria-pressed={selected} aria-label={`${selected ? "Remover" : "Selecionar"} ${hero.name} da equipe`}>
       <span className="heroPortraitPlaceholder">{portrait ? <img src={portrait} alt={`Retrato de ${hero.name}`} /> : <span>{hero.name.slice(0,2).toUpperCase()}</span>}</span>
       {unavailable && <span className="heroStatusOverlay">{statusText}</span>}
     </button>

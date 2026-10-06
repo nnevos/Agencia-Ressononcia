@@ -22,16 +22,28 @@ export function isDialogueSceneComplete(scene: DialogueScene, save: SaveGame) { 
 export function getSceneDay(scene: DialogueScene) { return scene.day ?? scene.availability?.minDay ?? 1; }
 export function getRouteStage(save: SaveGame, characterId: string) { return Math.max(1, save.social.routeStage[characterId] ?? 1); }
 export function routeAdvanceFlag(day: number, characterId: string) { return `social:route-advanced:day:${day}:${characterId}`; }
+export function dialogueIntroOutgoingFlag(turnId: string) { return `social:intro-outgoing-sent:${turnId}`; }
 export function hasAdvancedRouteToday(save: SaveGame, characterId: string) { return save.flags.includes(routeAdvanceFlag(save.player.currentDay, characterId)); }
 
-export function getStageRomanceEarned(save: SaveGame, characterId: string, stage: number) { return Math.max(0, save.social.romanceEarnedByStage[String(stage)]?.[characterId] ?? 0); }
-export function getRomanceStageCap(scene: DialogueScene) { return scene.romanceBudget ?? SOCIAL_BALANCE.romanceStageCap; }
-export function getRomanceGain(save: SaveGame, scene: DialogueScene, choice: DialogueChoice) { const affinity=choice.romanceAffinity ?? 0; if(!affinity)return 0; const stage=getSceneDay(scene); const raw=SOCIAL_BALANCE.romancePointsByAffinity[affinity] ?? 0; return Math.min(raw, Math.max(0,getRomanceStageCap(scene)-getStageRomanceEarned(save,scene.characterId,stage))); }
-export function getRomanceProgress(save: SaveGame, characterId: string) { return Math.max(0,Math.min(SOCIAL_BALANCE.maxRomanceProgress,save.social.romanceProgress[characterId] ?? 0)); }
-export function getOutingThreshold(stage: number) { return SOCIAL_BALANCE.outingThresholdByStage[stage] ?? null; }
-export function canChooseOuting(save: SaveGame, characterId: string, stage: number, projectedGain=0) { const threshold=getOutingThreshold(stage); const selected=save.social.outingsByGlobalDay[String(save.player.currentDay)]; const done=save.social.outingMilestones[characterId]?.includes(stage) ?? false; const projectedProgress=Math.min(100,getRomanceProgress(save,characterId)+Math.max(0,projectedGain)); return { allowed:threshold!=null && !done && (!selected||selected===characterId), threshold, selected, projectedProgress, done }; }
+/**
+ * O percentual de romance agora representa apenas o progresso estrutural da rota.
+ * Escolhas 100/50/30 continuam existindo como metadado autoral/relacional, mas
+ * nao concedem XP de romance nem alteram este percentual.
+ *
+ * routeStage aponta para a proxima etapa disponivel. Portanto, etapas concluidas
+ * = routeStage - 1. O denominador vem da quantidade de etapas autoradas da rota.
+ */
+export function getRomanceProgress(save: SaveGame, characterId: string, totalStages = Math.max(...SOCIAL_BALANCE.completionOutingMilestones)) {
+  const safeTotal = Math.max(1, totalStages);
+  const completedStages = Math.max(0, Math.min(safeTotal, getRouteStage(save, characterId) - 1));
+  return Math.round((completedStages / safeTotal) * SOCIAL_BALANCE.maxRomanceProgress);
+}
+export function getOutingThreshold(stage: number) { return SOCIAL_BALANCE.outingStages.includes(stage as 3 | 6) ? stage : null; }
+export function canChooseOuting(save: SaveGame, characterId: string, stage: number) {
+  const milestone = getOutingThreshold(stage);
+  const selected = save.social.outingsByGlobalDay[String(save.player.currentDay)];
+  const done = save.social.outingMilestones[characterId]?.includes(stage) ?? false;
+  return { allowed: milestone != null && !done && (!selected || selected === characterId), threshold: null, selected, projectedProgress: null, done };
+}
 export function isRomanceRouteComplete(save: SaveGame, characterId: string) { const done=save.social.outingMilestones[characterId] ?? []; return SOCIAL_BALANCE.completionOutingMilestones.every(stage=>done.includes(stage)); }
 export function isRomanceGame100Complete(save: SaveGame) { return Object.keys(save.social.routeStage).every(id=>isRomanceRouteComplete(save,id)); }
-// aliases temporarios para componentes antigos durante a migracao
-export const getDailyRomanceEarned = getStageRomanceEarned;
-export const getRomanceDailyCap = getRomanceStageCap;

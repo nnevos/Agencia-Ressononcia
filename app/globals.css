@@ -5987,7 +5987,7 @@ body {
 .nexoConversationList {
   min-width:0;
   display:grid;
-  grid-template-rows:62px 54px 42px minmax(0,1fr) 72px;
+  grid-template-rows:62px 54px 42px auto minmax(0,1fr) 72px;
   background:#08151e;
   border-right:1px solid #28485b
 }
@@ -7812,8 +7812,8 @@ input {
 
 /* v0.2.6 - onboarding backgrounds: exterior -> office -> system */
 .storyBackdrop{background-size:cover;background-position:center;transition:background-image .35s ease,filter .35s ease}
-.storyBackdropExterior{background-image:linear-gradient(90deg,rgba(3,9,14,.78) 0%,rgba(3,9,14,.45) 48%,rgba(3,9,14,.22) 100%),linear-gradient(0deg,rgba(3,8,12,.66),rgba(3,8,12,.08) 60%,rgba(3,8,12,.28)),url('/agencia-exterior.jpg');background-position:center 46%}
-.storyBackdropOffice{background-image:linear-gradient(90deg,rgba(3,9,14,.78) 0%,rgba(3,9,14,.43) 48%,rgba(3,9,14,.2) 100%),linear-gradient(0deg,rgba(3,8,12,.6),rgba(3,8,12,.06) 58%,rgba(3,8,12,.22)),url('/agencia-escritorio.jpg');background-position:center 52%}
+.storyBackdropExterior{background-image:linear-gradient(90deg,rgba(3,9,14,.78) 0%,rgba(3,9,14,.45) 48%,rgba(3,9,14,.22) 100%),linear-gradient(0deg,rgba(3,8,12,.66),rgba(3,8,12,.08) 60%,rgba(3,8,12,.28)),url('/agencia-exterior.webp');background-position:center 46%}
+.storyBackdropOffice{background-image:linear-gradient(90deg,rgba(3,9,14,.78) 0%,rgba(3,9,14,.43) 48%,rgba(3,9,14,.2) 100%),linear-gradient(0deg,rgba(3,8,12,.6),rgba(3,8,12,.06) 58%,rgba(3,8,12,.22)),url('/agencia-escritorio.webp');background-position:center 52%}
 .storyBackdropSystem{background-image:linear-gradient(0deg,rgba(3,8,12,.96),rgba(4,12,18,.25) 60%,rgba(3,8,12,.7)),radial-gradient(circle at 68% 30%,#21475d 0,#0b1b26 30%,#050a0f 72%)}
 @media(max-width:720px){.storyBackdropExterior,.storyBackdropOffice{background-position:center}}
 
@@ -7938,4 +7938,1745 @@ input {
 .nexoComposerWaiting small {
   font-size:.72rem;
   letter-spacing:.03em;
+}
+
+
+/* ==========================================================================
+   25. v0.2.13 - FLUXO DE TURNO + DESENVOLVIMENTO VISUAL
+   Remove a pausa meta entre dias, integra a transicao de fim de expediente
+   à shell da Central e usa os retratos autorados na tela de Desenvolvimento.
+   ========================================================================== */
+.dispatchUi.shiftIsFinished {
+  grid-template-rows:64px 44px 58px minmax(0,1fr);
+}
+.shiftCompleteStrip {
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:8px 16px;
+  border-bottom:1px solid #24485d;
+  background:linear-gradient(90deg,#081923,#0a202b 56%,#0d2732);
+  box-shadow:inset 0 1px rgba(103,230,165,.08);
+}
+.shiftCompleteStrip>div {
+  min-width:0;
+  display:grid;
+  gap:3px;
+}
+.shiftCompleteStrip .eyebrow {
+  color:#67e6a5;
+  font-size:.58rem;
+  letter-spacing:.12em;
+}
+.shiftCompleteStrip strong {
+  color:#d8e8ee;
+  font-size:.76rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.shiftCompleteStrip .button {
+  flex:0 0 auto;
+  min-width:210px;
+  min-height:36px;
+}
+
+.developmentHeroButton {
+  grid-template-columns:52px minmax(0,1fr) 34px;
+  min-height:62px;
+  padding:6px;
+}
+.developmentHeroButton>span.developmentRosterPortrait {
+  width:50px;
+  height:50px;
+  overflow:hidden;
+  padding:0;
+  background:#0b1720;
+}
+.developmentRosterPortrait img {
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center 22%;
+}
+.developmentPortrait {
+  height:200px;
+  overflow:hidden;
+  background:#08151f;
+}
+.developmentPortrait img {
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center 18%;
+}
+.developmentIdentity {
+  grid-template-columns:170px minmax(0,1fr);
+  align-items:center;
+}
+
+@media(max-width:900px) {
+  .dispatchUi.shiftIsFinished {
+    grid-template-rows:58px 40px auto minmax(0,1fr);
+  }
+  .shiftCompleteStrip {
+    padding:10px 12px;
+  }
+  .shiftCompleteStrip strong {
+    white-space:normal;
+  }
+  .shiftCompleteStrip .button {
+    min-width:180px;
+  }
+  .developmentRoster {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:600px) {
+  .shiftCompleteStrip {
+    align-items:stretch;
+    display:grid;
+    gap:8px;
+  }
+  .shiftCompleteStrip .button {
+    width:100%;
+    min-width:0;
+  }
+  .developmentIdentity {
+    grid-template-columns:120px minmax(0,1fr);
+    gap:14px;
+  }
+  .developmentPortrait {
+    height:150px;
+  }
+  .developmentRoster {
+    grid-template-columns:1fr;
+  }
+}
+
+/* ========================================================================== */
+/* v0.2.14 - NEXO: iniciativa de conversa + acompanhamento de scroll          */
+/* ========================================================================== */
+.nexoManualIntroComposer {
+  display:grid;
+  gap:7px;
+}
+.nexoManualIntroComposer>small {
+  padding:0 46px;
+  color:#6f93a2;
+  font-size:.68rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.nexoContactText p.awaitingPlayer {
+  color:#6f93a2;
+  font-style:italic;
+}
+.nexoJumpLatest {
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+@media(max-width:720px) {
+  .nexoManualIntroComposer>small {
+    padding:0 44px;
+  }
+}
+
+/* v0.2.27 - outings: enquadramento data-driven por viewport */
+.outingScene{background-position:var(--outing-bg-position-desktop,center center)}
+@media(max-width:680px){
+  .outingScene{background-position:var(--outing-bg-position-mobile,var(--outing-bg-position-desktop,center center))}
+}
+
+/* ========================================================================== */
+/* v0.2.29 - Desenvolvimento: first-view desktop                              */
+/* Reorganiza densidade vertical para mostrar o fluxo completo sem scroll     */
+/* em desktops comuns, sem remover informacao nem alterar comportamento.      */
+/* ========================================================================== */
+@media (min-width: 901px) {
+  .developmentPage {
+    height:100dvh;
+    min-height:0;
+    overflow:hidden;
+    padding:10px 16px;
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr) auto;
+    gap:8px;
+  }
+
+  .developmentHeader {
+    width:min(100%,1440px);
+    max-width:1440px;
+    margin:0 auto;
+    padding:10px 14px;
+    min-height:74px;
+    align-items:center;
+    gap:18px;
+  }
+  .developmentHeader h1 {
+    margin:2px 0 3px;
+    font-size:1.48rem;
+    line-height:1.08;
+  }
+  .developmentHeader p {
+    max-width:900px;
+    font-size:.72rem;
+    line-height:1.35;
+  }
+  .developmentHeader .button {
+    min-width:190px;
+    min-height:38px;
+    padding:8px 14px;
+  }
+
+  .developmentShell {
+    width:min(100%,1440px);
+    max-width:1440px;
+    min-height:0;
+    height:100%;
+    margin:0 auto;
+    grid-template-columns:220px minmax(0,1fr);
+    gap:10px;
+  }
+
+  .developmentRoster {
+    min-height:0;
+    overflow:hidden;
+    padding:9px;
+  }
+  .developmentRoster>.sectionLabel {
+    display:block;
+    margin-bottom:6px;
+  }
+  .developmentHeroButton {
+    grid-template-columns:46px minmax(0,1fr) 30px;
+    min-height:54px;
+    margin-bottom:5px;
+    padding:4px 5px;
+    gap:7px;
+  }
+  .developmentHeroButton>span.developmentRosterPortrait {
+    width:44px;
+    height:44px;
+  }
+  .developmentHeroButton strong {
+    font-size:.66rem;
+  }
+  .developmentHeroButton small {
+    font-size:.49rem;
+  }
+  .developmentHeroButton em {
+    padding:4px 3px;
+    font-size:.47rem;
+  }
+
+  .developmentHeroPanel {
+    min-height:0;
+    height:100%;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:minmax(0,1.18fr) minmax(360px,.82fr);
+    grid-template-rows:auto minmax(0,1fr) auto;
+    align-content:stretch;
+  }
+
+  .developmentIdentity {
+    grid-column:1 / -1;
+    grid-template-columns:118px minmax(0,1fr);
+    gap:14px;
+    padding:10px 14px;
+    min-height:126px;
+  }
+  .developmentPortrait {
+    width:118px;
+    height:108px;
+  }
+  .developmentIdentity h2 {
+    margin:2px 0;
+    font-size:1.42rem;
+  }
+  .developmentIdentity p {
+    font-size:.78rem;
+  }
+  .developmentIdentity .styleTags {
+    margin-top:7px;
+  }
+  .developmentIdentity .styleTags span {
+    padding:4px 7px;
+    font-size:.55rem;
+  }
+
+  .developmentStats {
+    grid-column:1 / -1;
+    min-height:0;
+    padding:10px 14px;
+    gap:12px;
+    grid-template-columns:minmax(0,1.08fr) minmax(330px,.92fr);
+  }
+  .developmentRadarCard,
+  .developmentXpCard {
+    min-height:0;
+    padding:10px 12px;
+  }
+  .developmentRadarCard {
+    min-height:250px;
+    height:100%;
+  }
+  .developmentRadarCard .heroRadar {
+    width:min(100%,360px);
+    height:100%;
+    max-height:285px;
+    margin:auto;
+  }
+  .developmentLevel {
+    left:10px;
+    top:10px;
+  }
+  .developmentLevel strong {
+    font-size:1.3rem;
+  }
+
+  .developmentXpCard>strong {
+    display:block;
+    margin-top:5px;
+    font-size:.95rem;
+  }
+  .developmentXpCard>p {
+    margin:5px 0 8px;
+    font-size:.68rem;
+    line-height:1.35;
+  }
+  .developmentXpBar {
+    margin:10px 0 4px;
+    height:10px;
+  }
+  .milestoneTrack {
+    margin-top:15px;
+    gap:3px;
+  }
+  .milestoneTrack span {
+    padding:6px 2px;
+    gap:3px;
+  }
+  .milestoneTrack b {
+    width:24px;
+    height:24px;
+  }
+
+  .developmentAction {
+    grid-column:1;
+    min-width:0;
+    padding:10px 14px;
+    border-right:1px solid var(--r-line);
+    border-bottom:0;
+    overflow:hidden;
+  }
+  .developmentAction h3 {
+    margin:2px 0 3px;
+    font-size:.98rem;
+  }
+  .developmentAction>div>p {
+    margin:0 0 7px;
+    font-size:.66rem;
+    line-height:1.35;
+  }
+  .attributeUpgradeGrid {
+    gap:5px;
+  }
+  .attributeUpgradeGrid button {
+    min-height:48px;
+    padding:7px 6px;
+    gap:3px;
+  }
+  .attributeUpgradeGrid span {
+    font-size:.52rem;
+  }
+  .attributeUpgradeGrid strong {
+    font-size:.72rem;
+  }
+  .techniqueChoiceGrid {
+    gap:7px;
+  }
+  .techniqueChoiceGrid button {
+    padding:8px 10px;
+    gap:3px;
+  }
+  .techniqueChoiceGrid strong {
+    font-size:.78rem;
+  }
+  .techniqueChoiceGrid p {
+    font-size:.61rem;
+    line-height:1.35;
+  }
+  .techniqueChoiceGrid em {
+    font-size:.51rem;
+  }
+  .developmentNoUpgrade {
+    padding:10px;
+  }
+
+  .developmentUnlocked {
+    grid-column:2;
+    min-width:0;
+    padding:10px 14px;
+    overflow:hidden;
+  }
+  .developmentUnlocked>div {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:5px;
+    margin-top:5px;
+  }
+  .developmentUnlocked>div>span {
+    padding:7px 8px;
+    gap:2px;
+  }
+  .developmentUnlocked strong {
+    font-size:.62rem;
+  }
+  .developmentUnlocked small {
+    font-size:.51rem;
+    line-height:1.3;
+  }
+  .developmentUnlocked>p {
+    margin:6px 0 0;
+    font-size:.63rem;
+  }
+
+  .developmentMessage {
+    width:min(100%,1440px);
+    max-width:1440px;
+    margin:0 auto;
+    padding:6px 10px;
+    min-height:29px;
+    font-size:.61rem;
+    line-height:1.3;
+  }
+}
+
+@media (min-width:901px) and (max-height:820px) {
+  .developmentPage {
+    padding:7px 12px;
+    gap:6px;
+  }
+  .developmentHeader {
+    min-height:64px;
+    padding:7px 12px;
+  }
+  .developmentHeader h1 {
+    font-size:1.32rem;
+  }
+  .developmentHeader p {
+    font-size:.66rem;
+  }
+  .developmentHeroButton {
+    min-height:49px;
+    margin-bottom:4px;
+  }
+  .developmentHeroButton>span.developmentRosterPortrait {
+    width:39px;
+    height:39px;
+  }
+  .developmentHeroButton {
+    grid-template-columns:41px minmax(0,1fr) 28px;
+  }
+  .developmentIdentity {
+    min-height:104px;
+    grid-template-columns:96px minmax(0,1fr);
+    padding:7px 12px;
+  }
+  .developmentPortrait {
+    width:96px;
+    height:88px;
+  }
+  .developmentStats {
+    padding:7px 12px;
+  }
+  .developmentRadarCard {
+    min-height:220px;
+  }
+  .developmentRadarCard .heroRadar {
+    max-height:245px;
+  }
+  .developmentAction,
+  .developmentUnlocked {
+    padding:7px 12px;
+  }
+  .developmentMessage {
+    min-height:25px;
+    padding:4px 9px;
+  }
+}
+
+/* ========================================================================== */
+/* v0.2.30 - Desenvolvimento: workbench integrado                             */
+/* A escolha de atributo passa a viver junto do radar; progressao, escolhas   */
+/* de tecnica e tecnicas desbloqueadas ficam na coluna direita.               */
+/* ========================================================================== */
+@media (min-width: 901px) {
+  .developmentHeroPanel {
+    grid-template-columns:1fr;
+    grid-template-rows:auto minmax(0,1fr);
+  }
+  .developmentStats.developmentStatsReworked {
+    grid-column:1;
+    display:grid;
+    grid-template-columns:minmax(0,1.05fr) minmax(390px,.95fr);
+    min-height:0;
+    height:100%;
+    padding:10px 14px;
+    gap:12px;
+  }
+  .developmentRadarWorkbench,
+  .developmentProgressWorkbench {
+    min-height:0;
+    height:100%;
+    overflow:hidden;
+  }
+  .developmentRadarWorkbench {
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:46px 12px 12px;
+  }
+  .developmentAttributeWorkbench {
+    width:100%;
+    height:100%;
+    min-height:0;
+    display:grid;
+    grid-template-columns:minmax(220px,.8fr) minmax(260px,1.2fr);
+    grid-template-rows:minmax(0,1fr) auto;
+    align-items:center;
+    gap:10px 14px;
+  }
+  .developmentAttributeControls {
+    display:grid;
+    gap:8px;
+    align-content:center;
+  }
+  .developmentAttributeRow {
+    display:grid;
+    grid-template-columns:minmax(78px,1fr) 34px 42px 34px;
+    align-items:center;
+    gap:6px;
+    padding:5px 7px;
+    border:1px solid #1d3c49;
+    background:#071821;
+  }
+  .developmentAttributeRow.selected {
+    border-color:#57d5f3;
+    box-shadow:inset 3px 0 #57d5f3;
+  }
+  .developmentAttributeRow>span {
+    color:#75bdd4;
+    font-size:.65rem;
+    font-weight:900;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .developmentAttributeRow>strong {
+    text-align:center;
+    color:#eaf8fd;
+    font-size:.95rem;
+  }
+  .developmentAttributeRow>button {
+    width:34px;
+    height:32px;
+    border:1px solid #315868;
+    background:#0a2430;
+    color:#dff7ff;
+    font-size:1.05rem;
+    font-weight:900;
+    cursor:pointer;
+  }
+  .developmentAttributeRow>button:hover:not(:disabled) {
+    border-color:#61d8f5;
+    background:#103544;
+  }
+  .developmentAttributeRow>button:disabled {
+    opacity:.28;
+    cursor:not-allowed;
+  }
+  .developmentRadarPreview,
+  .developmentRadarOnly {
+    min-height:0;
+    display:grid;
+    place-items:center;
+    align-content:center;
+  }
+  .developmentRadarPreview .heroRadarWrap,
+  .developmentRadarOnly .heroRadarWrap {
+    width:min(100%,390px);
+  }
+  .developmentRadarPreview .heroRadar,
+  .developmentRadarOnly .heroRadar {
+    width:100%;
+    height:auto;
+    max-height:330px;
+  }
+  .developmentRadarPreview>small {
+    margin-top:-7px;
+    color:#729aaa;
+    font-size:.58rem;
+  }
+  .developmentAttributeActions {
+    grid-column:1 / -1;
+    display:grid;
+    grid-template-columns:1fr 1.35fr;
+    gap:10px;
+  }
+  .developmentAttributeActions .button {
+    min-height:40px;
+  }
+
+  .developmentProgressWorkbench {
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr) auto;
+    padding:12px 14px;
+  }
+  .developmentProgressTop {
+    min-width:0;
+  }
+  .developmentProgressTop>strong {
+    display:block;
+    margin-top:5px;
+    font-size:.98rem;
+  }
+  .developmentProgressTop>p {
+    margin:4px 0 8px;
+    color:#8fb1bd;
+    font-size:.68rem;
+  }
+  .developmentProgressTop>small {
+    color:#79a6b7;
+    font-size:.58rem;
+  }
+  .developmentProgressAction {
+    min-height:0;
+    padding:16px 0 10px;
+    display:grid;
+    align-content:start;
+    overflow:auto;
+  }
+  .developmentProgressAction h3 {
+    margin:4px 0;
+    font-size:.98rem;
+  }
+  .developmentProgressAction>div>p {
+    margin:0 0 8px;
+    color:#86aab8;
+    font-size:.66rem;
+    line-height:1.4;
+  }
+  .developmentAttributeHint {
+    margin-top:10px;
+    padding:12px;
+    border:1px solid #214856;
+    background:#071a23;
+  }
+  .developmentAttributeHint>strong {
+    display:block;
+    margin:6px 0 4px;
+    color:#e7f7fc;
+    font-size:.86rem;
+  }
+  .developmentUnlockedInline {
+    grid-column:auto;
+    padding:10px 0 0;
+    border-top:1px solid #1d3945;
+    overflow:visible;
+  }
+  .developmentUnlockedInline>div {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  /* neutraliza a faixa inferior da v0.2.29: as acoes agora estao dentro dos cards */
+  .developmentHeroPanel>.developmentAction,
+  .developmentHeroPanel>.developmentUnlocked:not(.developmentUnlockedInline) {
+    display:none;
+  }
+}
+
+@media (min-width:901px) and (max-height:820px) {
+  .developmentStats.developmentStatsReworked { padding:7px 12px; gap:9px; }
+  .developmentRadarWorkbench { padding:40px 9px 8px; }
+  .developmentAttributeWorkbench { grid-template-columns:minmax(205px,.82fr) minmax(230px,1.18fr); gap:7px 10px; }
+  .developmentAttributeControls { gap:5px; }
+  .developmentAttributeRow { grid-template-columns:minmax(72px,1fr) 30px 38px 30px; gap:4px; padding:3px 5px; }
+  .developmentAttributeRow>button { width:30px; height:28px; }
+  .developmentRadarPreview .heroRadar,
+  .developmentRadarOnly .heroRadar { max-height:250px; }
+  .developmentAttributeActions .button { min-height:34px; padding:6px 10px; }
+  .developmentProgressWorkbench { padding:9px 11px; }
+  .developmentProgressAction { padding:10px 0 7px; }
+  .developmentUnlockedInline { padding-top:7px; }
+}
+
+@media (max-width:900px) {
+  .developmentAttributeWorkbench { display:grid; gap:12px; }
+  .developmentAttributeControls { display:grid; gap:7px; }
+  .developmentAttributeRow { display:grid; grid-template-columns:minmax(90px,1fr) 38px 44px 38px; align-items:center; gap:6px; padding:6px; border:1px solid #284653; }
+  .developmentAttributeRow>button { height:36px; border:1px solid #315868; background:#0a2430; color:#dff7ff; font-weight:900; }
+  .developmentAttributeRow>strong { text-align:center; }
+  .developmentAttributeActions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .developmentProgressWorkbench { display:grid; gap:12px; }
+  .developmentProgressAction { display:grid; gap:10px; }
+  .developmentUnlockedInline { padding:12px 0 0; border-top:1px solid #1d3945; }
+}
+
+/* ========================================================================== */
+/* v0.2.31 - Desenvolvimento: hierarquia de upgrade e legibilidade             */
+/* Upgrade pendente ocupa o painel principal; roster e tecnicas ganham escala. */
+/* ========================================================================== */
+@media (min-width:901px) {
+  .developmentShell { grid-template-columns:285px minmax(0,1fr); }
+  .developmentRoster { padding:14px; }
+  .developmentRoster>.sectionLabel { font-size:.68rem; }
+  .developmentHeroButton {
+    grid-template-columns:52px minmax(0,1fr) 34px;
+    min-height:62px;
+    gap:10px;
+    padding:7px 8px;
+    margin-bottom:7px;
+  }
+  .developmentHeroButton>span.developmentRosterPortrait { width:50px; height:50px; }
+  .developmentHeroButton strong { font-size:.78rem; }
+  .developmentHeroButton small { font-size:.57rem; line-height:1.35; }
+  .developmentHeroButton em { font-size:.58rem; padding:7px 5px; }
+
+  .developmentTechniqueWorkbench {
+    width:100%;
+    height:100%;
+    min-height:0;
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr);
+    align-content:center;
+    gap:18px;
+    padding:8px 10px 12px;
+  }
+  .developmentTechniqueLead {
+    padding:16px 18px;
+    border:1px solid #39718a;
+    border-left:4px solid #62d9f6;
+    background:linear-gradient(90deg,rgba(21,72,91,.45),rgba(7,24,33,.78));
+    box-shadow:0 0 28px rgba(73,199,232,.08);
+  }
+  .developmentTechniqueLead .sectionLabel { font-size:.68rem; }
+  .developmentTechniqueLead h3 {
+    margin:5px 0 7px;
+    color:#f1fbff;
+    font-size:1.35rem;
+    line-height:1.15;
+  }
+  .developmentTechniqueLead p {
+    max-width:680px;
+    margin:0;
+    color:#a9c8d4;
+    font-size:.78rem;
+    line-height:1.5;
+  }
+  .techniqueChoiceGridFeatured {
+    align-self:start;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+  }
+  .techniqueChoiceGridFeatured button {
+    min-height:145px;
+    padding:17px 18px;
+    gap:7px;
+    border-color:#315b6e;
+    background:#0a1d27;
+    color:#e9f8fd;
+  }
+  .techniqueChoiceGridFeatured button:hover {
+    border-color:#68dcf8;
+    background:#0e2b38;
+    box-shadow:inset 0 0 0 1px rgba(104,220,248,.18),0 0 22px rgba(64,197,230,.08);
+  }
+  .techniqueChoiceGridFeatured small { font-size:.59rem; color:#79bfd5; }
+  .techniqueChoiceGridFeatured strong { font-size:1rem; line-height:1.2; }
+  .techniqueChoiceGridFeatured p { font-size:.73rem; line-height:1.48; color:#a8c2cc; }
+  .techniqueChoiceGridFeatured em { font-size:.62rem; color:#6ee2ae; }
+
+  .developmentTechniquePrompt {
+    margin-top:10px;
+    padding:14px 15px;
+    border:1px solid #285264;
+    background:#071b25;
+  }
+  .developmentTechniquePrompt>strong {
+    display:block;
+    margin:6px 0 4px;
+    color:#e8f8fd;
+    font-size:.9rem;
+  }
+
+  .developmentUnlockedInline { padding-top:12px; }
+  .developmentUnlockedInline>.sectionLabel { font-size:.67rem; }
+  .developmentUnlockedInline>div { gap:8px; margin-top:8px; }
+  .developmentUnlockedInline>div>span { padding:11px 12px; }
+  .developmentUnlockedInline strong { font-size:.76rem; }
+  .developmentUnlockedInline small { font-size:.61rem; line-height:1.42; }
+  .developmentUnlockedInline>p { font-size:.7rem; }
+}
+
+@media (min-width:901px) and (max-height:820px) {
+  .developmentShell { grid-template-columns:270px minmax(0,1fr); }
+  .developmentHeroButton { min-height:56px; margin-bottom:5px; grid-template-columns:46px minmax(0,1fr) 31px; }
+  .developmentHeroButton>span.developmentRosterPortrait { width:44px; height:44px; }
+  .developmentHeroButton strong { font-size:.73rem; }
+  .developmentHeroButton small { font-size:.54rem; }
+  .developmentTechniqueWorkbench { gap:10px; padding:4px 7px 8px; }
+  .developmentTechniqueLead { padding:11px 13px; }
+  .developmentTechniqueLead h3 { font-size:1.16rem; }
+  .developmentTechniqueLead p { font-size:.7rem; }
+  .techniqueChoiceGridFeatured { gap:9px; }
+  .techniqueChoiceGridFeatured button { min-height:112px; padding:11px 12px; }
+  .techniqueChoiceGridFeatured strong { font-size:.9rem; }
+  .techniqueChoiceGridFeatured p { font-size:.65rem; }
+  .developmentUnlockedInline>div>span { padding:8px 9px; }
+}
+
+/* ========================================================================== */
+/* v0.2.32 - Hotfix: evita sobreposicao entre NIVEL e escolha de abordagem     */
+/* ========================================================================== */
+@media (min-width:901px) {
+  .developmentTechniqueWorkbench {
+    padding-top:24px;
+  }
+}
+
+@media (min-width:901px) and (max-height:820px) {
+  .developmentTechniqueWorkbench {
+    padding-top:20px;
+  }
+}
+
+/* v0.2.33 — NEXO: estado visual de mensagem excluída autorada */
+.phoneBubble.deleted p {
+  font-style: italic;
+  opacity: .72;
+}
+
+
+/* ==========================================================================
+   36. v0.2.36 - convite presencial persistente no NEXO
+   O chat termina antes de reservar a noite; o jogador escolhe quando sair.
+   ========================================================================== */
+.nexoPendingOuting {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px 14px;
+  align-items:center;
+  width:100%;
+  padding:10px 12px;
+  border:1px solid #28556a;
+  background:linear-gradient(90deg,#091b25,#0b2632);
+}
+.nexoPendingOuting > div:first-child { min-width:0; display:grid; gap:3px; }
+.nexoPendingOuting strong { color:#eef9ff; font-size:.88rem; letter-spacing:.025em; }
+.nexoPendingOuting small { color:#9bb7c5; font-size:.76rem; line-height:1.4; }
+.nexoPendingOuting .nexoOutingHint { grid-column:1 / -1; margin:0; }
+.nexoOutingButton {
+  min-height:44px;
+  padding:0 18px;
+  border:1px solid #44ccec;
+  background:#123b4b;
+  color:#f1fbff;
+  font:800 .78rem/1 var(--font-ui,inherit);
+  letter-spacing:.055em;
+  cursor:pointer;
+}
+.nexoOutingButton:hover:not(:disabled) { background:#195269; }
+.nexoOutingButton:disabled { opacity:.42; cursor:not-allowed; }
+@media(max-width:780px) {
+  .nexoPendingOuting { grid-template-columns:1fr; }
+  .nexoOutingButton { width:100%; }
+}
+
+/* v0.2.38 — menu principal cinematográfico com cidade noturna */
+.mainMenuPage{
+  min-height:100svh;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:#03080d;
+  color:#eef8ff;
+}
+.mainMenuBackdrop{
+  position:absolute;
+  inset:0;
+  z-index:-3;
+  background-image:url('/menu/cidade-noturna.webp');
+  background-size:cover;
+  background-position:center 54%;
+  transform:scale(1.01);
+}
+.mainMenuFade{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,
+      rgba(2,7,11,.98) 0%,
+      rgba(2,7,11,.95) 17%,
+      rgba(2,7,11,.84) 32%,
+      rgba(2,7,11,.60) 48%,
+      rgba(2,7,11,.34) 64%,
+      rgba(2,7,11,.16) 82%,
+      rgba(2,7,11,.08) 100%),
+    linear-gradient(0deg,rgba(2,7,11,.46) 0%,transparent 38%,rgba(2,7,11,.12) 100%);
+}
+.mainMenuPanel{
+  position:relative;
+  z-index:1;
+  width:min(560px,48vw);
+  min-height:100svh;
+  padding:clamp(42px,7vh,82px) clamp(34px,5vw,78px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:flex-start;
+  background:none;
+}
+.mainMenuBrand{
+  max-width:520px;
+  padding-top:clamp(4px,2vh,20px);
+}
+.mainMenuAgency{
+  margin:0 0 3px;
+  color:#74dfff;
+  font-size:clamp(.72rem,.82vw,.9rem);
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  text-shadow:0 1px 20px rgba(0,0,0,.62);
+}
+.mainMenuPanel h1{
+  margin:0;
+  font-size:clamp(2.6rem,4.6vw,5.3rem);
+  line-height:.92;
+  letter-spacing:-.055em;
+  text-transform:uppercase;
+  color:#f4fbff;
+  text-shadow:0 4px 30px rgba(0,0,0,.72);
+}
+.menuTagline{
+  max-width:430px;
+  margin:16px 0 0;
+  color:#bed0dc;
+  font-size:clamp(.88rem,1vw,1.05rem);
+  line-height:1.55;
+  text-shadow:0 2px 14px rgba(0,0,0,.82);
+}
+.mainMenuActions{
+  width:min(410px,100%);
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin:clamp(28px,5vh,72px) 0 auto;
+  padding-top:clamp(14px,3vh,34px);
+}
+.mainMenuAction{
+  min-height:58px;
+  padding:10px 14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:2px;
+  color:#d4e3ec;
+  border-left:3px solid transparent;
+  background:rgba(7,18,26,.12);
+  transition:background .16s ease,color .16s ease,border-color .16s ease,transform .16s ease;
+  text-transform:uppercase;
+  backdrop-filter:blur(1.5px);
+}
+.mainMenuAction strong{
+  font-size:clamp(.94rem,1.05vw,1.12rem);
+  letter-spacing:.07em;
+  line-height:1.15;
+}
+.mainMenuAction span{
+  color:#7892a3;
+  font-size:.66rem;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:none;
+}
+.mainMenuAction:hover,
+.mainMenuAction:focus-visible{
+  transform:translateX(7px);
+  color:#061018;
+  background:rgba(222,247,255,.92);
+  border-left-color:#6edcff;
+  outline:none;
+}
+.mainMenuAction:hover span,
+.mainMenuAction:focus-visible span{color:#385a69}
+.mainMenuAction.isDisabled{
+  opacity:.38;
+  cursor:not-allowed;
+  filter:saturate(.45);
+}
+.mainMenuAction.isDisabled:hover{
+  transform:none;
+  color:#d4e3ec;
+  background:rgba(7,18,26,.12);
+  border-left-color:transparent;
+}
+.mainMenuAction.isDisabled:hover span{color:#7892a3}
+.mainMenuFooter{
+  width:min(410px,100%);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  color:#698091;
+  font-size:.64rem;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  text-shadow:0 2px 12px #000;
+}
+@media(max-width:800px){
+  .mainMenuBackdrop{background-position:62% center;transform:none}
+  .mainMenuFade{
+    background:
+      linear-gradient(90deg,rgba(2,7,11,.96) 0%,rgba(2,7,11,.82) 44%,rgba(2,7,11,.52) 72%,rgba(2,7,11,.30) 100%),
+      linear-gradient(0deg,rgba(2,7,11,.68),rgba(2,7,11,.08) 58%,rgba(2,7,11,.30));
+  }
+  .mainMenuPanel{width:100%;padding:34px 24px 26px;min-height:100svh}
+  .mainMenuBrand{max-width:86vw}
+  .mainMenuPanel h1{font-size:clamp(2.45rem,12vw,4.2rem)}
+  .menuTagline{max-width:34ch;font-size:.9rem}
+  .mainMenuActions{width:min(360px,100%);margin:26px 0 auto;padding-top:8px}
+  .mainMenuAction{min-height:55px;background:rgba(5,15,23,.32)}
+  .mainMenuFooter{width:100%;font-size:.58rem;flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){
+  .mainMenuAction{transition:none}
+}
+
+/* v0.2.39 — fluxo completo do menu, conta futura, carregar/configurações e transições */
+.mainMenuBackdrop{
+  animation:menuCityDrift 22s ease-in-out infinite alternate;
+  will-change:transform;
+}
+.mainMenuVignette{
+  position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(circle at 72% 45%,transparent 0 36%,rgba(1,5,8,.08) 64%,rgba(1,5,8,.38) 100%),linear-gradient(0deg,rgba(0,3,6,.32),transparent 24%);
+}
+.mainMenuPanel{transition:opacity .22s ease,transform .22s ease}
+.mainMenuBody{width:min(480px,100%);display:flex;flex:1;align-items:center;padding:18px 0}
+.mainMenuActions{margin:0;padding:0;width:min(430px,100%)}
+.mainMenuAction{width:100%;border:0;border-left:3px solid transparent;text-align:left;font:inherit;cursor:pointer}
+.mainMenuAction:disabled{opacity:.38;cursor:not-allowed;filter:saturate(.45)}
+.mainMenuAction:disabled:hover{transform:none;color:#d4e3ec;background:rgba(7,18,26,.12);border-left-color:transparent}
+.menuSubPanel{width:min(470px,100%);max-height:min(68vh,680px);overflow:auto;padding:2px 14px 14px 0;animation:menuPanelIn .2s ease both;scrollbar-width:thin;scrollbar-color:#315064 transparent}
+.menuBackButton{border:0;background:none;color:#7ddff8;font:800 .7rem/1.2 var(--font-ui,inherit);letter-spacing:.12em;padding:8px 0 18px;cursor:pointer}
+.menuPanelEyebrow{margin:0;color:#72dbf7;font-size:.68rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+.menuSubPanel h2{margin:5px 0 10px;color:#f3fbff;font-size:clamp(1.65rem,2.4vw,2.35rem);line-height:1.05}
+.menuSubPanel p{color:#a9c0ce;line-height:1.55}
+.menuPanelForm,.menuPanelStack{display:grid;gap:13px}
+.menuPanelForm.compact{gap:10px}
+.menuPanelForm label{display:grid;gap:7px;color:#a9bfcc;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.menuPanelForm input{width:100%;min-height:46px;padding:0 13px;border:1px solid #28485a;background:rgba(4,16,24,.82);color:#f3fbff;outline:none;font:600 .9rem/1 var(--font-ui,inherit)}
+.menuPanelForm input:focus{border-color:#6edcff;box-shadow:0 0 0 1px rgba(110,220,255,.18)}
+.menuPanelForm small{color:#718997;font-size:.68rem;line-height:1.45}
+.newGameModePicker{margin:2px 0 0;padding:0;border:0;display:grid;gap:8px}
+.newGameModePicker legend{margin:0 0 1px;color:#a9bfcc;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.newGameModePicker>label{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:11px;min-height:58px;padding:10px 12px;border:1px solid #29495b;background:rgba(4,16,24,.68);cursor:pointer;text-transform:none;letter-spacing:0}
+.newGameModePicker>label.selected{border-color:#6edcff;background:rgba(14,52,67,.78);box-shadow:0 0 0 1px rgba(110,220,255,.12)}
+.newGameModePicker input{width:18px!important;min-height:18px!important;height:18px;margin:0;accent-color:#6edcff}
+.newGameModePicker span{display:grid;gap:3px}.newGameModePicker strong{color:#eefaff;font-size:.82rem}.newGameModePicker small{color:#7f9aa9;font-size:.68rem;line-height:1.35}
+.menuPrimaryButton,.menuSecondaryButton,.saveSlotCard button,.settingsRows button,.accountTabs button{min-height:44px;border:1px solid #3b6a80;background:#14384a;color:#ecfaff;padding:0 15px;font:900 .72rem/1 var(--font-ui,inherit);letter-spacing:.07em;cursor:pointer}
+.menuPrimaryButton{border-color:#72dcf8;background:#dff8ff;color:#07131a}
+.menuSecondaryButton:hover,.saveSlotCard button:hover,.settingsRows button:hover,.accountTabs button:hover{border-color:#71d9f5;background:#19495e}
+.menuSecondaryButton:disabled{opacity:.38;cursor:not-allowed}
+.menuSecondaryButton.wide{width:100%}
+.menuWarning,.accountCurrentCard,.menuEmptyState{border:1px solid #2a4b5e;background:rgba(7,24,34,.72);padding:13px 14px;display:grid;gap:4px}
+.menuWarning{border-color:#8a682f;background:rgba(61,43,12,.36)}
+.menuWarning strong,.accountCurrentCard strong{color:#f1f9fc}.menuWarning span,.accountCurrentCard p,.menuEmptyState{color:#8fa9b7;font-size:.76rem;line-height:1.45;margin:0}
+.saveSlotCard{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;border:1px solid #31566a;background:rgba(6,20,29,.78);padding:15px}
+.saveSlotCard div{display:grid;gap:3px}.saveSlotCard span{color:#71d9f5;font-size:.61rem;font-weight:900;letter-spacing:.14em}.saveSlotCard strong{color:#f5fbff;font-size:1.15rem}.saveSlotCard p{margin:0;color:#8fa8b7;font-size:.76rem}
+.menuButtonRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.accountTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}.accountTabs button{background:rgba(7,20,29,.72);color:#8ca6b5}.accountTabs button.active{border-color:#6edcff;color:#eefbff;background:#123647}
+.accountDivider{display:flex;align-items:center;gap:10px;color:#617b8b;font-size:.62rem;letter-spacing:.14em}.accountDivider:before,.accountDivider:after{content:"";height:1px;background:#203b4c;flex:1}
+.settingsRows{display:grid;border-top:1px solid #294759}.settingsRows>div{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;padding:13px 0;border-bottom:1px solid #203b4c}.settingsRows span{display:grid;gap:3px}.settingsRows strong{color:#eef9ff;font-size:.84rem}.settingsRows small{color:#7994a3;font-size:.68rem;line-height:1.4}.settingsRows button{min-width:108px}
+.menuNotice{margin:12px 0 0!important;padding:9px 11px;border-left:2px solid #5fdcf9;background:rgba(9,36,47,.72);color:#c8e5ee!important;font-size:.72rem!important}
+.menuTransitionCurtain{position:absolute;inset:0;z-index:20;pointer-events:none;background:#02070b;opacity:0;transition:opacity .26s ease}
+.mainMenuPage.isLeaving .menuTransitionCurtain{opacity:1}.mainMenuPage.isLeaving .mainMenuPanel{opacity:.3;transform:translateX(-10px)}
+.mainMenuPage.motionReduced .mainMenuBackdrop{animation:none;transform:none}.mainMenuPage.motionReduced .menuSubPanel,.mainMenuPage.motionReduced .mainMenuPanel,.mainMenuPage.motionReduced .menuTransitionCurtain{animation:none;transition:none}
+.developmentHeaderActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.nexoSaveExitButton{font-size:1rem!important}
+@keyframes menuCityDrift{from{transform:scale(1.015) translate3d(0,0,0)}to{transform:scale(1.045) translate3d(-.7%,.25%,0)}}
+@keyframes menuPanelIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+@media(max-width:800px){
+  .mainMenuBody{align-items:flex-start;padding-top:24px}.menuSubPanel{max-height:none;width:100%;padding-right:0}.menuButtonRow{grid-template-columns:1fr}.saveSlotCard{grid-template-columns:1fr}.saveSlotCard button{width:100%}.settingsRows>div{grid-template-columns:1fr}.settingsRows button{width:100%}.developmentHeaderActions{width:100%;justify-content:stretch}.developmentHeaderActions .button{flex:1}
+}
+@media(prefers-reduced-motion:reduce){.mainMenuBackdrop{animation:none!important}.menuSubPanel{animation:none!important}.mainMenuPanel,.menuTransitionCurtain{transition:none!important}}
+
+/* v0.2.48 - confirmacao de avanco no modo somente pos-expediente */
+.nexoNextDayBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(5, 8, 14, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.nexoNextDayConfirm {
+  width: min(460px, 100%);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 22px;
+  padding: 24px;
+  background: #111821;
+  box-shadow: 0 24px 70px rgba(0,0,0,.38);
+  color: #f5f7fb;
+}
+
+.nexoNextDayConfirm h2 {
+  margin: 0 0 10px;
+  font-size: 1.3rem;
+}
+
+.nexoNextDayConfirm p {
+  margin: 0;
+  color: rgba(245,247,251,.72);
+  line-height: 1.5;
+}
+
+.nexoNextDayActions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+@media (max-width: 520px) {
+  .nexoNextDayActions {
+    flex-direction: column;
+  }
+
+  .nexoNextDayActions .button {
+    width: 100%;
+  }
+}
+
+/* v0.2.50 - NEXO: clareza de estados e feedback de navegacao */
+.nexoListIntro > div { display:flex; align-items:center; gap:8px; min-width:0; }
+.nexoNightChip {
+  display:inline-flex;
+  align-items:center;
+  min-height:20px;
+  padding:2px 7px;
+  border:1px solid #315d73;
+  border-radius:999px;
+  background:#0d2734;
+  color:#9ee8fb;
+  font-size:.58rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  white-space:nowrap;
+}
+.nexoContactRow.unread { background:linear-gradient(90deg,rgba(70,201,147,.08),transparent 72%); }
+.nexoContactRow.outingPending { background:linear-gradient(90deg,rgba(97,197,229,.12),transparent 78%); }
+.nexoContactRow.complete .nexoContactText p { color:#607985; }
+.nexoContactState { min-width:24px; display:grid; place-items:center; }
+.nexoOutingBadge {
+  min-width:34px;
+  min-height:20px;
+  padding:3px 5px;
+  display:grid;
+  place-items:center;
+  border:1px solid #44ccec;
+  border-radius:999px;
+  background:#123b4b;
+  color:#e9fbff;
+  font-size:.5rem;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+.nexoCompleteMark {
+  width:20px;
+  height:20px;
+  display:grid;
+  place-items:center;
+  border:1px solid #31515f;
+  border-radius:50%;
+  color:#6e98a8;
+  font-size:.68rem;
+  font-weight:900;
+}
+.nexoReplySuggestions button:disabled:not(.selected) { opacity:.38; cursor:not-allowed; }
+.nexoReplySuggestions button.selected { box-shadow:0 0 0 1px rgba(97,197,229,.16) inset; }
+.nexoChatImageButton { width:min(300px,68vw); aspect-ratio:auto; }
+.nexoChatImage { width:100%; max-height:340px; object-fit:cover; object-position:center; }
+@media(max-width:720px) {
+  .nexoChatImageButton { width:min(270px,76vw); }
+  .nexoChatImage { max-height:300px; }
+  .nexoNightChip { font-size:.54rem; }
+}
+
+/* ========================================================================== 
+   v0.2.51 - DATE READER: leitura linear paginada, progresso e estados seguros
+   ========================================================================== */
+.outingScene {
+  position:relative;
+  isolation:isolate;
+  transition:background-position .25s ease;
+}
+.outingScene::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(2,7,11,.04) 0%,rgba(2,7,11,.12) 44%,rgba(2,7,11,.56) 78%,rgba(2,7,11,.82) 100%);
+}
+.outingSceneHeader {
+  position:fixed;
+  top:22px;
+  left:clamp(18px,4vw,54px);
+  right:clamp(18px,4vw,54px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  pointer-events:none;
+  z-index:2;
+}
+.outingSceneHeader .outingTopTag {
+  position:static;
+  pointer-events:auto;
+}
+.outingProgressMeta {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:7px 10px;
+  border:1px solid rgba(115,190,218,.28);
+  background:rgba(4,13,20,.72);
+  backdrop-filter:blur(7px);
+  color:#94bdcd;
+  font-size:.64rem;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+.outingProgressMeta strong { color:#e6f8ff; font-size:.72rem; }
+.outingTextBox {
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  max-height:min(72dvh,720px);
+}
+.outingProgressTrack {
+  height:3px;
+  margin:-1px -1px 18px;
+  background:#102c3a;
+  overflow:hidden;
+}
+.outingProgressTrack span {
+  display:block;
+  height:100%;
+  background:#61c5e5;
+  transition:width .22s ease;
+}
+.outingTitleRow {
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:flex-start;
+}
+.outingTitleRow h1 { margin-bottom:12px; }
+.outingPageCounter {
+  flex:0 0 auto;
+  margin-top:7px;
+  color:#7ea6b6;
+  font-size:.68rem;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.outingStoryPage {
+  overflow:auto;
+  min-height:0;
+  padding-right:8px;
+  scrollbar-gutter:stable;
+  animation:outingStoryIn .18s ease both;
+}
+.outingStoryPage p:last-child { margin-bottom:2px; }
+.outingFooter {
+  flex:0 0 auto;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid rgba(105,159,181,.2);
+}
+.outingFooter small { color:#7193a1; font-size:.68rem; line-height:1.35; }
+.outingFooter .outingContinue { margin-top:0; }
+@keyframes outingStoryIn {
+  from { opacity:0; transform:translateY(5px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .outingProgressTrack span,.outingScene { transition:none; }
+  .outingStoryPage { animation:none; }
+}
+@media(max-width:780px) {
+  .outingSceneHeader { top:12px; left:14px; right:14px; }
+  .outingProgressMeta span { display:none; }
+  .outingTextBox { max-height:74dvh; overflow:hidden; }
+  .outingStoryPage { padding-right:3px; }
+  .outingTitleRow { gap:10px; }
+  .outingPageCounter { font-size:.62rem; }
+  .outingFooter { align-items:stretch; flex-direction:column; gap:9px; }
+  .outingFooter small { text-align:center; }
+  .outingContinue { width:100%; }
+}
+
+/* ========================================================================== 
+   v0.2.52 - NEXO library, social QA, date transitions and accessibility polish
+   ========================================================================== */
+.nexoLibraryTabs {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:6px;
+  align-self:start;
+  min-height:0;
+  padding:8px 14px 10px;
+  border-bottom:1px solid rgba(86,132,151,.16);
+}
+.nexoLibraryTabs button {
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  border:1px solid #173d4d;
+  border-radius:8px;
+  background:#091d27;
+  color:#7ea7b7;
+  font-size:.68rem;
+  font-weight:800;
+  cursor:pointer;
+}
+.nexoLibraryTabs button span {
+  min-width:18px;
+  height:18px;
+  padding:0 4px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  background:#123443;
+  color:#a8eafa;
+  font-size:.58rem;
+}
+.nexoLibraryTabs button.active { border-color:#3aa8c8; background:#0d2d3b; color:#ecfbff; }
+.nexoContactMeta {
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:4px;
+  color:#567786;
+  font-size:.54rem;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+.nexoContactMeta span:last-child { color:#6e99a9; white-space:nowrap; }
+.nexoLibraryPanel {
+  height:100%;
+  overflow:auto;
+  padding:clamp(20px,4vw,42px);
+  background:linear-gradient(180deg,#071923,#06141d);
+  scrollbar-gutter:stable;
+}
+.nexoLibraryPanel>header { max-width:760px; margin-bottom:24px; }
+.nexoLibraryPanel>header h1 { margin:5px 0 8px; font-size:clamp(1.45rem,2.4vw,2.15rem); }
+.nexoLibraryPanel>header p { margin:0; max-width:680px; color:#7898a6; line-height:1.6; }
+.nexoPhotoGallery { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:14px; }
+.nexoPhotoGallery button {
+  position:relative;
+  aspect-ratio:4/5;
+  overflow:hidden;
+  padding:0;
+  border:1px solid #1e4b5d;
+  border-radius:12px;
+  background:#0b212b;
+  cursor:zoom-in;
+}
+.nexoPhotoGallery img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .18s ease; }
+.nexoPhotoGallery button:hover img { transform:scale(1.025); }
+.nexoPhotoGallery span {
+  position:absolute; left:8px; right:8px; bottom:8px;
+  padding:6px 8px; border-radius:7px;
+  background:rgba(3,12,18,.82); color:#eafaff;
+  font-size:.64rem; font-weight:900; text-align:left;
+}
+.nexoDateArchive { display:grid; gap:10px; max-width:820px; }
+.nexoDateArchive article {
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  padding:15px 16px; border:1px solid #1a4456; border-radius:10px; background:#0a202a;
+}
+.nexoDateArchive article>div { display:grid; gap:3px; min-width:0; }
+.nexoDateArchive article span { color:#65c9e7; font-size:.6rem; font-weight:900; letter-spacing:.1em; }
+.nexoDateArchive article strong { color:#eefbff; }
+.nexoDateArchive article small { color:#7698a6; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.nexoDateArchive article button {
+  min-height:36px; padding:0 14px; border:1px solid #3aa7c7; border-radius:7px;
+  background:#103848; color:#effcff; font-weight:900; cursor:pointer;
+}
+.nexoLibraryEmpty { padding:30px; border:1px dashed #254959; color:#7392a0; text-align:center; }
+.nexoDateTransition {
+  position:fixed; inset:0; z-index:12000; display:grid; place-items:center;
+  background:rgba(2,8,12,.92); backdrop-filter:blur(8px); animation:nexoDateFadeIn .2s ease both;
+}
+.nexoDateTransition>div { display:grid; gap:7px; text-align:center; }
+.nexoDateTransition strong { color:#ecfbff; font-size:1.1rem; letter-spacing:.03em; }
+@keyframes nexoDateFadeIn { from{opacity:0} to{opacity:1} }
+
+.outingIntroScene { display:grid; place-items:center; padding:24px; }
+.outingIntroCard {
+  width:min(520px,92vw); padding:30px; border:1px solid rgba(120,194,220,.3); border-radius:14px;
+  background:rgba(4,14,21,.88); backdrop-filter:blur(10px); box-shadow:0 22px 70px rgba(0,0,0,.38);
+  text-align:center; animation:outingIntroIn .22s ease both;
+}
+.outingIntroDate { margin:12px auto 7px; color:#74d0eb; font-size:.72rem; font-weight:950; letter-spacing:.16em; }
+.outingIntroCard h1 { margin:0; font-size:clamp(1.8rem,5vw,3rem); }
+.outingIntroCard p { margin:7px 0 22px; color:#9bb8c4; }
+.outingIntroActions { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+.outingScene.isLeaving { animation:outingLeave .18s ease both; pointer-events:none; }
+.outingReaderNav { display:flex; align-items:center; gap:10px; min-width:0; }
+.outingPrevious { min-height:38px; padding:0 12px; }
+@keyframes outingIntroIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes outingLeave { to{opacity:0} }
+
+.qaSocialPage { min-height:100dvh; padding:clamp(18px,3vw,42px); background:#06141c; color:#dff6ff; }
+.qaSocialHeader { max-width:1180px; margin:0 auto 22px; display:flex; justify-content:space-between; align-items:flex-end; gap:20px; }
+.qaSocialHeader h1 { margin:4px 0; }
+.qaSocialHeader p { margin:0; max-width:760px; color:#7897a4; line-height:1.55; }
+.qaSocialGrid { max-width:1180px; margin:0 auto; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.qaCard { display:flex; flex-direction:column; gap:12px; padding:18px; border:1px solid #1d4555; border-radius:12px; background:#091d27; }
+.qaCard select { min-height:42px; padding:0 10px; border:1px solid #28566a; border-radius:8px; background:#06151d; color:#e8faff; }
+.qaStatus { display:flex; flex-wrap:wrap; gap:8px 14px; color:#779aa9; font-size:.72rem; }
+.qaStatus strong { color:#effcff; width:100%; font-size:1rem; }
+.qaButtonGrid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px; }
+.qaButtonGrid button,.qaStack button { min-height:38px; border:1px solid #285469; border-radius:7px; background:#0b2632; color:#c8e6f0; cursor:pointer; font-weight:800; }
+.qaButtonGrid button.active { border-color:#5cc7e8; background:#124052; color:#fff; }
+.qaStack { display:grid; gap:8px; }
+.qaCard small { color:#6e8e9c; line-height:1.45; }
+.qaFlagsCard { grid-column:span 2; }
+.qaFlags { max-height:220px; overflow:auto; display:flex; flex-wrap:wrap; gap:6px; padding:10px; background:#05131a; border-radius:8px; }
+.qaFlags code { padding:5px 7px; border:1px solid #214653; border-radius:6px; color:#94d8eb; font-size:.66rem; }
+
+button:focus-visible, input:focus-visible, select:focus-visible, [role="button"]:focus-visible {
+  outline:2px solid #7addf7;
+  outline-offset:2px;
+}
+
+@media(max-width:780px) {
+  .nexoLibraryTabs { padding:0 10px 10px; gap:4px; }
+  .nexoLibraryTabs button { font-size:.61rem; min-height:32px; }
+  .nexoLibraryPanel { padding:18px 14px 28px; }
+  .nexoPhotoGallery { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+  .nexoDateArchive article { align-items:flex-start; }
+  .nexoDateArchive article button { flex:0 0 auto; }
+  .outingIntroCard { padding:24px 18px; }
+  .outingReaderNav { width:100%; justify-content:space-between; }
+  .outingReaderNav small { text-align:right; }
+  .qaSocialHeader { align-items:flex-start; flex-direction:column; }
+  .qaSocialGrid { grid-template-columns:1fr; }
+  .qaFlagsCard { grid-column:auto; }
+  .qaButtonGrid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .nexoDateTransition,.outingIntroCard,.outingScene.isLeaving,.nexoPhotoGallery img { animation:none; transition:none; }
+}
+.outingScene.motionReduced,.outingScene.motionReduced .outingStoryPage,.outingScene.motionReduced .outingIntroCard,.outingScene.motionReduced .outingProgressTrack span { animation:none!important; transition:none!important; }
+
+/* ========================================================================== 
+   v0.2.54 - MOBILE NAVIGATION REVIEW
+   Saidas explicitas para bibliotecas do NEXO e leitor de Dates, safe areas e
+   controles que permanecem alcancaveis em telas pequenas.
+   ========================================================================== */
+.nexoMobileLibraryBar { display:none; }
+.outingHeaderLeft { display:flex; align-items:center; gap:8px; min-width:0; pointer-events:auto; }
+.outingExitButton {
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:0 10px;
+  border:1px solid rgba(115,190,218,.34);
+  background:rgba(4,13,20,.78);
+  color:#d8f3fb;
+  font:inherit;
+  font-size:.66rem;
+  font-weight:900;
+  cursor:pointer;
+  backdrop-filter:blur(7px);
+}
+.outingExitButton:hover { border-color:#65c9e7; background:rgba(10,36,48,.9); }
+
+@media(max-width:780px) {
+  .nexoConversationList {
+    height:100dvh;
+    grid-template-rows:62px 54px 42px auto minmax(0,1fr) auto;
+  }
+  .nexoNightFooter {
+    min-height:64px;
+    padding-bottom:max(10px,env(safe-area-inset-bottom));
+  }
+  .nexoComposerArea { padding-bottom:max(12px,calc(10px + env(safe-area-inset-bottom))); }
+  .nexoLibraryPanel {
+    height:100dvh;
+    padding:0 14px max(28px,calc(18px + env(safe-area-inset-bottom)));
+    overscroll-behavior:contain;
+  }
+  .nexoMobileLibraryBar {
+    position:sticky;
+    top:0;
+    z-index:8;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:54px;
+    margin:0 -14px 18px;
+    padding:env(safe-area-inset-top) 14px 0;
+    border-bottom:1px solid #183746;
+    background:rgba(7,25,35,.97);
+    backdrop-filter:blur(9px);
+  }
+  .nexoMobileLibraryBar button {
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    border:0;
+    background:transparent;
+    color:#a9e6f7;
+    font:inherit;
+    font-weight:900;
+    cursor:pointer;
+  }
+  .nexoMobileLibraryBar button:first-letter { font-size:1.5rem; }
+  .nexoMobileLibraryBar strong { color:#dff7ff; font-size:.78rem; letter-spacing:.04em; }
+  .nexoPhotoGallery button { min-height:44px; }
+  .nexoDateArchive article { flex-direction:column; gap:12px; }
+  .nexoDateArchive article button { width:100%; min-height:44px; }
+  .nexoImageLightbox { padding:max(64px,calc(48px + env(safe-area-inset-top))) 12px max(20px,env(safe-area-inset-bottom)); }
+  .nexoImageLightboxClose { top:max(12px,env(safe-area-inset-top)); right:12px; }
+
+  .outingScene {
+    min-height:100dvh;
+    padding:calc(72px + env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom));
+  }
+  .outingSceneHeader {
+    top:max(8px,env(safe-area-inset-top));
+    left:10px;
+    right:10px;
+    align-items:flex-start;
+  }
+  .outingHeaderLeft { gap:6px; }
+  .outingExitButton { min-height:38px; padding:0 9px; }
+  .outingExitButton span { display:none; }
+  .outingSceneHeader .outingTopTag { min-height:38px; display:flex; align-items:center; padding:0 9px; font-size:.61rem; }
+  .outingProgressMeta { min-height:38px; padding:0 9px; }
+  .outingTextBox { width:100%; max-height:calc(100dvh - 86px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); }
+  .outingFooter { padding-bottom:max(0px,env(safe-area-inset-bottom)); }
+  .outingPrevious,.outingContinue { min-height:44px; }
+  .outingIntroScene { padding:max(16px,env(safe-area-inset-top)) 12px max(16px,env(safe-area-inset-bottom)); }
+  .outingIntroActions { display:grid; grid-template-columns:1fr; }
+  .outingIntroActions .button { width:100%; min-height:44px; }
+
+  .nexoNextDayConfirm { max-height:calc(100dvh - 24px); overflow:auto; margin:12px; }
+  .nexoNextDayActions { position:sticky; bottom:0; background:inherit; padding-bottom:max(0px,env(safe-area-inset-bottom)); }
+}
+
+@media(max-width:420px) {
+  .nexoLibraryTabs button { gap:4px; padding-inline:4px; }
+  .nexoLibraryTabs button span { min-width:16px; height:16px; font-size:.52rem; }
+  .nexoContactMeta { font-size:.5rem; }
+  .outingProgressMeta { display:none; }
+  .outingHeaderLeft { width:100%; }
+  .outingSceneHeader .outingTopTag { flex:1; justify-content:center; }
+}
+
+/* ========================================================================== 
+   v0.2.55 - NEXO: ordem de atividade, previews consistentes e autoscroll
+   ========================================================================== */
+.nexoContactRow {
+  min-height:66px;
+}
+.nexoContactText > div:first-child {
+  min-width:0;
+}
+.nexoContactText strong {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.nexoContactText time {
+  flex:0 0 auto;
+  font-variant-numeric:tabular-nums;
+}
+.nexoContactText p {
+  min-width:0;
+  margin-top:3px;
+  line-height:1.3;
+}
+.nexoPreviewYou {
+  color:#73bfd5;
+  font-weight:800;
+}
+.nexoContactRow.unread .nexoContactText p {
+  color:#bed3dc;
+  font-weight:700;
+}
+.nexoContactRow.unread .nexoContactMeta span:first-child {
+  color:#65d7aa;
+}
+.nexoContactRow.outingPending .nexoContactMeta span:first-child {
+  color:#69d5f1;
+}
+.nexoContactRow.complete .nexoContactMeta span:first-child {
+  color:#5f7b88;
+}
+.nexoUnreadDot {
+  width:9px;
+  height:9px;
+  min-width:9px;
+  min-height:9px;
+  padding:0;
+  font-size:0;
+  box-shadow:0 0 0 3px rgba(70,201,147,.08);
+}
+.nexoJumpLatest {
+  max-width:min(260px,calc(100% - 28px));
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+@media(max-width:780px) {
+  .nexoContactRow {
+    grid-template-columns:42px minmax(0,1fr) 18px;
+    gap:9px;
+    min-height:64px;
+    padding:8px 8px 8px 9px;
+  }
+  .nexoContactAvatar {
+    width:40px;
+    height:40px;
+  }
+  .nexoContactText strong { font-size:.88rem; }
+  .nexoContactText time { font-size:.58rem; }
+  .nexoContactText p { font-size:.72rem; }
+  .nexoContactMeta {
+    margin-top:3px;
+    gap:5px;
+  }
+  .nexoContactMeta span:last-child {
+    max-width:42%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .nexoJumpLatest {
+    right:12px;
+    padding:8px 10px;
+    font-size:.67rem;
+  }
+}
+
+/* v0.2.56 — robustez social / QA */
+.qaHeaderActions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.qaInlineActions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.qaInlineActions button { min-height:38px; }
+.qaIntegrityCard { grid-column:span 2; }
+.qaIntegritySummary { display:flex; flex-direction:column; gap:4px; padding:12px; border:1px solid #295467; border-radius:9px; background:#071821; }
+.qaIntegritySummary.ok { border-color:#24634d; }
+.qaIntegritySummary.warning { border-color:#805d2c; }
+.qaIntegritySummary span { color:#7f9faa; font-size:.78rem; line-height:1.4; }
+.qaIntegrityList { display:flex; flex-direction:column; gap:6px; max-height:210px; overflow:auto; padding:10px; border:1px solid #193b49; border-radius:8px; background:#051219; }
+.qaIntegrityList code { white-space:normal; overflow-wrap:anywhere; color:#c8e8f2; font-size:.72rem; }
+@media (max-width:780px) {
+  .qaIntegrityCard { grid-column:auto; }
+  .qaHeaderActions { width:100%; justify-content:stretch; }
+  .qaHeaderActions .button { flex:1; }
+  .qaInlineActions { grid-template-columns:1fr; }
+}
+
+/* v0.2.64 - Tutorial Progressivo v2 */
+.progressiveTutorialCoach{position:fixed;z-index:95;right:24px;top:92px;width:min(430px,calc(100vw - 48px));display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;padding:14px;background:rgba(6,19,27,.97);border:1px solid #2a596c;border-left:3px solid #76dcfb;box-shadow:0 18px 56px rgba(0,0,0,.5)}
+.progressiveTutorialPortrait{width:52px;height:52px;border-radius:50%;background-image:url('/edison.jpg');background-size:cover;background-position:center 24%;border:1px solid rgba(123,222,252,.42)}
+.progressiveTutorialCopy{min-width:0;display:flex;flex-direction:column;gap:4px}.progressiveTutorialCopy small{color:#67cce9;letter-spacing:.11em;font-size:.62rem;font-weight:800}.progressiveTutorialCopy strong{color:#f0fbff;font-size:.92rem}.progressiveTutorialCopy p{margin:1px 0 7px;color:#a8bfcc;font-size:.74rem;line-height:1.48}.progressiveTutorialCopy button{align-self:flex-start;padding:7px 11px;border:1px solid #39758d;background:#102b39;color:#dff7ff;font-weight:900;font-size:.67rem;letter-spacing:.08em;cursor:pointer}.progressiveTutorialCopy button:hover{border-color:#76dcfb}.progressiveTutorialCoach.nexoTutorial{top:18px;right:18px}.progressiveTutorialCoach.developmentTutorial{top:100px}.progressiveTutorialCoach.dispatchTutorial{top:108px}
+@media(max-width:760px){.progressiveTutorialCoach,.progressiveTutorialCoach.nexoTutorial,.progressiveTutorialCoach.developmentTutorial,.progressiveTutorialCoach.dispatchTutorial{top:78px;right:12px;width:calc(100vw - 24px)}}
+
+/* v0.2.65 — Edison Tutorial UX v3 */
+.edisonSpotlightBackdrop{position:fixed;inset:0;z-index:92;pointer-events:none;background:rgba(2,8,12,.46);backdrop-filter:saturate(.82)}
+.tutorialTarget{position:relative;z-index:94!important;outline:2px solid rgba(118,220,251,.92)!important;box-shadow:0 0 0 5px rgba(118,220,251,.11),0 0 34px rgba(83,207,241,.28)!important;animation:tutorialTargetPulse 1.7s ease-in-out infinite}
+@keyframes tutorialTargetPulse{0%,100%{box-shadow:0 0 0 5px rgba(118,220,251,.09),0 0 24px rgba(83,207,241,.18)}50%{box-shadow:0 0 0 8px rgba(118,220,251,.13),0 0 42px rgba(83,207,241,.34)}}
+
+.edisonCoach{z-index:98;display:grid;grid-template-columns:62px minmax(0,1fr);gap:13px;border:1px solid #315f72;border-left:3px solid #76dcfb;background:linear-gradient(135deg,rgba(5,22,31,.985),rgba(8,31,42,.97));box-shadow:0 22px 70px rgba(0,0,0,.56);color:#eefaff}
+.edisonCoach-floating{position:fixed;top:96px;right:24px;width:min(450px,calc(100vw - 48px));padding:15px}
+.edisonCoach-inline{position:relative;width:auto;padding:11px 12px;box-shadow:none;background:#0a202b;z-index:2}
+.edisonCoachPortrait{width:62px;height:62px;border-radius:10px;overflow:hidden;border:1px solid rgba(118,220,251,.42);background:#102b39;align-self:start}
+.edisonCoachPortrait img{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block}
+.edisonCoachCopy{min-width:0;display:flex;flex-direction:column;gap:5px}
+.edisonCoachMeta{display:flex;align-items:center;justify-content:space-between;gap:10px}.edisonCoachMeta small{color:#72d9f7;font-size:.62rem;font-weight:900;letter-spacing:.12em}.edisonCoachMeta span{font-size:.6rem;color:#8aa9b7;border:1px solid #294d5d;padding:2px 6px;border-radius:999px}
+.edisonCoachCopy>strong{font-size:.94rem;line-height:1.25}.edisonCoachCopy>p{margin:0;color:#a8bfcc;font-size:.75rem;line-height:1.48}.edisonCoachTargetCue{margin-top:3px;display:flex;gap:7px;align-items:center;padding:7px 9px;background:rgba(118,220,251,.07);border:1px solid rgba(118,220,251,.18);color:#c8f3ff;font-size:.69rem;font-weight:800}.edisonCoachTargetCue b{font-size:1rem;color:#76dcfb}.edisonCoachCopy>button{margin-top:3px;align-self:flex-start;border:1px solid #3d8099;background:#113444;color:#e8fbff;padding:8px 11px;font-size:.66rem;font-weight:900;letter-spacing:.08em;cursor:pointer}.edisonCoachCopy>button:hover{border-color:#76dcfb;background:#17465a}
+.edisonCoach.tone-attention{border-left-color:#efb65e}.edisonCoach.tone-attention .edisonCoachMeta small,.edisonCoach.tone-attention .edisonCoachTargetCue b{color:#efc47e}.edisonCoach.tone-discovery{border-left-color:#ae8fff}.edisonCoach.tone-discovery .edisonCoachMeta small,.edisonCoach.tone-discovery .edisonCoachTargetCue b{color:#c4adff}.edisonCoach.tone-success{border-left-color:#61dfac}.edisonCoach.tone-success .edisonCoachMeta small,.edisonCoach.tone-success .edisonCoachTargetCue b{color:#83e9c2}
+.progressiveTutorialCoach{display:none!important}.briefTutorialCoach{margin:0 18px 10px}.briefTutorialCoach .edisonCoachPortrait{width:48px;height:48px}.briefTutorialCoach.edisonCoach{grid-template-columns:48px minmax(0,1fr)}
+
+.agencyManualLauncher{position:fixed;z-index:89;right:24px;bottom:22px;height:38px;display:flex;align-items:center;gap:7px;padding:0 10px;border:1px solid #315f72;background:rgba(6,21,29,.94);color:#dff8ff;cursor:pointer;box-shadow:0 9px 28px rgba(0,0,0,.28)}.agencyManualLauncher>span{width:21px;height:21px;border:1px solid #69cce9;border-radius:50%;display:grid;place-items:center;color:#82e1fb;font-weight:900}.agencyManualLauncher>b{font-size:.64rem;letter-spacing:.1em}.agencyManualLauncher>small{min-width:20px;padding:2px 5px;border-radius:999px;background:#123b4b;color:#9fe8fb;font-size:.58rem;text-align:center}.agencyManualLauncher:hover{border-color:#76dcfb}
+.agencyManualBackdrop{position:fixed;inset:0;z-index:140;background:rgba(1,6,9,.78);display:grid;place-items:center;padding:22px}.agencyManualModal{width:min(920px,100%);max-height:min(760px,92vh);overflow:hidden;background:#071923;border:1px solid #35677a;box-shadow:0 35px 120px rgba(0,0,0,.7);display:flex;flex-direction:column}.agencyManualModal>header{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding:22px 24px;border-bottom:1px solid #173744}.agencyManualModal>header small{color:#72d9f7;letter-spacing:.14em;font-size:.64rem}.agencyManualModal>header h2{margin:5px 0 2px;font-size:1.35rem}.agencyManualModal>header p{margin:0;color:#8faab7;font-size:.76rem}.agencyManualModal>header button{border:0;background:transparent;color:#a8c9d6;font-size:1.6rem;cursor:pointer}
+.agencyManualLayout{min-height:0;display:grid;grid-template-columns:190px 1fr;flex:1}.agencyManualLayout nav{padding:14px;border-right:1px solid #173744;display:flex;flex-direction:column;gap:7px}.agencyManualLayout nav button{text-align:left;padding:11px;border:1px solid transparent;background:transparent;color:#86a7b6;font-weight:900;font-size:.7rem;letter-spacing:.08em;cursor:pointer}.agencyManualLayout nav button.active{color:#eafaff;border-color:#2f667b;background:#0e2a37}.agencyManualEntries{min-height:0;overflow:auto;padding:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start}.agencyManualEntries article{padding:14px;border:1px solid #244a5a;background:#0a202b;min-height:118px}.agencyManualEntries article.locked{opacity:.5;filter:saturate(.45)}.agencyManualEntries small{display:block;color:#6bcfea;font-size:.57rem;font-weight:900;letter-spacing:.11em}.agencyManualEntries strong{display:block;margin-top:5px}.agencyManualEntries p{margin:5px 0 0;color:#9ab4c0;font-size:.72rem;line-height:1.46}
+
+@media(max-width:800px){.edisonCoach-floating{top:auto;right:12px;left:12px;bottom:68px;width:auto;grid-template-columns:50px minmax(0,1fr);padding:12px}.edisonCoachPortrait{width:50px;height:50px}.edisonCoachCopy>p{font-size:.71rem}.agencyManualLauncher{right:12px;bottom:12px}.agencyManualBackdrop{padding:10px}.agencyManualModal{max-height:94vh}.agencyManualLayout{grid-template-columns:1fr}.agencyManualLayout nav{border-right:0;border-bottom:1px solid #173744;flex-direction:row;overflow:auto}.agencyManualLayout nav button{white-space:nowrap}.agencyManualEntries{grid-template-columns:1fr;padding:12px}.briefTutorialCoach{margin:0 10px 8px}}
+.edisonShiftStart{display:grid!important;grid-template-columns:120px minmax(0,1fr)!important;gap:18px!important;align-items:center!important}.edisonShiftStart>img{width:120px;height:145px;object-fit:cover;object-position:center 22%;border:1px solid #38677a}.edisonShiftStart>div{min-width:0}.edisonShiftStart h2{margin-top:5px}.edisonShiftStart p{line-height:1.55}
+@media(max-width:640px){.edisonShiftStart{grid-template-columns:72px minmax(0,1fr)!important;gap:12px!important}.edisonShiftStart>img{width:72px;height:92px}.edisonShiftStart p{font-size:.75rem}}
+
+/* Beta 1 hotfix — primeiro caso: tutorial em balão, sem blackout/compactação do briefing */
+.dispatchCoreTutorial.firstCaseTutorialBubble{
+  top:84px;
+  right:18px;
+  width:min(390px,calc(100vw - 36px));
+  z-index:132;
+}
+.dispatchCoreTutorial.firstResultTutorialBubble{
+  top:84px;
+  right:18px;
+  width:min(390px,calc(100vw - 36px));
+  z-index:132;
+}
+.dispatchCoreTutorial.firstCaseTutorialBubble .edisonCoachCopy>p,
+.dispatchCoreTutorial.firstResultTutorialBubble .edisonCoachCopy>p{font-size:.72rem;line-height:1.44}
+.dispatchCoreTutorial.firstCaseTutorialBubble .edisonCoachPortrait,
+.dispatchCoreTutorial.firstResultTutorialBubble .edisonCoachPortrait{width:54px;height:54px}
+.dispatchCoreTutorial.firstCaseTutorialBubble.edisonCoach,
+.dispatchCoreTutorial.firstResultTutorialBubble.edisonCoach{grid-template-columns:54px minmax(0,1fr);padding:12px 13px}
+/* O alvo continua claro, mas o resto da tela não é apagado no onboarding principal. */
+.dispatchUi .tutorialTarget{outline-color:rgba(118,220,251,.82)!important}
+@media(max-width:1100px) and (min-width:801px){
+  .dispatchCoreTutorial.firstCaseTutorialBubble,
+  .dispatchCoreTutorial.firstResultTutorialBubble{top:auto;bottom:18px;right:18px;width:min(360px,calc(100vw - 36px))}
+}
+@media(max-width:800px){
+  .dispatchCoreTutorial.firstCaseTutorialBubble,
+  .dispatchCoreTutorial.firstResultTutorialBubble{top:auto;right:12px;left:12px;bottom:68px;width:auto;max-height:36vh;overflow:auto}
 }

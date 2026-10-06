@@ -96,5 +96,5 @@ export function unlockTechniqueLevel(progress: HeroProgression, level: 2 | 4 | 6
 }
 
 export function developmentComplete(progressions: Record<string, HeroProgression>) {
-  return Object.values(progressions).every((progress) => !canLevelUp(progress) && progress.unspentAttributePoints === 0);
+  return Object.values(progressions).every((progress) => !canLevelUp(progress) && progress.pendingMilestoneLevels.length === 0 && progress.unspentAttributePoints === 0);
 }

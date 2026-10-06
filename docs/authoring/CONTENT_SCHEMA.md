@@ -141,8 +141,8 @@ Uma cena continua começando com `opening + choices`, mas pode ganhar quantos tu
 Regras:
 - `romanceAffinity` aceita `100 | 50 | 30` e mede contribuição relativa para a rota romântica; não é chance aleatória.
 - O orçamento romântico diário é dividido entre os turnos da cena para que conversas longas não gerem progresso extra só pelo tamanho.
-- `exclusiveOutingDay: 3` ou `exclusiveOutingDay: 6` marca uma escolha que confirma o único encontro presencial daquele marco.
-- `vnSceneId` pode apontar futuramente para uma cena presencial/VN autorada.
+- `exclusiveOutingDay: 3` ou `exclusiveOutingDay: 6` marca que a escolha final oferece o encontro daquele marco. A escolha não reserva a noite; ela habilita o CTA persistente no NEXO.
+- `vnSceneId` aponta para a cena presencial/VN autorada que será aberta quando o jogador pressionar `IR PARA ENCONTRO`.
 - Não criar fala automática para preencher `followUps`; cada mensagem continua escrita explicitamente em `content/`.
 
 
@@ -211,3 +211,18 @@ Regras atuais:
 
 ### v0.2.9 — entrega cadenciada
 `openingAfterIncoming` e `afterResponse` continuam sendo sequências autoradas, mas o cliente as entrega uma bolha por vez durante a conversa ativa. Não é necessário quebrar artificialmente o roteiro em choices só para criar pausas.
+
+
+### v0.2.14 — iniciativa da conversa
+
+`openingOutgoing` e `prefaceOutgoing` representam uma mensagem autorada do **Analista que ainda precisa ser enviada pelo jogador**. A UI não deve colocar essa bolha automaticamente no histórico. Ao abrir a conversa, o texto aparece preparado no compositor e o jogador confirma o envio.
+
+Se o personagem é quem inicia o turno, use `opening`/`incoming` (e mídia associada). Essa abertura é tratada como mensagem já recebida e pode gerar estado de não lida na lista de contatos. Não troque o autor da primeira fala apenas para adequar a UI; a direção vem do roteiro.
+
+
+## Cena presencial — crop por viewport (v0.2.27)
+Além de `backgroundImage`, uma `OutingScene` pode usar `backgroundPositionDesktop` e `backgroundPositionMobile` com valores CSS de `background-position` (ex.: `center center`, `42% center`). Esses campos são puramente visuais e não alteram flags/progressão.
+
+
+## Identidade variável do jogador
+O protagonista possui `player.name` e `player.pronouns`. A autoria não deve assumir gênero. Ordem de preferência: (1) frase naturalmente neutra; (2) `{{playerName}}`; (3) pronome configurável; (4) `{{playerForm:...}}` somente quando a flexão preserva uma fala autoral importante. Tokens: `{{playerName}}`, `{{playerSubject}}`, `{{playerSubjectCap}}`, `{{playerPossessive}}`, `{{playerPossessiveCap}}`, `{{playerForm:masculino|feminino|neutro}}`.

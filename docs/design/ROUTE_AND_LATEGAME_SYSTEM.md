@@ -9,8 +9,10 @@ O dia global controla a cidade/Dispatch. O progresso social é individual por pe
 - O jogador pode desenvolver todos em paralelo ou focar um por vez.
 - Primeiro encontro: marco de rota 3. O percentual de romance não bloqueia a cena; 30% fica apenas como referência histórica/de balanceamento.
 - Segundo date: marco de rota 6. O percentual de romance não bloqueia a cena; 70% fica apenas como referência histórica/de balanceamento.
-- Apenas uma saída presencial pode ser marcada por noite global.
-- Se o jogador não atingir o marco no convite original, o encontro continua recuperável em noites posteriores quando o requisito for alcançado.
+- Apenas uma saída presencial pode ser realizada por noite global.
+- Concluir o chat de convite não consome a saída da noite: o NEXO mantém um CTA persistente `IR PARA ENCONTRO`.
+- Se o jogador adiar, o convite continua disponível nas noites seguintes. A rota fica estacionada no estágio 3/6 até o encontro ser concluído.
+- Se outro personagem já teve encontro naquela noite, o CTA permanece visível porém indisponível até o próximo dia; isso não bloqueia conversar com os demais personagens.
 - Placeholders de QA incluem etapas 7–10 para testar rotas lentas. Conteúdo final pode ter ritmos e quantidades diferentes por personagem.
 - 100% romântico: os sete personagens concluíram os marcos presenciais 3 e 6. O calendário não termina automaticamente no Dia 6.
 
@@ -36,3 +38,19 @@ Cada personagem avança no máximo uma etapa individual por noite global. É per
 
 ## v0.2.9 — romance como feedback, não gate
 As escolhas 100/50/30 continuam alterando o percentual e os eixos relacionais, porém o arco principal não pode entrar em hardlock por pontuação. Ao alcançar a etapa 3 ou 6 da rota individual, o encontro correspondente pode ser escolhido independentemente do percentual atual. A única trava estrutural preservada é uma saída presencial por noite global.
+
+
+## v0.2.36 — convite desacoplado da execução do date
+O convite autorado continua nas etapas 3/6, mas a escolha de resposta no chat apenas conclui a conversa. A reserva da única saída presencial da noite ocorre somente quando o jogador pressiona `IR PARA ENCONTRO`. Enquanto o date não for concluído, `routeStage` não avança. Isso permite manter várias rotas em paralelo, acumular convites e escolher em qual noite realizar cada saída sem perder diálogo ou conteúdo.
+
+## v0.2.51 — apresentação dos Dates
+
+Os marcos presenciais continuam sendo cenas lineares e sem escolhas. A autoria permanece em `content/narrative/outings.ts`; a interface de `/encontro/[sceneId]` pode subdividir um bloco longo de `paragraphs` em páginas de leitura sem modificar texto, ordem ou consequência narrativa.
+
+Regras:
+- DATE 1 corresponde ao marco de rota 3; DATE 2 ao marco 6.
+- `beats` são usados apenas quando há uma transição autoral de ambiente/background; cada beat pode ser paginado visualmente.
+- `continueLabel` do beat aparece somente no fim daquele beat.
+- `outingMilestones`, avanço de `routeStage`, `completionFlag` e `routeAdvanceFlag` só são gravados ao concluir a última página da cena.
+- Progresso temporário de leitura pode ser mantido em `sessionStorage`; isso não faz parte do save e não altera o schema v9.
+- Um encontro já concluído não deve ser reexecutado por acesso manual à URL.

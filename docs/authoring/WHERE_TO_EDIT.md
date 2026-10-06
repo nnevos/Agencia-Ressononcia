@@ -17,6 +17,13 @@ Edite: nome, poder, classe, trilha, estilo, tags, descrição, pontos fortes, li
 
 Retratos: `content/characters/portraits.ts`.
 
+### NEXO operacional contextual
+`content/messages/operations.ts`
+
+Edite `eventComments` para o comentário de cada caso, `affinityMissionLines` para afinidades explícitas, `specialtyMissionLines` para respostas por tag, `pairDialogue` para pares autorados, `teamTemplates` para fallbacks de equipe e `outcomeLines`/`teamOutcomeReactions` para retornos. A lógica de prioridade fica em `game/data/operationsChat.ts`; não coloque fala narrativa diretamente no componente React.
+
+Documento de revisão: `docs/authoring/chat-scripts/NEXO - Guerreiros Elementais.docx`.
+
 ### Ocorrências
 `content/incidents/caseBank.ts` + `content/incidents/dailyPool.ts`
 
@@ -59,8 +66,8 @@ Cada personagem tem seu próprio arquivo. Você controla exatamente:
 - dias e condições em que a cena aparece;
 - `romanceAffinity: 100 | 50 | 30`;
 - turnos extras em `followUps` para conversas longas;
-- `exclusiveOutingDay: 3 | 6` para encontros exclusivos;
-- `vnSceneId` como gancho para cena presencial autorada.
+- `exclusiveOutingDay: 3 | 6` para marcar a oferta de encontro no fim do chat;
+- `vnSceneId` como destino do CTA persistente `IR PARA ENCONTRO`.
 
 `content/dialogues/post-shift/index.ts` é o registro de cenas disponíveis.
 
@@ -110,3 +117,7 @@ Os placeholders D2–D6 e os encontros atuais estao marcados como `PLACEHOLDER`.
 - `dailyPool.ts`: edite composição respiro/normal/pressão/pico e regras de sorteio.
 - `powerAffinityHeroIds`: lista opcional de heróis cujo poder tem vantagem contextual forte no caso. Não use para tornar um personagem obrigatório.
 - peso 3 = ESSENCIAL; 2 = IMPORTANTE; 1 = APOIO.
+
+
+### Nome/pronomes do protagonista
+A interpolação é centralizada em `lib/playerText.ts`. Não faça novos `.replaceAll("{{playerName}}", ...)` nos componentes. Em conteúdo, preserve “Analista” quando for cargo; em narração ou tratamento pessoal, adapte contextualmente e prefira neutralidade.

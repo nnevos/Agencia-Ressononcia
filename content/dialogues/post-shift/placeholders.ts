@@ -23,10 +23,8 @@ const profiles: PlaceholderProfile[] = [
   { id:"yuki", speaker:"Yuki", voice:"direto, mas atento", day2Topic:"uma disputa boba sobre qual lanche sobrevive melhor a um plantao", day3Plan:"dar uma volta e comprar alguma coisa gelada", day4Memory:"a caminhada e a conversa sem pressa", day5Flirt:"o jeito como voce sempre percebe quando ele esta cansado", day6Plan:"um passeio mais demorado, longe da Agencia" },
   { id:"elysia", speaker:"Elysia", voice:"rapida e provocadora", day2Topic:"um teste inutil para descobrir qual de voces organiza melhor uma mesa", day3Plan:"visitar uma cafeteria e discutir teorias absurdas", day4Memory:"a cafeteria e a quantidade de assuntos que surgiram", day5Flirt:"a facilidade com que ela consegue tirar uma resposta sua", day6Plan:"um lugar com luzes da cidade e tempo para conversar" },
   { id:"lysandro", speaker:"Lysandro", voice:"contido e seco", day2Topic:"uma discussao seria demais sobre o jeito certo de preparar cafe", day3Plan:"caminhar por um lugar tranquilo e comer alguma coisa", day4Memory:"o silencio confortavel durante a saida", day5Flirt:"o fato de ele ter ficado tempo demais olhando para voce", day6Plan:"um jantar simples seguido de uma caminhada" },
-  { id:"helio", speaker:"Helio", voice:"pratico com humor discreto", day2Topic:"uma aposta sobre quem erra primeiro uma previsao de filme", day3Plan:"ver alguma coisa juntos e pegar comida no caminho", day4Memory:"as piadas durante o filme", day5Flirt:"a forma como ele inventa desculpas para continuar a conversa", day6Plan:"uma noite fora da rotina, sem falar de trabalho" },
   { id:"demetria", speaker:"Demetria", voice:"franca e calorosa", day2Topic:"uma conversa sobre comidas que todo mundo defende sem motivo", day3Plan:"ir a uma feira e escolher alguma coisa para comer", day4Memory:"a feira e a competicao improvisada entre voces", day5Flirt:"o jeito como ela ficou perto demais sem parecer se importar", day6Plan:"um lugar aberto, comida boa e nenhuma pressa" },
   { id:"alexandra", speaker:"Alexandra", voice:"gentil e observadora", day2Topic:"uma lista de pequenas coisas que melhoram um dia ruim", day3Plan:"ir a um lugar calmo perto da agua", day4Memory:"o tempo que voces passaram conversando sem olhar o relogio", day5Flirt:"a maneira como ela lembra detalhes que voce disse dias atras", day6Plan:"um passeio tranquilo seguido de jantar" },
-  { id:"eros", speaker:"Eros", voice:"brincalhao e espontaneo", day2Topic:"um ranking completamente injusto das melhores desculpas para evitar reunioes", day3Plan:"sair sem roteiro e decidir o caminho na hora", day4Memory:"o tanto que voces riram sem planejar nada", day5Flirt:"a quantidade de vezes que ele chama isso de coincidencia", day6Plan:"uma noite improvisada que claramente parece um encontro" },
 ];
 
 function choice(id: string, text: string, response: string, flag: string, romanceAffinity: 100 | 50 | 30, delta: DialogueChoice["delta"], extras: Partial<DialogueChoice> = {}): DialogueChoice {
@@ -188,6 +186,6 @@ function recoveryStage(profile: PlaceholderProfile, stage: 7 | 8 | 9 | 10): Dial
 
 export const placeholderPostShiftScenes: DialogueScene[] = profiles.flatMap((profile) => {
   const recovery = [recoveryStage(profile,7), recoveryStage(profile,8), recoveryStage(profile,9), recoveryStage(profile,10)];
-  if (profile.id === "yuki") return recovery;
+  if (profile.id === "yuki" || profile.id === "elysia" || profile.id === "lysandro" || profile.id === "demetria" || profile.id === "alexandra") return recovery;
   return [day2(profile), day3(profile), day4(profile), day5(profile), day6(profile), ...recovery];
 });

@@ -9,3 +9,5 @@ export { GAMEPLAY_CONFIG } from "./config/gameplay";
 export { SOCIAL_BALANCE } from "./config/social";
 
 export { outingScenes, getOutingScene } from "./narrative/outings";
+
+export { SOCIAL_ROUTE_MANIFEST, SOCIAL_ROUTE_STAGES, SOCIAL_OUTING_STAGES } from "./social/routeManifest";

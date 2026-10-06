@@ -1,4 +1,4 @@
-# EDIT HERE — RESSONÂNCIA v0.2.9
+# EDIT HERE — RESSONÂNCIA v0.2.39
 
 Se você quer alterar o jogo sem procurar código, comece aqui.
 
@@ -9,7 +9,7 @@ Se você quer alterar o jogo sem procurar código, comece aqui.
 - **Banco de eventos/ocorrências:** `content/incidents/caseBank.ts`
 - **Composição diária / sorteio:** `content/incidents/dailyPool.ts`
 - **Balanceamento operacional:** `content/config/balance.ts`
-- **Balanceamento social/romance:** `content/config/social.ts`
+- **Configuração social/romance:** `content/config/social.ts` — pesos 100/50/30 são metadados; a porcentagem é derivada da etapa da rota.
 - **Turno/equipe:** `content/config/gameplay.ts`
 - **Mensagens durante o expediente:** `content/messages/operations.ts`
 - **Conversas pós-expediente:** `content/dialogues/post-shift/`
@@ -89,3 +89,71 @@ Polimento do onboarding após playtest: texto de privacidade do NEXO reduzido à
 - Primeiro outing e segundo date: `content/narrative/outings.ts` (`outing-day3-yuki` e `outing-day6-yuki`).
 - Os outros personagens ainda usam placeholders de QA.
 - Para anexar foto a uma DM, use os campos documentados em `content/README.md`; não hardcode imagem no componente.
+
+
+## Regra de autoria de dates — v0.2.10
+Não criar botão externo/genérico para milestones 3/6. O convite deve existir no texto da própria conversa e a escolha que aceita a saída deve carregar `exclusiveOutingDay` e `vnSceneId`. Assim, terminar a etapa anterior nunca dispara o encontro.
+
+
+## Regra de percentual de romance — v0.2.11
+
+Não escrever conteúdo supondo ganho de XP romântico. O percentual exibido é estrutural: etapas concluídas / total de etapas da rota. As escolhas 100/50/30 podem alterar confiança, intimidade, atração, tensão etc., mas não mudam a porcentagem.
+
+
+## Fluxo de iniciativa no NEXO — v0.2.15
+Para o Analista iniciar um turno, use `openingOutgoing` (abertura da cena) ou `prefaceOutgoing` (follow-up): o jogador precisará apertar Enviar. Para o personagem iniciar, use `opening`/`incoming`; essa mensagem pode aparecer como recebida/não lida antes de abrir a thread.
+
+## v0.2.21 — briefing desktop
+O briefing desktop foi redistribuído para caber na primeira viewport: equipe sob narrativa à esquerda, requisitos/radar à direita, CTA no rodapé. Não reintroduzir scroll como solução padrão antes de redistribuir espaço ocioso. Mobile mantém layout próprio.
+
+
+## v0.2.22 — briefing / requisitos
+- Layout desktop da seleção: `app/globals.css` (bloco v0.2.22).
+- Quantização de requisito de atributo: `game/simulation/resolveIncident.ts`, dentro de `getMissionAssessment`.
+- Requisitos passam a pontos inteiros com `Math.round(baseRequired * dayScale)`.
+- Não reintroduzir casas decimais na UI sem decisão explícita de design.
+
+
+## v0.2.23 — briefing sobre mapa / seleção pela barra de agentes
+- Estrutura do briefing e integração com o roster: `app/agencia/page.tsx`.
+- Layout desktop contextual sobre o mapa: `app/agencia/agency.css` (regra consolidada; origem histórica v0.2.23).
+- Clique no retrato do roster usa `onSelect`; o botão `ABRIR FICHA` continua separado: `components/HeroCard.tsx`.
+- No desktop não duplicar os sete cards dentro do briefing. No mobile, a seleção interna continua disponível porque a barra de agentes não permanece visível atrás do full-screen.
+
+
+### v0.2.24 — legibilidade do briefing
+- Ajustes visuais do briefing contextual ficam no bloco `v0.2.24` ao final de `app/globals.css`.
+- Não alterar fórmulas/requisitos para reproduzir este ajuste: ele é somente tipográfico.
+
+
+### v0.2.25 — legibilidade global da Central
+- A regra histórica `v0.2.25`, hoje consolidada em `app/agencia/agency.css`, amplia apenas tipografia funcional no desktop.
+- Não aumentar o radar para resolver legibilidade textual.
+
+
+## Central v0.2.26–v0.2.29
+- Orquestração/estado: `app/agencia/page.tsx`.
+- Superfícies visuais: `components/agency/`.
+- CSS da Central: `app/agencia/agency.css`.
+- Save/export/import: `lib/save.ts` + `components/agency/AgencyHeader.tsx`.
+- Crop de encontros: campos `backgroundPositionDesktop` / `backgroundPositionMobile` em `content/narrative/outings.ts`.
+Não mover falas, casos ou regras de cálculo para os componentes de UI.
+
+
+## Menu v0.2.38
+- Textos: `content/ui/menu.ts`
+- Layout: `app/page.tsx`
+- Estilo/fade/crop: bloco `v0.2.38` no final de `app/globals.css`
+- Background: `public/menu/cidade-noturna.webp`
+
+
+## Menu v0.2.39
+- Fluxo/painéis: `app/page.tsx`.
+- Sessão local preparada para backend: `lib/account.ts` (não armazena senha).
+- Preferências locais: `lib/settings.ts`.
+- Timing de mensagens do NEXO lê `dialogueRevealDelay()` em `components/PhoneDialogueEngine.tsx`.
+- Estilo/transições: bloco `v0.2.39` no final de `app/globals.css`.
+- `app/login/page.tsx` e `app/novo-jogo/page.tsx` são aliases de compatibilidade que retornam aos painéis do menu.
+
+
+- Lysandro D1–D6 já está autorado em `content/dialogues/post-shift/lysandro.ts`; não voltar aos placeholders principais.

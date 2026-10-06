@@ -27,6 +27,7 @@ export function DevTools({ save, onSave, onPost, onDevelopment }: { save: SaveGa
       <button className="devPrimary devPerfectFinish" onClick={() => { const next = devPerfectFinishShift(save); apply(next); onDevelopment(); }}>FINALIZAR EXPEDIENTE 100%</button>
       <small className="devPerfectHint">QA rápido: todas as ocorrências ainda não arquivadas viram Sucesso, aplicam XP/custo normal de Sucesso e o jogo segue para Desenvolvimento.</small>
       <button className="devPrimary" onClick={() => { const next = devSkipToPostShift(save); apply(next); onPost(); }}>Pular direto para pós-expediente</button>
+      <button className="devPrimary" onClick={() => window.location.assign("/qa/social")}>QA SOCIAL / NEXO</button>
       <button className="devDanger" onClick={() => apply(devResetShift(save))}>Resetar expediente atual</button>
       <small>Uso recomendado: testes de UI, diálogos, saves, progressão e fluxo narrativo.</small>
     </aside>}

@@ -16,6 +16,9 @@ export type Hero = {
   id: string;
   name: string;
   powerName: string;
+  age: number;
+  heightCm: number;
+  weightKg: number;
   tags: string[];
   attributes: HeroAttributes;
   className: string;
@@ -105,8 +108,11 @@ export type ResonancePair = {
   missionsTogether: number;
 };
 
+export type PlayerPronouns = "ele-dele" | "ela-dela" | "elu-delu";
+
 export type PlayerState = {
   name: string;
+  pronouns: PlayerPronouns;
   currentDay: number;
   reputation: number;
   currentChapter: string;
@@ -150,10 +156,11 @@ export type ShiftState = {
 };
 
 export type RomanceState = {
+  /** LEGADO v8/v9: preservado no save para compatibilidade. A UI deriva o percentual da etapa da rota. */
   romanceProgress: Record<string, number>;
   /** Etapa narrativa individual de cada personagem. Nao depende do dia global. */
   routeStage: Record<string, number>;
-  /** Pontos de romance ganhos por etapa/personagem; limita farm em conversas longas. */
+  /** LEGADO v8/v9: preservado para compatibilidade; nao alimenta mais o percentual de romance. */
   romanceEarnedByStage: Record<string, Record<string, number>>;
   /** Personagem escolhido para uma saida em cada noite global; no maximo um encontro por noite. */
   outingsByGlobalDay: Record<string, string>;
@@ -162,7 +169,7 @@ export type RomanceState = {
 };
 
 export type SaveGame = {
-  version: 9;
+  version: 10;
   player: PlayerState;
   heroStates: Record<string, HeroState>;
   heroProgression: Record<string, HeroProgression>;
@@ -181,6 +188,10 @@ export type DialogueMessage = {
   text?: string;
   image?: string;
   imageAlt?: string;
+  /** Opcional: durante entrega ao vivo, a bolha troca para estado excluído após este atraso. */
+  deleteAfterMs?: number;
+  /** Texto mostrado depois da exclusão. Histórico concluído já abre neste estado. */
+  deletedText?: string;
 };
 
 export type DialogueChoice = {
@@ -246,6 +257,7 @@ export type DialogueAvailability = {
   maxDay?: number;
   requiredFlags?: string[];
   blockedFlags?: string[];
+  /** LEGADO: ignorado desde v0.2.11; disponibilidade social usa etapa/flags. */
   minRomanceProgress?: number;
 };
 
@@ -257,8 +269,19 @@ export type OutingScene = {
   title: string;
   /** Imagem de fundo da cena. Pode ser substituida pelo autor sem mudar a tela. */
   backgroundImage?: string;
+  /** Enquadramento autoral opcional por viewport; a tela continua generica. */
+  backgroundPositionDesktop?: string;
+  backgroundPositionMobile?: string;
   /** Texto descritivo da saida/date exibido em uma caixa estilo light novel. */
   paragraphs: string[];
+  /** Beats opcionais permitem trocar o background durante uma cena linear, sem adicionar escolhas. */
+  beats?: Array<{
+    backgroundImage?: string;
+    backgroundPositionDesktop?: string;
+    backgroundPositionMobile?: string;
+    paragraphs: string[];
+    continueLabel?: string;
+  }>;
   continueLabel?: string;
   completionFlag: string;
 };

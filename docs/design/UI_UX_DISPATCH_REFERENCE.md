@@ -77,3 +77,9 @@ Não exibir porcentagem única de sucesso. Preferir:
 - Herói fatigado/ferido
 
 A resposta final pertence ao jogador.
+
+
+## Consolidação e acessibilidade — v0.2.26/v0.2.27
+- Central composta por superfícies independentes (fila, mapa/briefing, NEXO, roster) com estado orquestrado pela rota.
+- Acessibilidade base: foco visível, Escape, live regions e alvos de toque; reduced motion respeitado.
+- Export/import de save é infraestrutura de QA/portabilidade e não altera o loop.
