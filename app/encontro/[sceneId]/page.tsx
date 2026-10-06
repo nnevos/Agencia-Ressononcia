@@ -6,6 +6,7 @@ import { routeAdvanceFlag } from "@/game/social/dialogue";
 import type { OutingScene, SaveGame } from "@/game/types";
 import { loadSave, updateSave } from "@/lib/save";
 import { formatPlayerText } from "@/lib/playerText";
+import { publicPath } from "@/lib/publicPath";
 import { loadSettings } from "@/lib/settings";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
@@ -143,7 +144,8 @@ export default function OutingPage() {
 
   const safePageIndex = Math.min(pageIndex, Math.max(0, pages.length - 1));
   const activePage = pages[safePageIndex];
-  const background = activePage?.backgroundImage ?? scene.backgroundImage ?? getHeroPortrait(scene.characterId) ?? "";
+  const rawBackground = activePage?.backgroundImage ?? scene.backgroundImage ?? getHeroPortrait(scene.characterId) ?? "";
+  const background = publicPath(rawBackground);
   const isLastPage = safePageIndex >= pages.length - 1;
   const progress = pages.length ? ((safePageIndex + 1) / pages.length) * 100 : 100;
 

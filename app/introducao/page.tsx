@@ -3,6 +3,8 @@
 import { introAfterNexo, introductionSequence, introNexoChoices, introNexoReplies, INTRO_HERO_IDS } from "@/content/narrative/introduction";
 import { isPostShiftOnlySave, loadSave, writeSave } from "@/lib/save";
 import { useRouter } from "next/navigation";
+import { publicPath } from "@/lib/publicPath";
+import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 
 type Phase = "agency" | "nexo" | "replies" | "sdh";
@@ -90,14 +92,18 @@ export default function IntroductionPage() {
 
   const line = phase === "agency" ? introductionSequence[index] : phase === "sdh" ? introAfterNexo[index] : null;
   const backdropClass = phase === "agency" && index === 0 ? "storyBackdrop storyBackdropExterior" : phase === "agency" ? "storyBackdrop storyBackdropOffice" : "storyBackdrop storyBackdropSystem";
+  const introStyle = {
+    "--story-exterior-image": `url(${publicPath("/agencia-exterior.webp")})`,
+    "--story-office-image": `url(${publicPath("/agencia-escritorio.webp")})`,
+  } as CSSProperties;
 
-  return <main className="storyIntroPage">
+  return <main className="storyIntroPage" style={introStyle}>
     <div className={backdropClass}><div className="storyOfficeGlow" />{phase === "sdh" && <div className="storyOfficeScreen">AGÊNCIA<br/><strong>RESSONÂNCIA</strong></div>}</div>
     <header className="storyTopbar"><span>RESSONÂNCIA · DIA 1</span><button onClick={skipTutorial}>PULAR TUTORIAL</button></header>
 
     {(phase === "agency" || phase === "sdh") && line && <section className="storyDialogue">
       <div className="storySpeakerRow">
-        {line.speaker.toLowerCase() === "edison" && <span className="storySpeakerAvatar" aria-hidden="true" />}
+        {line.speaker.toLowerCase() === "edison" && <span className="storySpeakerAvatar" aria-hidden="true"><img src={publicPath("/edison.jpg")} alt="" /></span>}
         <div className="storySpeaker">{line.speaker}</div>
       </div>
       <p>{line.text}</p>

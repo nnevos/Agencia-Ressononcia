@@ -44,31 +44,49 @@ export function startShift(shift: ShiftState, now = Date.now()): ShiftState {
   return { ...shift, startedAtEpochMs: now, status: "running", elapsedGameMinutes: 0 };
 }
 
+export function resumeShiftClock(shift: ShiftState, now = Date.now()): ShiftState {
+  if (shift.status !== "running") return shift;
+  return { ...shift, startedAtEpochMs: now - shift.elapsedGameMinutes * REAL_MS_PER_GAME_MINUTE };
+}
+
 export function syncIncidentRuntime(shift: ShiftState, gameMinute: number): ShiftState {
-  const nextIncidents: Record<string, IncidentRuntime> = { ...shift.incidents };
+  let nextIncidents = shift.incidents;
+  let incidentsChanged = false;
+
+  function updateIncident(id: string, runtime: IncidentRuntime) {
+    if (!incidentsChanged) {
+      nextIncidents = { ...shift.incidents };
+      incidentsChanged = true;
+    }
+    nextIncidents[id] = runtime;
+  }
+
   for (const incident of incidents) {
     const runtime = nextIncidents[incident.id];
     if (!runtime) continue;
     const scheduledSpawnMinute = runtime.spawnedAtGameMinute ?? incident.spawnMinute;
     if (runtime.status === "scheduled" && gameMinute >= scheduledSpawnMinute) {
       const deadlineAtGameMinute = scheduledSpawnMinute + incident.deadlineMinutes;
-      nextIncidents[incident.id] = {
+      updateIncident(incident.id, {
         ...runtime,
         status: gameMinute > deadlineAtGameMinute ? "expired" : "waiting",
         spawnedAtGameMinute: scheduledSpawnMinute,
-        deadlineAtGameMinute
-      };
+        deadlineAtGameMinute,
+      });
       continue;
     }
     if (runtime.status === "waiting" && runtime.deadlineAtGameMinute !== undefined && gameMinute > runtime.deadlineAtGameMinute) {
-      nextIncidents[incident.id] = { ...runtime, status: "expired" };
+      updateIncident(incident.id, { ...runtime, status: "expired" });
     }
   }
-  const finished = gameMinute >= SHIFT_GAME_MINUTES;
+
+  const nextStatus = gameMinute >= SHIFT_GAME_MINUTES ? "finished" : shift.status;
+  if (!incidentsChanged && gameMinute === shift.elapsedGameMinutes && nextStatus === shift.status) return shift;
+
   return {
     ...shift,
     elapsedGameMinutes: gameMinute,
-    status: finished ? "finished" : shift.status,
-    incidents: nextIncidents
+    status: nextStatus,
+    incidents: nextIncidents,
   };
 }

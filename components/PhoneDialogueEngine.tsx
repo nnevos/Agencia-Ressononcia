@@ -7,6 +7,7 @@ import { canChooseOuting, dialogueIntroOutgoingFlag, getCompletedChoice, getCurr
 import { isSceneAvailable } from "@/content/dialogues/post-shift";
 import { isPostShiftOnlySave, updateSave } from "@/lib/save";
 import { formatPlayerText } from "@/lib/playerText";
+import { publicPath } from "@/lib/publicPath";
 import { recordNexoActivity } from "@/game/social/nexoLibrary";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -39,7 +40,7 @@ function DialogueBubble({ message, messageKey, live, player, onOpenImage, onImag
   const visibleText = deleted ? (message.deletedText ?? "Mensagem excluída") : message.text;
   return <div className={`phoneBubble ${message.direction} nexoBubbleArrive${deleted ? " deleted" : ""}`} key={messageKey}>
     {!deleted && message.image && <button className="nexoChatImageButton" onClick={() => onOpenImage(message.image!, alt)} aria-label={`Abrir imagem: ${alt}`}>
-      <img className="nexoChatImage" src={message.image} alt={alt} onLoad={onImageLoad} />
+      <img className="nexoChatImage" src={publicPath(message.image)} alt={alt} onLoad={onImageLoad} />
     </button>}
     {visibleText && <p>{formatPlayerText(visibleText, player)}</p>}
     <time>{message.direction === "outgoing" ? "enviada ✓✓" : "agora"}</time>
@@ -443,7 +444,7 @@ export function PhoneDialogueEngine({ scenes, save, lastDispatch, onBack, onSave
 
     {expandedImage && <div className="nexoImageLightbox" role="dialog" aria-modal="true" aria-label={expandedImage.alt} onClick={() => setExpandedImage(null)}>
       <button className="nexoImageLightboxClose" onClick={() => setExpandedImage(null)} aria-label="Fechar imagem">×</button>
-      <img src={expandedImage.src} alt={expandedImage.alt} onClick={(event) => event.stopPropagation()} />
+      <img src={publicPath(expandedImage.src)} alt={expandedImage.alt} onClick={(event) => event.stopPropagation()} />
     </div>}
   </section>;
 }

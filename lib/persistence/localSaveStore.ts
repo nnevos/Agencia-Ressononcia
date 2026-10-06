@@ -35,7 +35,14 @@ export function ensureLocalSaveMeta(): LocalSaveMeta | null {
 
 export function writeLocalSaveRaw(raw: string, options?: { preserveRevision?: boolean }): LocalSaveMeta | null {
   if (typeof window === "undefined") return null;
+  const currentRaw = localStorage.getItem(LOCAL_SAVE_KEY);
   const previous = readLocalSaveMeta();
+
+  // Escritas idempotentes nao criam nova revisao nem acordam o CloudSyncBridge.
+  // Isso protege contra loops de render/polling que tentem persistir o mesmo
+  // payload repetidamente.
+  if (currentRaw === raw) return previous ?? ensureLocalSaveMeta();
+
   const meta: LocalSaveMeta = {
     slotKey: DEFAULT_SLOT,
     revision: options?.preserveRevision && previous ? previous.revision : (previous?.revision ?? 0) + 1,

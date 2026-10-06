@@ -1,5 +1,5 @@
 import { getHeroPortrait } from "@/game/data/heroPortraits";
-import { incidents } from "@/game/data/incidents";
+import { caseById } from "@/game/data/incidents";
 import { formatGameTime } from "@/game/simulation/shift";
 import type { DispatchResult, Incident, SaveGame } from "@/game/types";
 
@@ -33,7 +33,7 @@ export function IncidentRail({
   return <aside className="incidentRail" aria-label="Ocorrências ativas">
     <header className="railHeader"><div><span>OCORRÊNCIAS</span><small>FILA OPERACIONAL</small></div><strong>{activeIncidents.length}</strong></header>
     <div className="incidentRailList">
-      {expiredFlashIds.map((id) => { const expired = incidents.find((item) => item.id === id); return expired ? <div key={`expired-${id}`} className="incidentRailCard expired incidentExpiryFlash" role="status"><div className="incidentRailTop"><span className="incidentState"><i />TEMPO ESGOTADO</span></div><strong className="incidentRailTitle">{expired.title}</strong><div className="incidentRailMeta"><span>{expired.district}</span><span>ocorrência perdida</span></div></div> : null; })}
+      {expiredFlashIds.map((id) => { const expired = caseById[id]; return expired ? <div key={`expired-${id}`} className="incidentRailCard expired incidentExpiryFlash" role="status"><div className="incidentRailTop"><span className="incidentState"><i />TEMPO ESGOTADO</span></div><strong className="incidentRailTitle">{expired.title}</strong><div className="incidentRailMeta"><span>{expired.district}</span><span>ocorrência perdida</span></div></div> : null; })}
       {activeIncidents.length === 0 && expiredFlashIds.length === 0 && <div className="railEmpty"><strong>SEM CHAMADOS ATIVOS</strong><span>A Central está aguardando novas ocorrências.</span></div>}
       {activeIncidents.map((item) => {
         const runtime = save.shift.incidents[item.id];

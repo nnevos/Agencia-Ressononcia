@@ -1,4 +1,5 @@
 import { heroes } from "@/game/data/heroes";
+import { findOperationalHero } from "@/game/selectors/operationalHeroes";
 import { incidents } from "@/game/data/incidents";
 import { createInitialHeroStates, calculateHeroMissionEffect } from "@/game/simulation/heroState";
 import { acknowledgeMissionResult, advanceOperationalState } from "@/game/simulation/operations";
@@ -20,25 +21,8 @@ function runningAt(save: SaveGame, targetMinute: number, now = Date.now()): Save
   };
 }
 
-function operationalHero(save: SaveGame, heroId: string): OperationalHero | null {
-  const hero = heroes.find((item) => item.id === heroId);
-  const state = save.heroStates[heroId];
-  const progression = save.heroProgression[heroId];
-  if (!hero || !state || !progression) return null;
-  const unlockedTags = hero.techniques
-    .filter((technique) => progression.unlockedTechniqueIds.includes(technique.id))
-    .flatMap((technique) => technique.grantedTags ?? []);
-  return {
-    ...hero,
-    ...state,
-    ...progression,
-    attributes: progression.attributes,
-    tags: Array.from(new Set([...hero.tags, ...unlockedTags]))
-  };
-}
-
 function heroFitScore(save: SaveGame, incident: Incident, heroId: string, assignments: Record<string, number>) {
-  const hero = operationalHero(save, heroId);
+  const hero = findOperationalHero(save, heroId);
   if (!hero) return -Infinity;
   const attributeFit = Object.entries(incident.attributeWeights).reduce((sum, [key, weight]) => {
     const attribute = hero.attributes[key as keyof typeof hero.attributes] ?? 0;
@@ -118,7 +102,7 @@ export function devPerfectFinishShift(save: SaveGame): SaveGame {
     const heroId = heroes
       .map((hero) => hero.id)
       .sort((a, b) => heroFitScore(next, incident, b, assignments) - heroFitScore(next, incident, a, assignments))[0];
-    const hero = operationalHero(next, heroId);
+    const hero = findOperationalHero(next, heroId);
     if (!hero) continue;
 
     assignments[hero.id] = (assignments[hero.id] ?? 0) + 1;

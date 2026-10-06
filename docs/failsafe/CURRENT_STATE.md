@@ -1,3 +1,22 @@
+# CURRENT STATE — Beta 1 · v0.3.0-beta.4 (2026-10-06)
+
+- GitHub Pages/static export preparado com basePath automático por repositório.
+- Deploy oficial via `.github/workflows/pages.yml`; artifact é `out/`.
+- Assets públicos são basePath-aware; Dates dinâmicos são pré-gerados para export.
+- Supabase continua opcional/local-first; credenciais públicas de staging podem ser injetadas no build via GitHub vars/secrets.
+- Save schema v10; gameplay, conteúdo e balanceamento preservados.
+- QA GitHub Pages estático: 12/12 PASS. `npm ci` voltou a expirar neste ambiente, portanto o build real fica para o próprio GitHub Actions.
+- Próximo gate: workflow real no GitHub + smoke test da URL Pages e rotas diretas.
+
+# CURRENT STATE — Beta 1 · v0.3.0-beta.3 (2026-10-06)
+
+- Refatoração/otimização concluída sem mudança de gameplay/cânone.
+- Writes idempotentes não incrementam revisão local nem disparam cloud sync.
+- Tick operacional persiste apenas transições relevantes; relógio continua atualizando UI normalmente.
+- Cloud sync impede uploads simultâneos e consolida escrita pendente.
+- QA: flow 44/44, assets 35/35, Beta1 17/17, refactor 15/15; transpile 90 TS/TSX PASS.
+- Save schema v10.
+
 # CURRENT STATE — Beta 1 · v0.3.0-beta.2 (2026-10-06)
 
 - Baseline funcional anterior: v0.2.65 Edison Tutorial UX v3.

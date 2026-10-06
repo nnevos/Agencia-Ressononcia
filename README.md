@@ -1,6 +1,6 @@
-# Agência Ressonância — v0.2.44 · Foundation
+# Agência Ressonância — Beta 1
 
-## Beta 1 · v0.3.0-beta.2
+## Beta 1 · v0.3.0-beta.4
 
 A Beta 1 introduz arquitetura de persistência **local-first** preparada para Supabase. O jogo continua funcional sem backend; ao configurar `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` e aplicar `supabase/migrations/001_beta1_game_saves.sql`, o menu de conta ativa Auth e save cloud com RLS. Veja `docs/design/BETA1_SUPABASE_ARCHITECTURE.md`.
 
@@ -9,7 +9,21 @@ Novo baseline consolidado a partir da linha funcional v0.9.14.
 
 ## Executar
 
-No Windows, use `Ressonancia.exe` como launcher local. O projeto continua sendo Next.js/React/TypeScript.
+### GitHub Pages (recomendado para compartilhar a Beta)
+
+O repositório do GitHub sempre exibe o `README.md`; o jogo abre na **URL do GitHub Pages**, não na página de arquivos do repositório.
+
+1. Envie este projeto para um repositório GitHub.
+2. Em **Settings → Pages → Build and deployment**, selecione **GitHub Actions**.
+3. Faça push para `main` ou `master` (ou rode manualmente **Deploy GitHub Pages** em Actions).
+4. O workflow `.github/workflows/pages.yml` gera o export estático em `out/` e publica automaticamente.
+5. A URL do jogo aparece no job `deploy` e em **Settings → Pages**.
+
+Para Supabase no Pages, cadastre `NEXT_PUBLIC_SUPABASE_URL` como **Repository variable** e `NEXT_PUBLIC_SUPABASE_ANON_KEY` como **Repository secret**. Sem essas variáveis, a Beta continua funcionando em modo local/sem conta.
+
+### Local
+
+No Windows, `Ressonancia.exe` continua disponível como launcher local. Para desenvolvimento: `npm ci` e `npm run dev`. O projeto continua sendo Next.js/React/TypeScript.
 
 ## Onde editar conteúdo
 

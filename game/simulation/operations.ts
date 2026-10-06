@@ -1,7 +1,7 @@
 import { incidents } from "@/game/data/incidents";
 import { pairKey } from "@/game/data/resonance";
 import { applyMissionEffects } from "@/game/simulation/heroState";
-import { getElapsedGameMinutes, REAL_MS_PER_GAME_MINUTE, syncIncidentRuntime } from "@/game/simulation/shift";
+import { getElapsedGameMinutes, syncIncidentRuntime } from "@/game/simulation/shift";
 import { FIRST_TUTORIAL_INCIDENT_ID } from "@/content/narrative/tutorial";
 import { awardHeroXp } from "@/game/progression/heroProgression";
 import type { DispatchResult, SaveGame } from "@/game/types";
@@ -15,34 +15,37 @@ export function advanceOperationalState(save: SaveGame, now = Date.now()): SaveG
   const gameMinute = tutorialDecisionPaused ? save.shift.elapsedGameMinutes : getElapsedGameMinutes(save.shift, now);
   let shift = syncIncidentRuntime(save.shift, gameMinute);
 
-  // O primeiro caso ensina a interface, portanto nao pode expirar enquanto o
-  // jogador ainda esta decidindo. Mantemos o relogio operacional pausado e
-  // rebalanceamos startedAtEpochMs para que, ao despachar, o turno continue
-  // exatamente do minuto em que o tutorial estava.
+  // O primeiro caso ensina a interface e congela apenas o tempo logico.
+  // Nao reancoramos `startedAtEpochMs` a cada tick: isso gerava uma escrita de
+  // save por segundo (e, na Beta 1, sincronizacao cloud desnecessaria). O relogio
+  // e reancorado uma unica vez no momento do despacho do tutorial.
   if (tutorialDecisionPaused) {
     const tutorialRuntime = shift.incidents[FIRST_TUTORIAL_INCIDENT_ID];
-    shift = {
-      ...shift,
-      startedAtEpochMs: now - gameMinute * REAL_MS_PER_GAME_MINUTE,
-      status: "running",
-      incidents: tutorialRuntime ? {
-        ...shift.incidents,
-        [FIRST_TUTORIAL_INCIDENT_ID]: tutorialRuntime.status === "expired"
-          ? { ...tutorialRuntime, status: "waiting" as const }
-          : tutorialRuntime,
-      } : shift.incidents,
-    };
+    if (tutorialRuntime?.status === "expired") {
+      shift = {
+        ...shift,
+        incidents: {
+          ...shift.incidents,
+          [FIRST_TUTORIAL_INCIDENT_ID]: { ...tutorialRuntime, status: "waiting" as const },
+        },
+      };
+    }
   }
 
-  let changed = tutorialDecisionPaused || shift.elapsedGameMinutes !== save.shift.elapsedGameMinutes || shift.status !== save.shift.status;
-  const reportQueue = [...shift.reportQueue];
+  let changed = shift !== save.shift;
+  let reportQueue = shift.reportQueue;
+  let reportQueueChanged = false;
 
   for (const incident of incidents) {
     const runtime = shift.incidents[incident.id];
     if (runtime?.status !== "dispatched" || runtime.resolvesAtGameMinute === undefined || runtime.resolvesAtGameMinute > gameMinute || !runtime.result) continue;
 
     const alreadyQueued = reportQueue.some((item) => item.incidentId === runtime.result?.incidentId && item.completedAtGameMinute === runtime.result?.completedAtGameMinute);
-    if (!alreadyQueued) reportQueue.push(runtime.result);
+    if (!alreadyQueued) {
+      if (!reportQueueChanged) reportQueue = [...reportQueue];
+      reportQueue.push(runtime.result);
+      reportQueueChanged = true;
+    }
 
     shift = {
       ...shift,
@@ -54,9 +57,22 @@ export function advanceOperationalState(save: SaveGame, now = Date.now()): SaveG
     changed = true;
   }
 
-  if (!changed && reportQueue.length === shift.reportQueue.length) return save;
-  shift = { ...shift, reportQueue };
+  if (!changed && !reportQueueChanged) return save;
+  if (reportQueueChanged) shift = { ...shift, reportQueue };
   return { ...save, shift, lastDispatch: reportQueue.at(-1) ?? save.lastDispatch };
+}
+
+/**
+ * O relogio da Central atualiza a UI a cada minuto diegetico, mas o timestamp
+ * inicial ja permite reconstruir esse tempo em reload. Persistimos apenas
+ * transicoes observaveis do turno (spawn/expiracao/resolucao/fim), evitando
+ * centenas de revisoes locais/cloud por expediente.
+ */
+export function shouldPersistOperationalAdvance(previous: SaveGame, next: SaveGame): boolean {
+  return previous.shift.status !== next.shift.status
+    || previous.shift.incidents !== next.shift.incidents
+    || previous.shift.reportQueue !== next.shift.reportQueue
+    || previous.lastDispatch !== next.lastDispatch;
 }
 
 export function acknowledgeMissionResult(save: SaveGame, result: DispatchResult): SaveGame {

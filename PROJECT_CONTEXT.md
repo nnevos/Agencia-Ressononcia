@@ -1,3 +1,17 @@
+## Beta 1 · v0.3.0-beta.4 — GitHub Pages / static export (2026-10-06)
+- Next configurado com `output: export`, `trailingSlash` e `basePath` configurável por `NEXT_PUBLIC_BASE_PATH`.
+- Workflow `.github/workflows/pages.yml` publica `out/` via GitHub Pages em push para main/master ou manualmente.
+- Assets de `public/` passam por `lib/publicPath.ts`, preservando execução local e subdiretório `/repo` do Pages.
+- Dates dinâmicos recebem `generateStaticParams`, permitindo export estático de todas as cenas autoradas.
+- GitHub repo continua mostrando README; o jogo deve ser aberto pela URL do ambiente GitHub Pages.
+- Save schema permanece v10; gameplay/cânone/balanceamento não foram alterados.
+
+## Beta 1 · v0.3.0-beta.3 — refatoração/otimização (2026-10-06)
+- Central reduz persistência redundante: ticks visuais não geram revisão de save/cloud sem transição operacional.
+- Persistência local deduplica payload idêntico; CloudSyncBridge evita uploads concorrentes.
+- Seletores/índices compartilhados reduzem duplicação e buscas lineares; UI secundária da Central usa code splitting.
+- Save schema permanece v10; gameplay, balanceamento, conteúdo e cânone não mudaram.
+
 # RESSONÂNCIA — CONTEXTO MESTRE
 
 > BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.2**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.

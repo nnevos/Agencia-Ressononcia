@@ -13,6 +13,7 @@ import { createInitialShift, SHIFT_GAME_MINUTES } from "@/game/simulation/shift"
 import { isPostShiftOnlySave, loadSave, writeSave } from "@/lib/save";
 import { loadSettings } from "@/lib/settings";
 import { formatPlayerText } from "@/lib/playerText";
+import { publicPath } from "@/lib/publicPath";
 import { collectCompletedOutings, collectUnlockedNexoPhotos, getNexoActivity, isNexoContactRead, nexoReadFlag } from "@/game/social/nexoLibrary";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -397,7 +398,7 @@ export default function ConversationPage() {
         {libraryView === "photos" ? <div className="nexoLibraryPanel">
           <div className="nexoMobileLibraryBar"><button type="button" onClick={() => setLibraryView("chats")} aria-label="Voltar às conversas">‹ <span>Conversas</span></button><strong>Fotos</strong></div>
           <header><span className="eyebrow">MEMÓRIAS DO NEXO</span><h1>Fotos recebidas</h1><p>Apenas imagens que já apareceram em conversas concluídas até o ponto em que foram entregues.</p></header>
-          {unlockedPhotos.length ? <div className="nexoPhotoGallery">{unlockedPhotos.map((photo) => <button key={photo.src} onClick={() => setExpandedLibraryImage({ src: photo.src, alt: photo.alt })}><img src={photo.src} alt={photo.alt} /><span>{photo.speaker}</span></button>)}</div> : <div className="nexoLibraryEmpty">Nenhuma foto desbloqueada ainda.</div>}
+          {unlockedPhotos.length ? <div className="nexoPhotoGallery">{unlockedPhotos.map((photo) => <button key={photo.src} onClick={() => setExpandedLibraryImage({ src: photo.src, alt: photo.alt })}><img src={publicPath(photo.src)} alt={photo.alt} /><span>{photo.speaker}</span></button>)}</div> : <div className="nexoLibraryEmpty">Nenhuma foto desbloqueada ainda.</div>}
         </div> : libraryView === "dates" ? <div className="nexoLibraryPanel">
           <div className="nexoMobileLibraryBar"><button type="button" onClick={() => setLibraryView("chats")} aria-label="Voltar às conversas">‹ <span>Conversas</span></button><strong>Dates</strong></div>
           <header><span className="eyebrow">MEMÓRIAS DO NEXO</span><h1>Dates concluídos</h1><p>Releia encontros já concluídos. O replay não altera rota, flags ou progresso.</p></header>
@@ -432,7 +433,7 @@ export default function ConversationPage() {
 
     {expandedLibraryImage && <div className="nexoImageLightbox" role="dialog" aria-modal="true" aria-label={expandedLibraryImage.alt} onClick={() => setExpandedLibraryImage(null)}>
       <button className="nexoImageLightboxClose" onClick={() => setExpandedLibraryImage(null)} aria-label="Fechar imagem">×</button>
-      <img src={expandedLibraryImage.src} alt={expandedLibraryImage.alt} onClick={(event) => event.stopPropagation()} />
+      <img src={publicPath(expandedLibraryImage.src)} alt={expandedLibraryImage.alt} onClick={(event) => event.stopPropagation()} />
     </div>}
 
     {confirmNextDay && <div className="nexoNextDayBackdrop" role="presentation" onMouseDown={() => setConfirmNextDay(false)}>

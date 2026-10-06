@@ -48,3 +48,11 @@ A autoria e o motor **não** devem importar Supabase diretamente. O caminho obri
 - `lib/supabase/*` é infraestrutura substituível e não pode conter regra narrativa/gameplay.
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` pode existir no cliente; `service_role` nunca.
 - Conteúdo autoral/cânone não deve ser movido para Supabase como parte desta arquitetura.
+
+
+## Beta 1 — performance/persistência v0.3.0-beta.3
+- Tick visual não implica escrita de save. Persistir apenas transições observáveis do domínio.
+- Escrita local idempotente não cria revisão nem evento cloud.
+- Seletores de domínio compartilhados devem substituir montagem duplicada em componentes.
+- Índices `heroById` e `caseById` são preferidos para lookup por ID.
+- Cloud sync deve operar single-flight; gameplay nunca aguarda rede para continuar.

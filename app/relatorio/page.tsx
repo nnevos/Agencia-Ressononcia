@@ -1,7 +1,7 @@
 "use client";
 
-import { heroes } from "@/game/data/heroes";
-import { incidents } from "@/game/data/incidents";
+import { heroById } from "@/game/data/heroes";
+import { caseById } from "@/game/data/incidents";
 import { formatGameTime } from "@/game/simulation/shift";
 import { acknowledgeMissionResult } from "@/game/simulation/operations";
 import { loadSave, writeSave } from "@/lib/save";
@@ -23,8 +23,8 @@ export default function ReportPage() {
     setResult(queued);
   }, [router]);
 
-  const incident = useMemo(() => incidents.find((item) => item.id === result?.incidentId), [result]);
-  const team = useMemo(() => heroes.filter((hero) => result?.selectedHeroIds.includes(hero.id)), [result]);
+  const incident = useMemo(() => result ? caseById[result.incidentId] : undefined, [result]);
+  const team = useMemo(() => result ? result.selectedHeroIds.flatMap((id) => heroById[id] ? [heroById[id]] : []) : [], [result]);
 
   function acknowledge() {
     const current = loadSave();
@@ -53,7 +53,7 @@ export default function ReportPage() {
         </div>
         {!!result.specialCombos.length && <div className="comboCallout"><span className="eyebrow">COMBINAÇÃO ATIVADA</span><strong>{result.specialCombos.join(" · ")}</strong></div>}
         <div className="factorList"><h2>Fatores decisivos</h2>{result.decisiveFactors.map((factor) => <p key={factor}>• {factor}</p>)}</div>
-        <div className="factorList"><h2>Consequências na equipe</h2>{result.heroEffects.map((effect) => { const hero = heroes.find((item) => item.id === effect.heroId); return <p key={effect.heroId}>• {hero?.name}: {effect.healthDelta} Vida, {effect.energyDelta} Energia, +{effect.xpAwarded} XP. Estado final: {effect.healthAfter} Vida / {effect.energyAfter} Energia.</p>; })}</div>
+        <div className="factorList"><h2>Consequências na equipe</h2>{result.heroEffects.map((effect) => { const hero = heroById[effect.heroId]; return <p key={effect.heroId}>• {hero?.name}: {effect.healthDelta} Vida, {effect.energyDelta} Energia, +{effect.xpAwarded} XP. Estado final: {effect.healthAfter} Vida / {effect.energyAfter} Energia.</p>; })}</div>
         <div className="reportActions"><button className="button primary" onClick={acknowledge}>{save.shift.reportQueue.length > 1 ? `Próximo relatório (${save.shift.reportQueue.length - 1})` : "Voltar à central"}</button></div>
       </section>
     </main>

@@ -1,3 +1,19 @@
+## Beta 1 · v0.3.0-beta.4 — GitHub Pages/static export (2026-10-06)
+- Next passa a gerar site estático em `out/`.
+- Deploy automático por GitHub Actions/Pages.
+- `basePath` e assets `public/` funcionam em project pages (`/repo/`).
+- Dates dinâmicos pré-gerados via `generateStaticParams`.
+- README e documentação explicam que a página do repositório mostra README e a URL Pages executa o jogo.
+- Save v10 e gameplay preservados.
+
+## Beta 1 · v0.3.0-beta.3 — refatoração e otimização (2026-10-06)
+- Persistência operacional transition-only e dedupe de save local.
+- CloudSyncBridge single-flight.
+- `OperationalHero` centralizado em seletor compartilhado.
+- Índices `heroById`/`caseById`, structural sharing no turno e code splitting da Central.
+- MissionBriefing reorganizado sem alteração funcional.
+- Save schema v10; QA 44/44 + 35/35 + 17/17 + 15/15.
+
 ## Beta 1 · v0.3.0-beta.2 — hotfix visual do primeiro tutorial (2026-10-06)
 
 - O primeiro briefing deixa de embutir Edison dentro do grid: o tutorial volta ao balão flutuante padrão, preservando espaço para narrativa, requisitos e roster.

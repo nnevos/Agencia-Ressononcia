@@ -1,3 +1,23 @@
+# NEXT SESSION — Beta 1 · v0.3.0-beta.4 (GitHub Pages gate)
+
+## Próximo item obrigatório
+1. Subir o pacote em um repositório GitHub e selecionar **Settings → Pages → GitHub Actions**. O `npm ci` local expirou no ambiente atual; usar o workflow como gate de build real.
+2. Confirmar workflow `Deploy GitHub Pages` verde e abrir a URL do environment `github-pages`.
+3. Testar menu, Introdução, Central, NEXO, Desenvolvimento e ao menos um Date por URL direta/reload.
+4. Confirmar imagens do menu, Edison, mapa, heróis, chats e Dates sob `/NOME-DO-REPO/`.
+5. Se Supabase for usado, configurar variable/secret e testar Auth + sync na origem `github.io`.
+6. Depois continuar o gate runtime/performance/Supabase já pendente da Beta 1.
+
+# NEXT SESSION — Beta 1 · v0.3.0-beta.3 (gate runtime/performance)
+
+## Próximo item obrigatório
+1. Em `next dev`, executar um expediente completo e confirmar relógio/spawn/expiração/resolução sem regressão.
+2. Com Supabase staging conectado, observar revisões: ticks sem evento não devem criar revisões/uploads; despacho, resultado e mudanças reais devem sincronizar.
+3. Deixar o primeiro E-04 parado por alguns minutos reais e confirmar tempo congelado; ao despachar, o relógio deve retomar do mesmo minuto.
+4. Testar conflito local/cloud e reconexão offline após a otimização de sync.
+5. Rodar golden path completo do Beta 1 e mobile 360/390/430 px.
+6. Só depois promover Beta 1 para candidata externa.
+
 # NEXT SESSION — Beta 1 · v0.3.0-beta.2 (Supabase staging + QA runtime)
 
 ## Implementado em 2026-10-06

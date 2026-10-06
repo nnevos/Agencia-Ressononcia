@@ -114,3 +114,6 @@ export const heroes: Hero[] = [
     ]
   }
 ];
+
+/** Lookup index compartilhado para evitar buscas lineares repetidas em UI/simulacao. */
+export const heroById = Object.fromEntries(heroes.map((hero) => [hero.id, hero])) as Record<string, Hero>;

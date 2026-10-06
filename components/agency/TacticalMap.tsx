@@ -1,3 +1,4 @@
+import { publicPath } from "@/lib/publicPath";
 import { formatGameTime } from "@/game/simulation/shift";
 import type { DispatchResult, Incident, SaveGame } from "@/game/types";
 import type { ReactNode } from "react";
@@ -19,7 +20,7 @@ export function TacticalMap({ save, activeIncidents, incidentId, gameMinute, onO
   return <section className="mapStage mapStageWorkspace">
     <div className="mapToolbar"><span>MAPA TÁTICO</span><small>REDE MUNICIPAL / TEMPO REAL</small></div>
     <div className="cityMap cityMapPrimary">
-      <img className="cityMapArtwork" src="/maps/central-city-map.webp" alt="Mapa urbano da área operacional" />
+      <img className="cityMapArtwork" src={publicPath("/maps/central-city-map.webp")} alt="Mapa urbano da área operacional" />
       <div className="mapImageShade" aria-hidden="true" />
       {activeIncidents.map((item) => {
         const runtime = save.shift.incidents[item.id];

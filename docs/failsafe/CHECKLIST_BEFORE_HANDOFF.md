@@ -1,3 +1,22 @@
+## Beta 1 · v0.3.0-beta.4 — GitHub Pages
+- [x] `output: export` e `trailingSlash`.
+- [x] basePath configurável sem quebrar execução local.
+- [x] assets públicos prefixados em runtime.
+- [x] Dates com params estáticos.
+- [x] workflow Pages publica `out/`.
+- [x] QA estático GitHub Pages incluído.
+- [ ] Executar workflow real no GitHub e smoke test da URL publicada.
+
+## Beta 1 · v0.3.0-beta.3
+- [x] Save schema continua v10.
+- [x] Gameplay/cânone/balanceamento preservados.
+- [x] QA flow 44/44.
+- [x] Assets sociais 35/35.
+- [x] QA Beta1 17/17.
+- [x] QA refactor 15/15.
+- [x] Transpile sintático 90 TS/TSX PASS.
+- [ ] QA browser/Supabase staging conforme NEXT_SESSION.
+
 ## Beta 1 · v0.3.0-beta.2
 - [x] baseline v0.2.65 preservada como origem da Beta 1;
 - [x] save schema permanece v10;

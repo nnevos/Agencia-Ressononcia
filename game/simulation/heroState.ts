@@ -1,4 +1,4 @@
-import { heroes } from "@/game/data/heroes";
+import { heroById, heroes } from "@/game/data/heroes";
 import { CONDITION_BALANCE } from "@/content/config/balance";
 import type { HeroAttributes, HeroMissionEffect, HeroProgression, HeroState, MissionOutcome } from "@/game/types";
 import { xpAwardForOutcome } from "@/game/progression/heroProgression";
@@ -67,7 +67,7 @@ export function applyMissionEffects(states: Record<string, HeroState>, effects: 
 
 export function recoverHeroStates(states: Record<string, HeroState>, progression: Record<string, HeroProgression>) {
   return Object.fromEntries(Object.entries(states).map(([id,current]) => {
-    const base = heroes.find((hero) => hero.id === id);
+    const base = heroById[id];
     const attributes = progression[id]?.attributes ?? base?.attributes ?? { strength: 1, agility: 1, charisma: 1, intelligence: 1, vigor: 1 };
     return [id, { ...current, health: getMaxHealth(attributes), energy: getMaxEnergy(attributes), status: "disponivel" as const, missionId: null, busyUntilGameMinute: null }];
   }));

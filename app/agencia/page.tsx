@@ -1,21 +1,22 @@
 "use client";
 
-import { DevTools } from "@/components/DevTools";
+import { publicPath } from "@/lib/publicPath";
 import { ProgressiveTutorialCoach } from "@/components/ProgressiveTutorialCoach";
 import { EdisonCoach } from "@/components/EdisonCoach";
-import { AgencyManual } from "@/components/AgencyManual";
 import { heroes } from "@/game/data/heroes";
-import { getIncidentsForDay, incidents } from "@/game/data/incidents";
+import { buildOperationalHeroes } from "@/game/selectors/operationalHeroes";
+import { caseById, getIncidentsForDay, incidents } from "@/game/data/incidents";
 import { getOperationalChatMessages } from "@/game/data/operationsChat";
 import { GAMEPLAY_CONFIG } from "@/content/config/gameplay";
 import { FIRST_TUTORIAL_HERO_ID, FIRST_TUTORIAL_INCIDENT_ID, tutorialCopy, tutorialLearned } from "@/content/narrative/tutorial";
 import { PROGRESSIVE_TUTORIAL_FLAGS, progressiveTutorialCopy } from "@/content/narrative/progressiveTutorial";
 import { calculateHeroMissionEffect, markHeroesOnMission } from "@/game/simulation/heroState";
-import { acknowledgeMissionResult, advanceOperationalState } from "@/game/simulation/operations";
+import { acknowledgeMissionResult, advanceOperationalState, shouldPersistOperationalAdvance } from "@/game/simulation/operations";
 import { analyzeTeam, getMissionAssessment, resolveIncident } from "@/game/simulation/resolveIncident";
-import { createInitialShift, formatGameTime, SHIFT_GAME_MINUTES, startShift } from "@/game/simulation/shift";
+import { createInitialShift, formatGameTime, resumeShiftClock, SHIFT_GAME_MINUTES, startShift } from "@/game/simulation/shift";
 import type { DispatchResult, OperationalHero, SaveGame } from "@/game/types";
 import { exportSaveJson, importSaveJson, isPostShiftOnlySave, loadSave, writeSave } from "@/lib/save";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AgencyHeader } from "@/components/agency/AgencyHeader";
@@ -25,9 +26,13 @@ import { TacticalMap } from "@/components/agency/TacticalMap";
 import { OperationsChatRail } from "@/components/agency/OperationsChatRail";
 import { AgentRoster } from "@/components/agency/AgentRoster";
 import { MissionBriefing } from "@/components/agency/MissionBriefing";
-import { MissionResultModal } from "@/components/agency/MissionResultModal";
-import { HeroDossierModal } from "@/components/agency/HeroDossierModal";
 import { MobileDispatchNav, type MobilePanel } from "@/components/agency/MobileDispatchNav";
+
+
+const DevTools = dynamic(() => import("@/components/DevTools").then((module) => module.DevTools), { ssr: false });
+const AgencyManual = dynamic(() => import("@/components/AgencyManual").then((module) => module.AgencyManual), { ssr: false });
+const MissionResultModal = dynamic(() => import("@/components/agency/MissionResultModal").then((module) => module.MissionResultModal), { ssr: false });
+const HeroDossierModal = dynamic(() => import("@/components/agency/HeroDossierModal").then((module) => module.HeroDossierModal), { ssr: false });
 
 
 export default function AgencyPage() {
@@ -38,7 +43,6 @@ export default function AgencyPage() {
   const [message, setMessage] = useState("Inicie o expediente para receber os primeiros chamados.");
   const [briefingOpen, setBriefingOpen] = useState(false);
   const [heroInfoId, setHeroInfoId] = useState<string | null>(null);
-  const [now, setNow] = useState(() => Date.now());
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [reportResult, setReportResult] = useState<DispatchResult | null>(null);
   const [expiredFlashIds, setExpiredFlashIds] = useState<string[]>([]);
@@ -52,7 +56,7 @@ export default function AgencyPage() {
     if (isPostShiftOnlySave(current)) return router.replace("/conversa");
     if (current.player.developmentRequired) return router.replace("/desenvolvimento");
     const advanced = advanceOperationalState(current);
-    if (advanced !== current) writeSave(advanced);
+    if (advanced !== current && shouldPersistOperationalAdvance(current, advanced)) writeSave(advanced);
     setSave(advanced);
   }, [router]);
 
@@ -66,7 +70,6 @@ export default function AgencyPage() {
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setNow(Date.now());
       const current = loadSave();
       if (!current) return;
       const advanced = advanceOperationalState(current);
@@ -75,20 +78,18 @@ export default function AgencyPage() {
         setExpiredFlashIds((previous) => Array.from(new Set([...previous, ...justExpired])));
         window.setTimeout(() => setExpiredFlashIds((previous) => previous.filter((id) => !justExpired.includes(id))), 1300);
       }
-      writeSave(advanced);
-      setSave(advanced);
+      if (advanced !== current) {
+        if (shouldPersistOperationalAdvance(current, advanced)) writeSave(advanced);
+        setSave(advanced);
+      }
     }, 1000);
     return () => window.clearInterval(interval);
   }, []);
 
   const operationalHeroes = useMemo<OperationalHero[]>(() => {
     if (!save) return [];
-    return heroes.map((hero) => {
-      const progression = save.heroProgression[hero.id];
-      const unlockedTags = hero.techniques.filter((technique) => progression?.unlockedTechniqueIds.includes(technique.id)).flatMap((technique) => technique.grantedTags ?? []);
-      return { ...hero, ...save.heroStates[hero.id], ...progression, attributes: progression?.attributes ?? hero.attributes, tags: Array.from(new Set([...hero.tags, ...unlockedTags])) };
-    }).filter((hero) => !!hero.heroId);
-  }, [save]);
+    return buildOperationalHeroes(save);
+  }, [save?.heroStates, save?.heroProgression]);
 
   const activeIncidents = useMemo(() => {
     if (!save) return [];
@@ -98,12 +99,12 @@ export default function AgencyPage() {
       if (status === "resolved") return save.shift.reportQueue.some((result) => result.incidentId === incident.id);
       return false;
     });
-  }, [save]);
+  }, [save?.shift.incidents, save?.shift.reportQueue]);
 
   const missedIncidents = useMemo(() => {
     if (!save) return [];
     return incidents.filter((incident) => save.shift.incidents[incident.id]?.status === "expired");
-  }, [save]);
+  }, [save?.shift.incidents]);
 
   useEffect(() => {
     if (briefingOpen && incidentId && save?.shift.incidents[incidentId]?.status === "expired") return;
@@ -111,12 +112,12 @@ export default function AgencyPage() {
     const waiting = activeIncidents.find((item) => save?.shift.incidents[item.id]?.status === "waiting");
     setIncidentId(waiting?.id ?? activeIncidents[0]?.id ?? null);
     setSelected([]);
-  }, [activeIncidents, incidentId, save, briefingOpen]);
+  }, [activeIncidents, incidentId, save?.shift.incidents, briefingOpen]);
 
   useEffect(() => {
     if (!save || !briefingOpen || !incidentId) return;
     if (save.shift.incidents[incidentId]?.status !== "expired") return;
-    const expiredIncident = incidents.find((item) => item.id === incidentId);
+    const expiredIncident = incidentId ? caseById[incidentId] : undefined;
     setBriefingExpiredId(incidentId);
     setMessage(`${expiredIncident?.title ?? "A ocorrência"} expirou antes do despacho.`);
     const timeout = window.setTimeout(() => {
@@ -126,12 +127,12 @@ export default function AgencyPage() {
       setIncidentId(null);
     }, 1500);
     return () => window.clearTimeout(timeout);
-  }, [save, briefingOpen, incidentId]);
+  }, [save?.shift.incidents, briefingOpen, incidentId]);
 
-  const incident = useMemo(() => incidents.find((item) => item.id === incidentId) ?? null, [incidentId]);
+  const incident = useMemo(() => (incidentId ? caseById[incidentId] : undefined) ?? null, [incidentId]);
   const selectedHeroes = useMemo(() => operationalHeroes.filter((hero) => selected.includes(hero.id)), [operationalHeroes, selected]);
-  const alerts = useMemo(() => incident && save ? analyzeTeam(incident, selectedHeroes, save.resonance) : [], [incident, selectedHeroes, save]);
-  const missionAssessment = useMemo(() => incident && save ? getMissionAssessment(incident, selectedHeroes, save.resonance, save.player.currentDay) : null, [incident, selectedHeroes, save]);
+  const alerts = useMemo(() => incident && save ? analyzeTeam(incident, selectedHeroes, save.resonance) : [], [incident, selectedHeroes, save?.resonance]);
+  const missionAssessment = useMemo(() => incident && save ? getMissionAssessment(incident, selectedHeroes, save.resonance, save.player.currentDay) : null, [incident, selectedHeroes, save?.resonance, save?.player.currentDay]);
   const infoHero = useMemo(() => operationalHeroes.find((hero) => hero.id === heroInfoId) ?? null, [operationalHeroes, heroInfoId]);
   const chatMessages = useMemo(() => save ? getOperationalChatMessages(save) : [], [save]);
   const heroNameById = useMemo(() => Object.fromEntries(operationalHeroes.map((hero) => [hero.id, hero.name])), [operationalHeroes]);
@@ -265,7 +266,7 @@ export default function AgencyPage() {
     setSave(next);
     setReportResult(null);
     setIncidentId(null);
-    setMessage(`Relatório de ${incidents.find((item) => item.id === reportResult.incidentId)?.title ?? "ocorrência"} arquivado.`);
+    setMessage(`Relatório de ${caseById[reportResult.incidentId]?.title ?? "ocorrência"} arquivado.`);
   }
   function toggleHero(id: string) {
     const hero = operationalHeroes.find((item) => item.id === id);
@@ -319,13 +320,14 @@ export default function AgencyPage() {
         heroEffects: chosen.map((hero) => calculateHeroMissionEffect(hero, "Sucesso", incident.risk)),
       };
     }
+    const dispatchShift = tutorialDispatch ? resumeShiftClock(save.shift) : save.shift;
     const next: SaveGame = {
       ...save,
       heroStates: markHeroesOnMission(save.heroStates, selected, incident.id, resolvesAt),
       shift: {
-        ...save.shift,
+        ...dispatchShift,
         incidents: {
-          ...save.shift.incidents,
+          ...dispatchShift.incidents,
           [incident.id]: {
             ...runtime,
             status: "dispatched",
@@ -411,7 +413,7 @@ export default function AgencyPage() {
 
       {save.shift.status === "not_started" && tutorialActive && (
         <section className="shiftStartOverlay">
-          <div className="shiftStartCard new edisonShiftStart"><img src="/edison.jpg" alt="Edison" /><div><span className="eyebrow">EDISON · ORIENTAÇÃO</span><h2>Seu primeiro turno</h2><p>Eu poderia te entregar um manual inteiro agora. Você vai aprender mais resolvendo um chamado. Eu acompanho o primeiro; depois, a Central fica nas suas mãos.</p><button className="button primary" onClick={beginShift}>INICIAR TURNO · 08:00</button></div></div>
+          <div className="shiftStartCard new edisonShiftStart"><img src={publicPath("/edison.jpg")} alt="Edison" /><div><span className="eyebrow">EDISON · ORIENTAÇÃO</span><h2>Seu primeiro turno</h2><p>Eu poderia te entregar um manual inteiro agora. Você vai aprender mais resolvendo um chamado. Eu acompanho o primeiro; depois, a Central fica nas suas mãos.</p><button className="button primary" onClick={beginShift}>INICIAR TURNO · 08:00</button></div></div>
         </section>
       )}
 
@@ -439,7 +441,7 @@ export default function AgencyPage() {
         showSpotlight={false}
       /> }
       <AgencyManual save={save} className="agencyManualAgency" />
-      {tutorialDone && save.player.currentDay === 1 && <aside className="tutorialCompleteCard"><img src="/edison.jpg" alt="Edison" /><div className="tutorialCompleteCopy"><small>{tutorialCopy.completeTitle}</small><strong>Primeiro despacho concluído.</strong><p>Você já conhece o ciclo básico. A Central vai liberar o restante dos chamados do Dia 1.</p><div className="tutorialCompleteSkills">{tutorialLearned.slice(0, 3).map((item) => <span key={item}>✓ {item}</span>)}</div><button onClick={() => { const next = { ...save, flags: save.flags.filter((flag) => flag !== "tutorial_complete") }; writeSave(next); setSave(next); }}>ASSUMIR A CENTRAL →</button></div></aside>}
+      {tutorialDone && save.player.currentDay === 1 && <aside className="tutorialCompleteCard"><img src={publicPath("/edison.jpg")} alt="Edison" /><div className="tutorialCompleteCopy"><small>{tutorialCopy.completeTitle}</small><strong>Primeiro despacho concluído.</strong><p>Você já conhece o ciclo básico. A Central vai liberar o restante dos chamados do Dia 1.</p><div className="tutorialCompleteSkills">{tutorialLearned.slice(0, 3).map((item) => <span key={item}>✓ {item}</span>)}</div><button onClick={() => { const next = { ...save, flags: save.flags.filter((flag) => flag !== "tutorial_complete") }; writeSave(next); setSave(next); }}>ASSUMIR A CENTRAL →</button></div></aside>}
 
       <MobileDispatchNav current={mobilePanel} waitingCount={waitingCount} availableCount={availableCount} onChange={setMobilePanel} />
 
@@ -461,7 +463,6 @@ export default function AgencyPage() {
             tutorialActive={tutorialActive}
             tutorialIncidentId={FIRST_TUTORIAL_INCIDENT_ID}
             tutorialHeroId={FIRST_TUTORIAL_HERO_ID}
-            tutorialText={tutorialText}
             expired={briefingExpiredId === incident.id}
             onClose={closeBriefing}
             onToggleHero={toggleHero}
@@ -470,14 +471,14 @@ export default function AgencyPage() {
           />}
         </TacticalMap>
 
-        <OperationsChatRail messages={chatMessages} operationalHeroes={operationalHeroes} feedRef={operationsFeedRef} />
+        <OperationsChatRail messages={chatMessages} feedRef={operationsFeedRef} />
         <AgentRoster heroes={operationalHeroes} briefingOpen={briefingOpen} selectedIds={selected} availableCount={availableCount} onSelect={handleHeroBarClick} onInfo={setHeroInfoId} />
       </div>
 
-      {reportResult && (() => { const reportIncident = incidents.find((item) => item.id === reportResult.incidentId); return reportIncident ? <MissionResultModal result={reportResult} incident={reportIncident} onClose={() => setReportResult(null)} onAcknowledge={acknowledgeResult} /> : null; })()}
+      {reportResult && (() => { const reportIncident = caseById[reportResult.incidentId]; return reportIncident ? <MissionResultModal result={reportResult} incident={reportIncident} onClose={() => setReportResult(null)} onAcknowledge={acknowledgeResult} /> : null; })()}
       {infoHero && <HeroDossierModal hero={infoHero} onClose={() => setHeroInfoId(null)} />}
 
-      <DevTools save={save} onSave={(next) => { setSave(next); setNow(Date.now()); }} onPost={() => router.push("/conversa")} onDevelopment={() => router.push("/desenvolvimento")} />
+      <DevTools save={save} onSave={setSave} onPost={() => router.push("/conversa")} onDevelopment={() => router.push("/desenvolvimento")} />
     </main>
   );
 }

@@ -7,6 +7,6 @@ export const MAIN_MENU_TEXT = {
   continueLabel: "Continuar",
   newGameLabel: "Novo jogo",
   accessLabel: "Conta / acesso",
-  versionLabel: "BETA 1 · v0.3.0-beta.2",
+  versionLabel: "BETA 1 · v0.3.0-beta.3",
   artPlaceholder: "",
 } as const;

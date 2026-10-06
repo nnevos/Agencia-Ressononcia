@@ -25,7 +25,10 @@ export type OperationalChatMessage = {
   kind?: "system" | "agent" | "alert";
 };
 
-function heroName(id: string) { return heroes.find((hero) => hero.id === id)?.name ?? id; }
+const HERO_NAME_BY_ID = new Map(heroes.map((hero) => [hero.id, hero.name] as const));
+const INCIDENT_BY_ID = new Map(incidents.map((incident) => [incident.id, incident] as const));
+
+function heroName(id: string) { return HERO_NAME_BY_ID.get(id) ?? id; }
 function asHeroId(id: string): OperationsHeroId { return id as OperationsHeroId; }
 function pairKey(a: string, b: string) { return [a, b].sort().join("|"); }
 function fill(text: string, values: Record<string, string>) {
@@ -138,7 +141,7 @@ export function getOperationalChatMessages(save: SaveGame): OperationalChatMessa
 
   for (const report of save.shift.reportQueue) {
     if (save.shift.elapsedGameMinutes < report.completedAtGameMinute) continue;
-    const incident = incidents.find((item) => item.id === report.incidentId);
+    const incident = INCIDENT_BY_ID.get(report.incidentId);
     const first = asHeroId(report.selectedHeroIds[0]);
     const second = report.selectedHeroIds[1] ? asHeroId(report.selectedHeroIds[1]) : undefined;
     const key = outcomeKey(report.outcome);

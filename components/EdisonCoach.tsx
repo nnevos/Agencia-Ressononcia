@@ -1,5 +1,7 @@
 "use client";
 
+import { publicPath } from "@/lib/publicPath";
+
 type EdisonCoachProps = {
   eyebrow?: string;
   title: string;
@@ -30,7 +32,7 @@ export function EdisonCoach({
   return <>
     {showSpotlight && mode === "floating" ? <div className="edisonSpotlightBackdrop" aria-hidden="true" /> : null}
     <aside className={`edisonCoach edisonCoach-${mode} tone-${tone} ${className}`.trim()} role="dialog" aria-live="polite" aria-label={title}>
-      <div className="edisonCoachPortrait"><img src="/edison.jpg" alt="" /></div>
+      <div className="edisonCoachPortrait"><img src={publicPath("/edison.jpg")} alt="" /></div>
       <div className="edisonCoachCopy">
         <div className="edisonCoachMeta"><small>{eyebrow}</small>{progressLabel ? <span>{progressLabel}</span> : null}</div>
         <strong>{title}</strong>

@@ -7,6 +7,7 @@ import { DEFAULT_SETTINGS, loadSettings, writeSettings, type RessonanciaSettings
 import { reconcileCloudSave, resolveCloudConflict } from "@/lib/cloudSync";
 import type { PlayerPronouns, SaveGame } from "@/game/types";
 import { PLAYER_PRONOUN_OPTIONS } from "@/lib/playerText";
+import { publicPath } from "@/lib/publicPath";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
@@ -189,7 +190,7 @@ export default function Home() {
 
   return (
     <main className={`mainMenuPage ${settings.reducedMotion ? "motionReduced" : ""} ${transitioning ? "isLeaving" : ""}`}>
-      <div className="mainMenuBackdrop" aria-hidden="true" />
+      <div className="mainMenuBackdrop" style={{ backgroundImage: `url(${publicPath("/menu/cidade-noturna.webp")})` }} aria-hidden="true" />
       <div className="mainMenuFade" aria-hidden="true" />
       <div className="mainMenuVignette" aria-hidden="true" />
 
