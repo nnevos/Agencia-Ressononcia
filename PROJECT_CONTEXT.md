@@ -1,3 +1,9 @@
+## Beta 1 · v0.3.0-beta.22 — correção textual Lysandro (2026-10-06)
+
+- Date 1 de Lysandro: corrigido o trecho autoral para `um rápido beijo acontece`, preservando evento e intenção da cena.
+- Runtime e DOCX de autoria foram alinhados; nenhuma mecânica, flag, romance ou save foi alterado.
+- Save schema permanece v10.
+
 ## Beta 1 · v0.3.0-beta.21 — Configurações NEXO + DEV oculto (2026-10-06)
 
 - Configurações do NEXO reorganizadas em Áudio / Save / Conta, com painel compacto no desktop e quase fullscreen no mobile.

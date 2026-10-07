@@ -1,3 +1,8 @@
+# NEXT SESSION — Beta 1 · v0.3.0-beta.22
+
+1. Publicar beta.22 e validar o Date 1 de Lysandro no navegador.
+2. Continuar QA de texto das rotas sem reautoria.
+
 # NEXT SESSION — Beta 1 · v0.3.0-beta.21
 
 1. Publicar beta.21 no GitHub Pages e validar Configurações do NEXO em desktop/mobile.

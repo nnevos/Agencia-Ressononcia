@@ -1,3 +1,9 @@
+## Beta 1 · v0.3.0-beta.22 — correção textual Lysandro (2026-10-06)
+
+- Corrigido `um rápido acontece` para `um rápido beijo acontece` no Date 1 de Lysandro.
+- `content/narrative/outings.ts` e `docs/authoring/chat-scripts/Lysandro - Chat.docx` mantidos em sincronia.
+- Sem mudança mecânica ou de save.
+
 ## Beta 1 · v0.3.0-beta.21 — Configurações NEXO + DEV oculto (2026-10-06)
 
 - Configurações do NEXO reagrupadas e responsivas.

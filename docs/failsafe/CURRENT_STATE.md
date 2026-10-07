@@ -1,3 +1,8 @@
+## Delta beta.22
+
+- Date 1 de Lysandro corrigido: `um rápido beijo acontece`.
+- Runtime e autoria DOCX sincronizados; save v10 inalterado.
+
 ## Delta beta.21
 
 - Rework visual do menu de Configurações do NEXO.

@@ -1,3 +1,7 @@
+## Beta 1 · v0.3.0-beta.22
+
+Correção textual pontual no Date 1 de Lysandro: `um rápido beijo acontece`. Runtime e DOCX de autoria alinhados; gameplay e save v10 inalterados.
+
 ## Beta 1 · v0.3.0-beta.21
 
 A beta.21 melhora o painel de Configurações do NEXO e esconde as ferramentas DEV da interface normal. Para QA interno, `Ctrl + Alt + Shift + D` alterna a visibilidade do modo DEV na Central.
