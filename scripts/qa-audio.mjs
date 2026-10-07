@@ -6,6 +6,7 @@ const settings = read("lib/settings.ts");
 const header = read("components/agency/AgencyHeader.tsx");
 const menu = read("app/page.tsx");
 const layout = read("app/layout.tsx");
+const nexo = read("app/conversa/page.tsx");
 const checks = [
   ["audio-tha-asset", fs.existsSync("public/audio/aphex-twin-tha.mp3")],
   ["audio-delphium-asset", fs.existsSync("public/audio/aphex-twin-delphium.mp3")],
@@ -16,6 +17,7 @@ const checks = [
   ["settings-persist-volume", settings.includes('musicVolume: Math.max') && settings.includes('ressonancia:settings')],
   ["agency-volume-slider", header.includes('Volume da música') && header.includes('type="range"')],
   ["menu-volume-slider", menu.includes('Volume da música') && menu.includes('settings.musicVolume')],
+  ["nexo-volume-slider", nexo.includes('Volume da música') && nexo.includes('nexoSettingsHost') && nexo.includes('settings.musicVolume')],
   ["global-player-mounted", layout.includes('<BackgroundMusic />')],
   ["github-pages-public-path", component.includes('publicPath(track.src)')],
 ];

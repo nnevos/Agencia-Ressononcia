@@ -1,3 +1,10 @@
+## Beta 1 · v0.3.0-beta.20 — configurações no NEXO (2026-10-06)
+
+- Adicionada engrenagem global de Configurações ao NEXO/chat.
+- Menu inclui volume da música, salvar, exportar/importar, salvar e sair e sair da conta.
+- Mobile mantém acesso ao menu mesmo dentro de conversa ativa.
+- Save schema v10 inalterado.
+
 ## Beta 1 · v0.3.0-beta.19 — música ambiente + volume (2026-10-06)
 - Adicionadas faixas locais `Tha` (Dispatch) e `Delphium` (NEXO/chat), ambas em loop.
 - Novo `BackgroundMusic` global troca a faixa por rota e respeita GitHub Pages/basePath.

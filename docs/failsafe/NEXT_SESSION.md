@@ -1,6 +1,6 @@
-# NEXT SESSION — Beta 1 · v0.3.0-beta.19
+# NEXT SESSION — Beta 1 · v0.3.0-beta.20
 
-1. Publicar beta.19 no GitHub Pages e confirmar que os dois MP3 são carregados sob o `basePath` do repositório.
+1. Publicar beta.20 no GitHub Pages e confirmar Configurações do NEXO no desktop/mobile, inclusive volume e logout em conversa ativa.
 2. Em navegador limpo, entrar na Central e confirmar que `Tha` começa no máximo na primeira interação após a rota; volume inicial deve ser 10%.
 3. Abrir Configurações, mover slider 0% → 10% → 50% e confirmar alteração imediata; recarregar e confirmar persistência.
 4. Encerrar turno e abrir NEXO; `Tha` deve parar/trocar e `Delphium` deve tocar em loop no mesmo volume.

@@ -11,13 +11,14 @@ import { shouldShowRomanceEnding } from "@/game/social/ending";
 import type { DialogueScene, SaveGame } from "@/game/types";
 import { recoverHeroStates } from "@/game/simulation/heroState";
 import { createInitialShift, SHIFT_GAME_MINUTES } from "@/game/simulation/shift";
-import { isPostShiftOnlySave, loadSave, writeSave } from "@/lib/save";
-import { loadSettings } from "@/lib/settings";
+import { exportSaveJson, importSaveJson, isPostShiftOnlySave, loadSave, writeSave } from "@/lib/save";
+import { DEFAULT_SETTINGS, loadSettings, writeSettings, type RessonanciaSettings } from "@/lib/settings";
 import { formatPlayerText } from "@/lib/playerText";
 import { publicPath } from "@/lib/publicPath";
 import { collectCompletedOutings, collectUnlockedNexoPhotos, getNexoActivity, isNexoContactRead, nexoReadFlag } from "@/game/social/nexoLibrary";
+import { clearAccountSession } from "@/lib/account";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 
 type ConversationContact = {
   characterId: string;
@@ -154,6 +155,9 @@ export default function ConversationPage() {
   const [libraryView, setLibraryView] = useState<"chats" | "photos" | "dates">("chats");
   const [expandedLibraryImage, setExpandedLibraryImage] = useState<{ src: string; alt: string } | null>(null);
   const [dateTransitionSceneId, setDateTransitionSceneId] = useState<string | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settings, setSettings] = useState<RessonanciaSettings>(DEFAULT_SETTINGS);
+  const importInputRef = useRef<HTMLInputElement | null>(null);
 
   function refresh() {
     const current = loadSave();
@@ -164,19 +168,27 @@ export default function ConversationPage() {
   useEffect(() => { refresh(); }, [router]);
 
   useEffect(() => {
+    setSettings(loadSettings());
+    const onSettings = (event: Event) => setSettings((event as CustomEvent<RessonanciaSettings>).detail ?? loadSettings());
+    window.addEventListener("ressonancia:settings", onSettings);
+    return () => window.removeEventListener("ressonancia:settings", onSettings);
+  }, []);
+
+  useEffect(() => {
     if (save && shouldShowRomanceEnding(save)) router.replace("/final");
   }, [save, router]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
-      if (expandedLibraryImage) setExpandedLibraryImage(null);
+      if (settingsOpen) setSettingsOpen(false);
+      else if (expandedLibraryImage) setExpandedLibraryImage(null);
       else if (confirmNextDay) setConfirmNextDay(false);
       else if (activeCharacterId) setActiveCharacterId(null);
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [expandedLibraryImage, confirmNextDay, activeCharacterId]);
+  }, [settingsOpen, expandedLibraryImage, confirmNextDay, activeCharacterId]);
 
   const visibleScenes = useMemo(() => {
     if (!save) return [];
@@ -287,6 +299,67 @@ export default function ConversationPage() {
     return () => { document.title = previous; };
   }, [nightStatus.unread]);
 
+  function changeMusicVolume(value: number) {
+    const next = { ...settings, musicVolume: Math.max(0, Math.min(1, value)) };
+    setSettings(next);
+    writeSettings(next);
+  }
+
+  function saveNow() {
+    if (!save) return;
+    writeSave(save);
+    setSettingsOpen(false);
+  }
+
+  function saveAndExit() {
+    if (!save) return;
+    writeSave(save);
+    setSettingsOpen(false);
+    router.push("/");
+  }
+
+  async function signOutAccount() {
+    if (save) writeSave(save);
+    setSettingsOpen(false);
+    await clearAccountSession();
+    router.push("/?panel=account");
+  }
+
+  function exportCurrentSave() {
+    if (!save || typeof window === "undefined") return;
+    const blob = new Blob([exportSaveJson(save)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `ressonancia-save-dia-${save.player.currentDay}.json`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+    setSettingsOpen(false);
+  }
+
+  async function importSaveFile(file: File) {
+    try {
+      const imported = importSaveJson(await file.text());
+      if (!imported) return;
+      if (typeof window !== "undefined" && !window.confirm(`Importar o save de ${imported.player.name}, Dia ${imported.player.currentDay}? O progresso local atual será substituído.`)) return;
+      writeSave(imported);
+      setSave(imported);
+      setActiveCharacterId(null);
+      setReadCharacterIds(new Set());
+      setSettingsOpen(false);
+    } catch {
+      // Importacao invalida nao altera o save atual.
+    }
+  }
+
+  function handleImport(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) void importSaveFile(file);
+    event.target.value = "";
+  }
+
   function finishDay() {
     const current = loadSave();
     if (!current) return router.replace("/novo-jogo");
@@ -336,6 +409,22 @@ export default function ConversationPage() {
   }
 
   return <main className="phoneScene nexoDesktopScene">
+    <div className="nexoSettingsHost settingsHost">
+      <button className={`settingsButton ${settingsOpen ? "active" : ""}`} type="button" onClick={() => setSettingsOpen((open) => !open)} aria-expanded={settingsOpen} aria-haspopup="menu" aria-label="Abrir configurações">⚙<span>CONFIGURAÇÕES</span></button>
+      {settingsOpen && <div className="settingsMenu nexoSettingsMenu" role="menu" aria-label="Configurações do NEXO">
+        <div className="settingsIdentity"><small>ANALISTA</small><strong>{save.player.name}</strong><span>NEXO · Dia {save.player.currentDay} · autosave ativo</span></div>
+        <label className="settingsVolumeControl">
+          <span><strong>MÚSICA</strong><small>{Math.round(settings.musicVolume * 100)}%</small></span>
+          <input type="range" min="0" max="100" step="1" value={Math.round(settings.musicVolume * 100)} onChange={(event) => changeMusicVolume(Number(event.target.value) / 100)} aria-label="Volume da música" />
+        </label>
+        <button role="menuitem" type="button" onClick={saveNow}>SALVAR AGORA</button>
+        <button role="menuitem" type="button" onClick={exportCurrentSave}>EXPORTAR SAVE</button>
+        <button role="menuitem" type="button" className="settingsImport" onClick={() => importInputRef.current?.click()}>IMPORTAR SAVE</button>
+        <input ref={importInputRef} className="settingsImportInput" type="file" accept="application/json,.json" onChange={handleImport} tabIndex={-1} aria-hidden="true" />
+        <button role="menuitem" type="button" className="settingsExit" onClick={saveAndExit}>SALVAR E SAIR</button>
+        <button role="menuitem" type="button" className="settingsSignOut" onClick={() => void signOutAccount()}>SAIR DA CONTA</button>
+      </div>}
+    </div>
     {progressiveTutorialKey && <ProgressiveTutorialCoach className="nexoTutorial" {...progressiveTutorialCopy[progressiveTutorialKey]} onDismiss={dismissProgressiveTutorial} actionLabel="OK" showSpotlight={false} />}
     <AgencyManual save={save} className="agencyManualNexo" />
     <div className="nexoMessengerShell">
