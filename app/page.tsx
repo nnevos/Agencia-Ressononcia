@@ -298,6 +298,7 @@ export default function Home() {
               <div className="settingsRows">
                 <div><span><strong>Movimento</strong><small>Transições e animação ambiente do menu.</small></span><button onClick={() => updateSettings({ ...settings, reducedMotion: !settings.reducedMotion })}>{settings.reducedMotion ? "REDUZIDO" : "ATIVO"}</button></div>
                 <div><span><strong>Velocidade das mensagens</strong><small>Intervalo entre bolhas automáticas do NEXO.</small></span><button onClick={() => updateSettings({ ...settings, textSpeed: settings.textSpeed === "normal" ? "fast" : "normal" })}>{settings.textSpeed === "fast" ? "RÁPIDA" : "NORMAL"}</button></div>
+                <div className="settingsVolumeRow"><span><strong>Volume da música</strong><small>Tha no Dispatch e Delphium no NEXO. O padrão inicial é 10%.</small></span><label className="menuVolumeControl"><input type="range" min="0" max="100" step="1" value={Math.round(settings.musicVolume * 100)} onChange={(event) => updateSettings({ ...settings, musicVolume: Number(event.target.value) / 100 })} aria-label="Volume da música" /><strong>{Math.round(settings.musicVolume * 100)}%</strong></label></div>
                 <div><span><strong>Tela cheia</strong><small>Alterna o navegador para o modo de tela cheia.</small></span><button onClick={() => void toggleFullscreen()}>ALTERNAR</button></div>
               </div>
             </div>}

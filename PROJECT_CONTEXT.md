@@ -1,3 +1,10 @@
+## Beta 1 · v0.3.0-beta.19 — música ambiente + volume (2026-10-06)
+- Música de Dispatch: `Aphex Twin - Tha`, asset local fornecido nesta sessão, em loop.
+- Música do NEXO/chat: `Aphex Twin - Delphium`, asset local fornecido nesta sessão, em loop.
+- Volume global persistente em `ressonancia.settings`, padrão inicial de 10%; slider nas Configurações da Central e no menu principal.
+- Player global respeita `basePath` do GitHub Pages e tenta iniciar após interação do usuário quando autoplay for bloqueado.
+- Save schema permanece v10; música/configuração não altera o save de campanha.
+
 ## Beta 1 · v0.3.0-beta.18 — AgencyHeader build hotfix (2026-10-06)
 - Tipagem de `AgencyHeader` formalizada em `AgencyHeaderProps`, incluindo `onSignOut` e callbacks async de import/logout.
 - `onImportSave` e `onSignOut` aceitam `Promise<void>` sem quebrar o contrato React/TypeScript.
@@ -74,7 +81,7 @@
 
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.18**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.19**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat

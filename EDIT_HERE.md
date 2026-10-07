@@ -157,3 +157,13 @@ Não mover falas, casos ou regras de cálculo para os componentes de UI.
 
 
 - Lysandro D1–D6 já está autorado em `content/dialogues/post-shift/lysandro.ts`; não voltar aos placeholders principais.
+## Música ambiente (Beta 1)
+
+- Dispatch/Central: `public/audio/aphex-twin-tha.mp3`
+- NEXO/chat: `public/audio/aphex-twin-delphium.mp3`
+- Mapeamento de rota/player: `components/BackgroundMusic.tsx`
+- Volume padrão/persistência: `lib/settings.ts` (`musicVolume`, padrão `0.1`)
+- Controle da engrenagem da Central: `components/agency/AgencyHeader.tsx`
+
+Não altere o save schema para volume: essa preferência é local da instalação e não pertence à campanha.
+

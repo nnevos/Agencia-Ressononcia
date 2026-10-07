@@ -1,3 +1,12 @@
+# NEXT SESSION — Beta 1 · v0.3.0-beta.19
+
+1. Publicar beta.19 no GitHub Pages e confirmar que os dois MP3 são carregados sob o `basePath` do repositório.
+2. Em navegador limpo, entrar na Central e confirmar que `Tha` começa no máximo na primeira interação após a rota; volume inicial deve ser 10%.
+3. Abrir Configurações, mover slider 0% → 10% → 50% e confirmar alteração imediata; recarregar e confirmar persistência.
+4. Encerrar turno e abrir NEXO; `Tha` deve parar/trocar e `Delphium` deve tocar em loop no mesmo volume.
+5. Testar Chrome Android/Safari iOS, pois política de autoplay varia por navegador.
+6. Antes de distribuição pública ampla, confirmar direitos/licença de redistribuição dos arquivos de áudio fornecidos.
+
 # NEXT SESSION — Beta 1 · v0.3.0-beta.18
 
 1. Subir a beta.18 no GitHub e confirmar `Deploy GitHub Pages` verde após o erro de tipagem de `AgencyHeader`.

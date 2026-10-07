@@ -9994,3 +9994,49 @@ button:focus-visible, input:focus-visible, select:focus-visible, [role="button"]
 .accountModeSwitch button[aria-pressed="true"]{border-color:#6edcff;color:#eefbff;background:#123647;box-shadow:0 0 0 1px rgba(110,220,255,.12)}
 @media(max-width:640px){.accountModeSwitch{grid-template-columns:repeat(2,minmax(0,1fr))}.accountModeSwitch button{min-height:68px;padding:10px}.accountModeSwitch button strong{font-size:.74rem}.accountModeSwitch button span{font-size:.58rem}.accountSubmitButton{min-height:56px;font-size:.78rem}}
 @media(max-width:360px){.accountModeSwitch{grid-template-columns:1fr}.accountModeSwitch button{min-height:56px}}
+
+/* Beta 1 v0.3.0-beta.19 - musica ambiente e volume */
+.settingsVolumeControl {
+  display:grid;
+  gap:8px;
+  padding:10px;
+  border:1px solid #244457;
+  background:#091923;
+}
+.settingsVolumeControl>span {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.settingsVolumeControl strong {
+  color:#dff6ff;
+  font-size:.56rem;
+  letter-spacing:.08em;
+}
+.settingsVolumeControl small {
+  color:#76cfe8;
+  font-size:.55rem;
+  font-weight:900;
+}
+.settingsVolumeControl input[type="range"],
+.menuVolumeControl input[type="range"] {
+  width:100%;
+  accent-color:#69d8f4;
+  cursor:pointer;
+}
+.menuVolumeControl {
+  min-width:210px;
+  display:grid;
+  grid-template-columns:minmax(120px,1fr) 42px;
+  align-items:center;
+  gap:10px;
+}
+.menuVolumeControl strong {
+  color:#dff8ff;
+  font-size:.72rem;
+  text-align:right;
+}
+@media(max-width:800px) {
+  .menuVolumeControl { width:100%; min-width:0; }
+}

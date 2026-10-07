@@ -121,3 +121,13 @@ Os placeholders D2–D6 e os encontros atuais estao marcados como `PLACEHOLDER`.
 
 ### Nome/pronomes do protagonista
 A interpolação é centralizada em `lib/playerText.ts`. Não faça novos `.replaceAll("{{playerName}}", ...)` nos componentes. Em conteúdo, preserve “Analista” quando for cargo; em narração ou tratamento pessoal, adapte contextualmente e prefira neutralidade.
+## Música ambiente (Beta 1)
+
+- Dispatch/Central: `public/audio/aphex-twin-tha.mp3`
+- NEXO/chat: `public/audio/aphex-twin-delphium.mp3`
+- Mapeamento de rota/player: `components/BackgroundMusic.tsx`
+- Volume padrão/persistência: `lib/settings.ts` (`musicVolume`, padrão `0.1`)
+- Controle da engrenagem da Central: `components/agency/AgencyHeader.tsx`
+
+Não altere o save schema para volume: essa preferência é local da instalação e não pertence à campanha.
+

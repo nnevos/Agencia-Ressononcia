@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { validateEditableContent } from "@/content/validate";
 import CloudSyncBridge from "@/components/CloudSyncBridge";
+import BackgroundMusic from "@/components/BackgroundMusic";
 import "./globals.css";
 
 if (process.env.NODE_ENV !== "production") validateEditableContent();
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="pt-BR"><body><CloudSyncBridge />{children}</body></html>;
+  return <html lang="pt-BR"><body><CloudSyncBridge /><BackgroundMusic />{children}</body></html>;
 }

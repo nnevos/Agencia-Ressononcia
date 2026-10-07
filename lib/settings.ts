@@ -1,10 +1,11 @@
 export type RessonanciaSettings = {
   reducedMotion: boolean;
   textSpeed: "normal" | "fast";
+  musicVolume: number;
 };
 
 const SETTINGS_KEY = "ressonancia.settings";
-export const DEFAULT_SETTINGS: RessonanciaSettings = { reducedMotion: false, textSpeed: "normal" };
+export const DEFAULT_SETTINGS: RessonanciaSettings = { reducedMotion: false, textSpeed: "normal", musicVolume: 0.1 };
 
 export function loadSettings(): RessonanciaSettings {
   if (typeof window === "undefined") return DEFAULT_SETTINGS;
@@ -15,6 +16,7 @@ export function loadSettings(): RessonanciaSettings {
     return {
       reducedMotion: Boolean(value.reducedMotion),
       textSpeed: value.textSpeed === "fast" ? "fast" : "normal",
+      musicVolume: Math.max(0, Math.min(1, typeof value.musicVolume === "number" ? value.musicVolume : DEFAULT_SETTINGS.musicVolume)),
     };
   } catch {
     return DEFAULT_SETTINGS;

@@ -1,5 +1,6 @@
-import { useRef, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { formatGameTime } from "@/game/simulation/shift";
+import { DEFAULT_SETTINGS, loadSettings, writeSettings, type RessonanciaSettings } from "@/lib/settings";
 
 type AgencyHeaderProps = {
   day: number;
@@ -31,6 +32,20 @@ export function AgencyHeader({
   onImportSave,
 }: AgencyHeaderProps) {
   const importInputRef = useRef<HTMLInputElement | null>(null);
+  const [settings, setSettings] = useState<RessonanciaSettings>(DEFAULT_SETTINGS);
+
+  useEffect(() => {
+    setSettings(loadSettings());
+    const onSettings = (event: Event) => setSettings((event as CustomEvent<RessonanciaSettings>).detail ?? loadSettings());
+    window.addEventListener("ressonancia:settings", onSettings);
+    return () => window.removeEventListener("ressonancia:settings", onSettings);
+  }, []);
+
+  function changeMusicVolume(value: number) {
+    const next = { ...settings, musicVolume: Math.max(0, Math.min(1, value)) };
+    setSettings(next);
+    writeSettings(next);
+  }
 
   function handleImport(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -45,6 +60,10 @@ export function AgencyHeader({
       <button className={`settingsButton ${settingsOpen ? "active" : ""}`} onClick={onToggleSettings} aria-expanded={settingsOpen} aria-haspopup="menu" aria-label="Abrir configurações">⚙<span>CONFIGURAÇÕES</span></button>
       {settingsOpen && <div className="settingsMenu" role="menu" aria-label="Configurações e salvamento">
         <div className="settingsIdentity"><small>ANALISTA</small><strong>{playerName}</strong><span>Dia {day} · salvamento local automático</span></div>
+        <label className="settingsVolumeControl">
+          <span><strong>MÚSICA</strong><small>{Math.round(settings.musicVolume * 100)}%</small></span>
+          <input type="range" min="0" max="100" step="1" value={Math.round(settings.musicVolume * 100)} onChange={(event) => changeMusicVolume(Number(event.target.value) / 100)} aria-label="Volume da música" />
+        </label>
         <button role="menuitem" onClick={onSaveNow}>SALVAR AGORA</button>
         <button role="menuitem" onClick={onExportSave}>EXPORTAR SAVE</button>
         <button role="menuitem" className="settingsImport" onClick={() => importInputRef.current?.click()}>IMPORTAR SAVE</button>

@@ -1,4 +1,8 @@
-## Beta 1 · v0.3.0-beta.18
+## Beta 1 · v0.3.0-beta.19
+
+## Música ambiente
+
+A beta.19 inclui música local em loop: **Tha** durante o Dispatch/Central e **Delphium** no NEXO/chat. O volume padrão é **10%** e pode ser alterado em Configurações; a preferência fica salva no navegador. Navegadores podem exigir a primeira interação do usuário antes de liberar áudio.
 
 - Mobile: previsão da equipe/radar agora aparece antes da lista de agentes na montagem do Dispatch.
 

@@ -1,3 +1,10 @@
+## Beta 1 · v0.3.0-beta.19 — música ambiente + volume (2026-10-06)
+- Adicionadas faixas locais `Tha` (Dispatch) e `Delphium` (NEXO/chat), ambas em loop.
+- Novo `BackgroundMusic` global troca a faixa por rota e respeita GitHub Pages/basePath.
+- `RessonanciaSettings` ganhou `musicVolume`, padrão 0.1, com migração transparente de preferências antigas.
+- Slider de volume adicionado às Configurações da Central e menu principal.
+- QA de áudio: `npm run qa:audio`.
+
 ## Beta 1 · v0.3.0-beta.18 — AgencyHeader build hotfix (2026-10-06)
 - Tipagem de `AgencyHeader` formalizada em `AgencyHeaderProps`, incluindo `onSignOut` e callbacks async de import/logout.
 - `onImportSave` e `onSignOut` aceitam `Promise<void>` sem quebrar o contrato React/TypeScript.

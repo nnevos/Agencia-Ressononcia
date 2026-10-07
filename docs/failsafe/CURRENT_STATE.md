@@ -1,3 +1,10 @@
+# CURRENT STATE — Beta 1 · v0.3.0-beta.19 (2026-10-06)
+
+- Player de música ambiente global adicionado. `Tha` toca em `/agencia` e `Delphium` em `/conversa`, ambos em loop.
+- Volume inicia em 10% para instalações sem preferência anterior e é persistido em settings locais, independente do save v10.
+- Configurações da Central e menu principal possuem slider 0–100%.
+- Autoplay bloqueado pelo navegador é retomado na primeira interação válida do usuário; GitHub Pages usa `publicPath`.
+
 # CURRENT STATE — Beta 1 · v0.3.0-beta.18 (2026-10-06)
 
 - Tutorial progressivo do NEXO não usa mais spotlight escuro nem força destaque sobre a lista.
