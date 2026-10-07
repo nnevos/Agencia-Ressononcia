@@ -1,4 +1,9 @@
-## Beta 1 · v0.3.0-beta.20 — configurações no NEXO (2026-10-06)
+## Beta 1 · v0.3.0-beta.21 — Configurações NEXO + DEV oculto (2026-10-06)
+
+- Configurações do NEXO reagrupadas e responsivas.
+- Modo DEV removido da UI normal e liberado apenas por `Ctrl + Alt + Shift + D`.
+
+## Beta 1 · v0.3.0-beta.21 — configurações no NEXO (2026-10-06)
 
 - Adicionada engrenagem global de Configurações ao NEXO/chat.
 - Menu inclui volume da música, salvar, exportar/importar, salvar e sair e sair da conta.

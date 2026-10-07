@@ -3,15 +3,32 @@
 import { devAdvanceMinutes, devPerfectFinishShift, devResetShift, devResolveAllAndFinish, devSkipToPostShift } from "@/game/simulation/devTools";
 import type { SaveGame } from "@/game/types";
 import { writeSave } from "@/lib/save";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function DevTools({ save, onSave, onPost, onDevelopment }: { save: SaveGame; onSave: (save: SaveGame) => void; onPost: () => void; onDevelopment: () => void }) {
+  const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (!(event.ctrlKey && event.altKey && event.shiftKey && event.code === "KeyD")) return;
+      event.preventDefault();
+      setVisible((current) => {
+        const next = !current;
+        if (!next) setOpen(false);
+        return next;
+      });
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   function apply(next: SaveGame) {
     writeSave(next);
     onSave(next);
   }
+
+  if (!visible) return null;
 
   return <>
     <button className={`devFab ${open ? "active" : ""}`} onClick={() => setOpen((value) => !value)} title="Ferramentas de desenvolvimento">DEV</button>

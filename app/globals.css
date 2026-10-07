@@ -10079,3 +10079,102 @@ button:focus-visible, input:focus-visible, select:focus-visible, [role="button"]
   .nexoSidebarHeader { padding-right:58px; }
   .nexoPrivateHeader { padding-right:58px; }
 }
+
+/* Beta 1 v0.3.0-beta.21 - NEXO settings UI rework */
+.nexoSettingsMenu {
+  width:min(330px, calc(100vw - 28px));
+  padding:0;
+  gap:0;
+  overflow:hidden;
+  border-color:#2a5268;
+  background:linear-gradient(180deg,#081722 0%,#06111a 100%);
+  box-shadow:0 24px 70px rgba(0,0,0,.62);
+}
+.nexoSettingsHeader {
+  min-height:54px;
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  border-bottom:1px solid #193646;
+  background:#091a25;
+}
+.nexoSettingsHeader>div { display:grid; gap:2px; }
+.nexoSettingsHeader .eyebrow { color:#55bdda; font-size:.45rem; letter-spacing:.14em; }
+.nexoSettingsHeader strong { color:#effaff; font-size:.72rem; letter-spacing:.08em; }
+.nexoSettingsClose {
+  width:34px; height:34px; display:grid; place-items:center;
+  border:1px solid #244b60; background:#0a202d; color:#9fd5e8;
+  font-size:1.15rem; line-height:1; cursor:pointer;
+}
+.nexoSettingsClose:hover { border-color:#63cbea; color:#fff; }
+.nexoSettingsIdentity {
+  margin:0; padding:12px 14px;
+  border-bottom:1px solid #193646;
+  background:rgba(9,26,37,.5);
+}
+.nexoSettingsSection {
+  display:grid;
+  gap:9px;
+  padding:12px 14px 14px;
+  border-bottom:1px solid #193646;
+}
+.nexoSettingsSection:last-child { border-bottom:0; }
+.nexoSettingsSectionTitle {
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.nexoSettingsSectionTitle span { color:#b9dce8; font-size:.49rem; font-weight:900; letter-spacing:.11em; }
+.nexoSettingsSectionTitle small { color:#5e8597; font-size:.44rem; }
+.nexoSettingsVolume {
+  margin:0; padding:10px 11px;
+  border:1px solid #1f4052;
+  background:#081923;
+}
+.nexoSettingsVolume>span { margin-bottom:8px; }
+.nexoSettingsVolume>span strong { font-size:.56rem; color:#d9f4ff; letter-spacing:.07em; }
+.nexoSettingsVolume>span small { color:#688b9a; }
+.nexoSettingsActions {
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:7px;
+}
+.nexoSettingsActions>button,
+.nexoSettingsAccount>button {
+  min-height:40px;
+  border:1px solid #24485c;
+  background:#0a1d28;
+  color:#d4eaf3;
+  padding:9px 10px;
+  font-size:.49rem;
+  font-weight:900;
+  letter-spacing:.06em;
+  cursor:pointer;
+}
+.nexoSettingsActions>button:hover { border-color:#54b5d3; background:#0d2a39; }
+.nexoSettingsAccount>.settingsExit {
+  border-color:#5c3d46; color:#efb5bc; background:#160f14;
+}
+.nexoSettingsAccount>.settingsSignOut {
+  border-color:#77434e; color:#ffd3d8; background:#211116;
+}
+.nexoSettingsAccount>.settingsExit:hover,
+.nexoSettingsAccount>.settingsSignOut:hover { border-color:#d16070; background:#351820; }
+.nexoSettingsMenu .settingsImportInput { display:none !important; }
+
+@media (max-width:780px) {
+  .nexoSettingsHost .settingsMenu.nexoSettingsMenu {
+    top:max(6px, env(safe-area-inset-top));
+    right:max(6px, env(safe-area-inset-right));
+    left:max(6px, env(safe-area-inset-left));
+    width:auto;
+    max-height:calc(100dvh - 12px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    border-radius:10px;
+    overflow:auto;
+    overscroll-behavior:contain;
+  }
+  .nexoSettingsHeader { position:sticky; top:0; z-index:2; }
+  .nexoSettingsActions { grid-template-columns:1fr; }
+  .nexoSettingsActions>button,
+  .nexoSettingsAccount>button { min-height:46px; font-size:.56rem; }
+}

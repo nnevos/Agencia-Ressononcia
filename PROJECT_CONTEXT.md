@@ -1,4 +1,10 @@
-## Beta 1 · v0.3.0-beta.20 — configurações também no NEXO (2026-10-06)
+## Beta 1 · v0.3.0-beta.21 — Configurações NEXO + DEV oculto (2026-10-06)
+
+- Configurações do NEXO reorganizadas em Áudio / Save / Conta, com painel compacto no desktop e quase fullscreen no mobile.
+- Input nativo de arquivo permanece oculto; importação usa botão estilizado.
+- DEV Tools ficam invisíveis por padrão e só são liberadas pelo atalho secreto `Ctrl + Alt + Shift + D`; repetir o atalho oculta novamente.
+
+## Beta 1 · v0.3.0-beta.21 — configurações também no NEXO (2026-10-06)
 
 - NEXO/chat agora possui engrenagem global de Configurações no canto superior direito, disponível também com conversa ativa e no mobile.
 - O menu replica o volume global da música (persistente), salvar agora, exportar/importar save, salvar e sair e sair da conta.
@@ -88,7 +94,7 @@
 
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.20**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.21**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat

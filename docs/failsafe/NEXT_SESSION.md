@@ -1,6 +1,12 @@
-# NEXT SESSION — Beta 1 · v0.3.0-beta.20
+# NEXT SESSION — Beta 1 · v0.3.0-beta.21
 
-1. Publicar beta.20 no GitHub Pages e confirmar Configurações do NEXO no desktop/mobile, inclusive volume e logout em conversa ativa.
+1. Publicar beta.21 no GitHub Pages e validar Configurações do NEXO em desktop/mobile.
+2. Confirmar que `Ctrl + Alt + Shift + D` mostra/oculta DEV Tools sem conflito no Chrome/Firefox.
+3. QA de áudio, logout e import/export após o rework visual.
+
+# NEXT SESSION — Beta 1 · v0.3.0-beta.21
+
+1. Publicar beta.21 no GitHub Pages e confirmar Configurações do NEXO no desktop/mobile, inclusive volume e logout em conversa ativa.
 2. Em navegador limpo, entrar na Central e confirmar que `Tha` começa no máximo na primeira interação após a rota; volume inicial deve ser 10%.
 3. Abrir Configurações, mover slider 0% → 10% → 50% e confirmar alteração imediata; recarregar e confirmar persistência.
 4. Encerrar turno e abrir NEXO; `Tha` deve parar/trocar e `Delphium` deve tocar em loop no mesmo volume.

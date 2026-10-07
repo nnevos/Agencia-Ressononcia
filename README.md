@@ -1,8 +1,12 @@
-## Beta 1 · v0.3.0-beta.20
+## Beta 1 · v0.3.0-beta.21
+
+A beta.21 melhora o painel de Configurações do NEXO e esconde as ferramentas DEV da interface normal. Para QA interno, `Ctrl + Alt + Shift + D` alterna a visibilidade do modo DEV na Central.
+
+## Beta 1 · v0.3.0-beta.21
 
 ## Música ambiente
 
-A beta.20 mantém a música local em loop e adiciona **Configurações também dentro do NEXO/chat**, com o mesmo volume global, salvar/exportar/importar e logout. As faixas continuam: **Tha** durante o Dispatch/Central e **Delphium** no NEXO/chat. O volume padrão é **10%** e pode ser alterado em Configurações; a preferência fica salva no navegador. Navegadores podem exigir a primeira interação do usuário antes de liberar áudio.
+A beta.21 mantém a música local em loop e adiciona **Configurações também dentro do NEXO/chat**, com o mesmo volume global, salvar/exportar/importar e logout. As faixas continuam: **Tha** durante o Dispatch/Central e **Delphium** no NEXO/chat. O volume padrão é **10%** e pode ser alterado em Configurações; a preferência fica salva no navegador. Navegadores podem exigir a primeira interação do usuário antes de liberar áudio.
 
 - Mobile: previsão da equipe/radar agora aparece antes da lista de agentes na montagem do Dispatch.
 

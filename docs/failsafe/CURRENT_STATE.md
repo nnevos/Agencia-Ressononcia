@@ -1,9 +1,14 @@
-## Delta beta.20
+## Delta beta.21
+
+- Rework visual do menu de Configurações do NEXO.
+- DEV Tools ocultas por padrão; atalho `Ctrl + Alt + Shift + D` alterna a superfície de QA.
+
+## Delta beta.21
 - Configurações agora também acessíveis no NEXO/chat, inclusive mobile e conversa ativa.
 - Volume global, save/export/import e logout disponíveis sem retornar à Central.
 - Save v10 inalterado.
 
-# CURRENT STATE — Beta 1 · v0.3.0-beta.20 (2026-10-06)
+# CURRENT STATE — Beta 1 · v0.3.0-beta.21 (2026-10-06)
 
 - Player de música ambiente global adicionado. `Tha` toca em `/agencia` e `Delphium` em `/conversa`, ambos em loop.
 - Volume inicia em 10% para instalações sem preferência anterior e é persistido em settings locais, independente do save v10.
