@@ -1,3 +1,8 @@
+## Beta 1 · v0.3.0-beta.18 — AgencyHeader build hotfix (2026-10-06)
+- Tipagem de `AgencyHeader` formalizada em `AgencyHeaderProps`, incluindo `onSignOut` e callbacks async de import/logout.
+- `onImportSave` e `onSignOut` aceitam `Promise<void>` sem quebrar o contrato React/TypeScript.
+- Nenhuma regra de gameplay, save, Supabase ou UI foi alterada.
+
 ## Beta 1 · v0.3.0-beta.16 — ordem mobile da montagem de equipe (2026-10-06)
 
 - No Dispatch mobile, `PREVISÃO DA EQUIPE`/radar foi movida para antes da lista de agentes.

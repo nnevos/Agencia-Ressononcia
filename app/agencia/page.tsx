@@ -16,6 +16,7 @@ import { analyzeTeam, getMissionAssessment, resolveIncident } from "@/game/simul
 import { createInitialShift, formatGameTime, resumeShiftClock, SHIFT_GAME_MINUTES, startShift } from "@/game/simulation/shift";
 import type { DispatchResult, OperationalHero, SaveGame } from "@/game/types";
 import { exportSaveJson, importSaveJson, isPostShiftOnlySave, loadSave, writeSave } from "@/lib/save";
+import { clearAccountSession } from "@/lib/account";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -226,6 +227,13 @@ export default function AgencyPage() {
     writeSave(save);
     setSettingsOpen(false);
     router.push("/");
+  }
+
+  async function signOutAccount() {
+    if (save) writeSave(save);
+    setSettingsOpen(false);
+    await clearAccountSession();
+    router.push("/?panel=account");
   }
 
   function exportCurrentSave() {
@@ -467,6 +475,7 @@ export default function AgencyPage() {
         onSaveNow={saveNow}
         onRestartShift={restartShift}
         onSaveAndExit={saveAndExit}
+        onSignOut={() => void signOutAccount()}
         onExportSave={exportCurrentSave}
         onImportSave={importSaveFile}
       />

@@ -5188,6 +5188,15 @@ body {
   border-color:#a74b58;
   background:#29141b
 }
+.settingsMenu>.settingsSignOut {
+  border-color:#75414b;
+  color:#ffd0d5;
+  background:#211116
+}
+.settingsMenu>.settingsSignOut:hover {
+  border-color:#d16070;
+  background:#351820
+}
 .opsWorkspace {
   height:100%;
   min-height:0;

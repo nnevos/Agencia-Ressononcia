@@ -1,6 +1,21 @@
 import { useRef, type ChangeEvent } from "react";
 import { formatGameTime } from "@/game/simulation/shift";
 
+type AgencyHeaderProps = {
+  day: number;
+  gameMinute: number;
+  playerName: string;
+  settingsOpen: boolean;
+  clockPaused?: boolean;
+  onToggleSettings: () => void;
+  onSaveNow: () => void;
+  onRestartShift: () => void;
+  onSaveAndExit: () => void;
+  onSignOut: () => void | Promise<void>;
+  onExportSave: () => void;
+  onImportSave: (file: File) => void | Promise<void>;
+};
+
 export function AgencyHeader({
   day,
   gameMinute,
@@ -11,26 +26,15 @@ export function AgencyHeader({
   onSaveNow,
   onRestartShift,
   onSaveAndExit,
+  onSignOut,
   onExportSave,
   onImportSave,
-}: {
-  day: number;
-  gameMinute: number;
-  playerName: string;
-  settingsOpen: boolean;
-  clockPaused?: boolean;
-  onToggleSettings: () => void;
-  onSaveNow: () => void;
-  onRestartShift: () => void;
-  onSaveAndExit: () => void;
-  onExportSave: () => void;
-  onImportSave: (file: File) => void;
-}) {
+}: AgencyHeaderProps) {
   const importInputRef = useRef<HTMLInputElement | null>(null);
 
   function handleImport(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
-    if (file) onImportSave(file);
+    if (file) void onImportSave(file);
     event.target.value = "";
   }
 
@@ -47,6 +51,7 @@ export function AgencyHeader({
         <input ref={importInputRef} className="settingsImportInput" type="file" accept="application/json,.json" onChange={handleImport} tabIndex={-1} aria-hidden="true" />
         <button role="menuitem" onClick={onRestartShift}>REINICIAR EXPEDIENTE</button>
         <button role="menuitem" className="settingsExit" onClick={onSaveAndExit}>SALVAR E SAIR</button>
+        <button role="menuitem" className="settingsSignOut" onClick={() => void onSignOut()}>SAIR DA CONTA</button>
       </div>}
     </div>
   </header>;

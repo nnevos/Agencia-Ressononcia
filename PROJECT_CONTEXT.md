@@ -1,3 +1,8 @@
+## Beta 1 · v0.3.0-beta.18 — AgencyHeader build hotfix (2026-10-06)
+- Tipagem de `AgencyHeader` formalizada em `AgencyHeaderProps`, incluindo `onSignOut` e callbacks async de import/logout.
+- `onImportSave` e `onSignOut` aceitam `Promise<void>` sem quebrar o contrato React/TypeScript.
+- Nenhuma regra de gameplay, save, Supabase ou UI foi alterada.
+
 ## Beta 1 · v0.3.0-beta.16 — tutorial NEXO sem bloqueio visual (2026-10-06)
 - Tutoriais progressivos do NEXO agora usam balão normal com botão `OK`, sem spotlight/backdrop escuro.
 - Lista de contatos deixa de receber destaque/z-index forçado durante esses tutoriais.
@@ -69,7 +74,7 @@
 
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.16**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.18**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat
@@ -593,3 +598,8 @@ Pacote de robustez social: validação editorial reforçada para flags/IDs/mídi
 - Os DOCX reenviados nesta data são a única fonte válida para Elysia/Yuki.
 - Elysia tem 21 anos; o registro anterior de 19 anos foi superseded pela correção autoral.
 - Não transformar falas fixas do Analista em alternativas; só há escolha quando o DOCX declara alternativas/escolhas.
+
+## v0.3.0-beta.17 — logout nas configurações (2026-10-06)
+- A engrenagem da Central agora oferece `SAIR DA CONTA` separado de `SALVAR E SAIR`.
+- Logout preserva o save local, encerra a sessão Supabase e retorna ao painel de autenticação.
+- Save schema permanece v10; nenhuma regra de gameplay/narrativa foi alterada.

@@ -1,3 +1,10 @@
+# NEXT SESSION — Beta 1 · v0.3.0-beta.18
+
+1. Subir a beta.18 no GitHub e confirmar `Deploy GitHub Pages` verde após o erro de tipagem de `AgencyHeader`.
+2. Verificar no build que não há mais erro de prop `onSignOut` nem incompatibilidade async de `onImportSave`.
+3. Smoke test: CONFIGURAÇÕES → SAIR DA CONTA → ENTRAR novamente; save local deve permanecer.
+4. Se o compiler revelar erro subsequente antes mascarado, registrar o log exato antes de qualquer mudança funcional.
+
 # NEXT SESSION — Beta 1 · v0.3.0-beta.16
 
 1. No GitHub Pages, abrir o NEXO com primeiro convite de Date e confirmar que a tela não escurece.

@@ -1,4 +1,4 @@
-## Beta 1 · v0.3.0-beta.16
+## Beta 1 · v0.3.0-beta.18
 
 - Mobile: previsão da equipe/radar agora aparece antes da lista de agentes na montagem do Dispatch.
 
@@ -153,3 +153,11 @@ Substitui as três fotos de chat de Lysandro pelos arquivos autorais mais recent
 - Date 2 de Lysandro dividido em dois beats lineares: restaurante e casa.
 - Ao avançar do restaurante para a casa, o background troca para `public/outings/lysandro/date-2-casa.webp`.
 - Texto autoral preservado; sem escolhas novas e sem mudança no save schema v9.
+
+### Beta 1 v0.3.0-beta.17
+A Central inclui `SAIR DA CONTA` no menu de Configurações. A ação preserva o save local, encerra a sessão Supabase e retorna para Entrar/Criar conta.
+
+### Beta 1 v0.3.0-beta.18 — GitHub build hotfix
+- `AgencyHeader` usa contrato explícito `AgencyHeaderProps`.
+- `onSignOut` e `onImportSave` aceitam callbacks assíncronos sem conflito de TypeScript.
+- Nenhuma mudança de gameplay, persistência ou Supabase.
