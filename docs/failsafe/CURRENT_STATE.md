@@ -1,4 +1,4 @@
-## Delta beta.22
+## Delta beta.23
 
 - Date 1 de Lysandro corrigido: `um rápido beijo acontece`.
 - Runtime e autoria DOCX sincronizados; save v10 inalterado.
@@ -648,3 +648,11 @@ Corrigido bug em que finalizar a etapa 2 podia exibir `MARCAR PRIMEIRA SAÍDA` p
 
 ## Auth login hotfix — beta.14
 ENTRAR e CRIAR CONTA foram reforçados como modos independentes. O login existente usa apenas e-mail + senha, com CTA próprio e fallback explícito para voltar de cadastro para login. Sem alteração de Supabase, save v10 ou gameplay.
+
+## Beta 1 · v0.3.0-beta.23 — NEXO mobile sem sobreposicoes (2026-10-06)
+- Conversa mobile usa uma unica superficie de acao por regiao.
+- `PROXIMA NOITE`/`ENCERRAR NOITE` nao ocupa o cabecalho de uma conversa; a acao continua na lista do NEXO.
+- Manual nao flutua sobre respostas/composer durante conversa ativa; permanece acessivel ao voltar para a lista.
+- Composer redundante fica oculto ate uma resposta ser selecionada; depois aparece apenas a confirmacao/envio.
+- Configuracoes continuam acessiveis pela engrenagem no topo direito.
+- Save schema v10 e logica social inalterados.

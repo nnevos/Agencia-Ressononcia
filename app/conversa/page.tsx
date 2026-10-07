@@ -444,7 +444,7 @@ export default function ConversationPage() {
       </div>}
     </div>
     {progressiveTutorialKey && <ProgressiveTutorialCoach className="nexoTutorial" {...progressiveTutorialCopy[progressiveTutorialKey]} onDismiss={dismissProgressiveTutorial} actionLabel="OK" showSpotlight={false} />}
-    <AgencyManual save={save} className="agencyManualNexo" />
+    <AgencyManual save={save} className={`agencyManualNexo ${activeContact ? "conversationActive" : ""}`} />
     <div className="nexoMessengerShell">
       <aside className={(activeContact || libraryView !== "chats") ? "nexoConversationList hasActive" : "nexoConversationList"}>
         <header className="nexoSidebarHeader">

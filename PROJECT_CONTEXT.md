@@ -1,4 +1,4 @@
-## Beta 1 · v0.3.0-beta.22 — correção textual Lysandro (2026-10-06)
+## Beta 1 · v0.3.0-beta.23 — correção textual Lysandro (2026-10-06)
 
 - Date 1 de Lysandro: corrigido o trecho autoral para `um rápido beijo acontece`, preservando evento e intenção da cena.
 - Runtime e DOCX de autoria foram alinhados; nenhuma mecânica, flag, romance ou save foi alterado.
@@ -629,3 +629,11 @@ Pacote de robustez social: validação editorial reforçada para flags/IDs/mídi
 - A engrenagem da Central agora oferece `SAIR DA CONTA` separado de `SALVAR E SAIR`.
 - Logout preserva o save local, encerra a sessão Supabase e retorna ao painel de autenticação.
 - Save schema permanece v10; nenhuma regra de gameplay/narrativa foi alterada.
+
+## Beta 1 · v0.3.0-beta.23 — NEXO mobile sem sobreposicoes (2026-10-06)
+- Conversa mobile usa uma unica superficie de acao por regiao.
+- `PROXIMA NOITE`/`ENCERRAR NOITE` nao ocupa o cabecalho de uma conversa; a acao continua na lista do NEXO.
+- Manual nao flutua sobre respostas/composer durante conversa ativa; permanece acessivel ao voltar para a lista.
+- Composer redundante fica oculto ate uma resposta ser selecionada; depois aparece apenas a confirmacao/envio.
+- Configuracoes continuam acessiveis pela engrenagem no topo direito.
+- Save schema v10 e logica social inalterados.

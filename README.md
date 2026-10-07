@@ -1,4 +1,4 @@
-## Beta 1 · v0.3.0-beta.22
+## Beta 1 · v0.3.0-beta.23
 
 Correção textual pontual no Date 1 de Lysandro: `um rápido beijo acontece`. Runtime e DOCX de autoria alinhados; gameplay e save v10 inalterados.
 

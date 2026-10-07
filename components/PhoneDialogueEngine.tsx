@@ -419,7 +419,7 @@ export function PhoneDialogueEngine({ scenes, save, lastDispatch, onBack, onSave
               onClick={() => setDraftChoiceId((current) => current === choice.id ? null : choice.id)}
             >{formatPlayerText(choice.text, save.player)}</button>)}
           </div>
-          <div className="nexoComposer">
+          <div className={`nexoComposer nexoChoiceComposer ${selectedChoice ? "hasSelection" : "awaitingSelection"}`}>
             <button className="nexoComposerIcon" aria-label="Anexos" disabled>＋</button>
             <div className={selectedChoice ? "nexoDraftField filled" : "nexoDraftField"}>
               {selectedChoice?.text ?? "Escolha uma resposta acima..."}
