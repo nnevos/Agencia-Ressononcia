@@ -1,3 +1,10 @@
+## Beta 1 · v0.3.0-beta.26 — Configurações integradas ao NEXO desktop (2026-10-07)
+
+- O botão de Configurações do NEXO desktop agora pertence à moldura do messenger, no canto superior direito, em vez de flutuar fora do painel.
+- O menu continua ancorado ao botão e abre dentro da superfície do NEXO.
+- Conversas desktop reservam espaço no cabeçalho para evitar colisão entre Configurações e ações da thread.
+- O comportamento mobile da beta.25 foi preservado; save schema continua v10.
+
 ## Beta 1 · v0.3.0-beta.25 — Manual integrado ao rodapé mobile do NEXO (2026-10-07)
 
 - No mobile, o launcher flutuante do Manual foi removido da lista do NEXO.

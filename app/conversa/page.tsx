@@ -409,43 +409,43 @@ export default function ConversationPage() {
   }
 
   return <main className="phoneScene nexoDesktopScene">
-    <div className="nexoSettingsHost settingsHost">
-      <button className={`settingsButton ${settingsOpen ? "active" : ""}`} type="button" onClick={() => setSettingsOpen((open) => !open)} aria-expanded={settingsOpen} aria-haspopup="menu" aria-label="Abrir configurações">⚙<span>CONFIGURAÇÕES</span></button>
-      {settingsOpen && <div className="settingsMenu nexoSettingsMenu" role="menu" aria-label="Configurações do NEXO">
-        <div className="nexoSettingsHeader">
-          <div><span className="eyebrow">NEXO</span><strong>CONFIGURAÇÕES</strong></div>
-          <button type="button" className="nexoSettingsClose" onClick={() => setSettingsOpen(false)} aria-label="Fechar configurações">×</button>
-        </div>
-        <div className="settingsIdentity nexoSettingsIdentity"><small>ANALISTA</small><strong>{save.player.name}</strong><span>Dia {save.player.currentDay} · autosave ativo</span></div>
-
-        <section className="nexoSettingsSection" aria-labelledby="nexo-settings-audio">
-          <div className="nexoSettingsSectionTitle" id="nexo-settings-audio"><span>ÁUDIO</span><small>{Math.round(settings.musicVolume * 100)}%</small></div>
-          <label className="settingsVolumeControl nexoSettingsVolume">
-            <span><strong>MÚSICA</strong><small>volume global</small></span>
-            <input type="range" min="0" max="100" step="1" value={Math.round(settings.musicVolume * 100)} onChange={(event) => changeMusicVolume(Number(event.target.value) / 100)} aria-label="Volume da música" />
-          </label>
-        </section>
-
-        <section className="nexoSettingsSection" aria-labelledby="nexo-settings-save">
-          <div className="nexoSettingsSectionTitle" id="nexo-settings-save"><span>SAVE</span><small>local + nuvem</small></div>
-          <div className="nexoSettingsActions">
-            <button role="menuitem" type="button" onClick={saveNow}>SALVAR AGORA</button>
-            <button role="menuitem" type="button" onClick={exportCurrentSave}>EXPORTAR</button>
-            <button role="menuitem" type="button" className="settingsImport" onClick={() => importInputRef.current?.click()}>IMPORTAR</button>
-          </div>
-          <input ref={importInputRef} className="settingsImportInput" type="file" accept="application/json,.json" onChange={handleImport} tabIndex={-1} aria-hidden="true" />
-        </section>
-
-        <section className="nexoSettingsSection nexoSettingsAccount" aria-labelledby="nexo-settings-account">
-          <div className="nexoSettingsSectionTitle" id="nexo-settings-account"><span>CONTA</span><small>sessão atual</small></div>
-          <button role="menuitem" type="button" className="settingsExit" onClick={saveAndExit}>SALVAR E SAIR</button>
-          <button role="menuitem" type="button" className="settingsSignOut" onClick={() => void signOutAccount()}>SAIR DA CONTA</button>
-        </section>
-      </div>}
-    </div>
     {progressiveTutorialKey && <ProgressiveTutorialCoach className="nexoTutorial" {...progressiveTutorialCopy[progressiveTutorialKey]} onDismiss={dismissProgressiveTutorial} actionLabel="OK" showSpotlight={false} />}
     <AgencyManual save={save} className={`agencyManualNexo nexoManualFloating ${activeContact ? "conversationActive" : ""}`} />
     <div className="nexoMessengerShell">
+      <div className="nexoSettingsHost settingsHost">
+        <button className={`settingsButton ${settingsOpen ? "active" : ""}`} type="button" onClick={() => setSettingsOpen((open) => !open)} aria-expanded={settingsOpen} aria-haspopup="menu" aria-label="Abrir configurações">⚙<span>CONFIGURAÇÕES</span></button>
+        {settingsOpen && <div className="settingsMenu nexoSettingsMenu" role="menu" aria-label="Configurações do NEXO">
+          <div className="nexoSettingsHeader">
+            <div><span className="eyebrow">NEXO</span><strong>CONFIGURAÇÕES</strong></div>
+            <button type="button" className="nexoSettingsClose" onClick={() => setSettingsOpen(false)} aria-label="Fechar configurações">×</button>
+          </div>
+          <div className="settingsIdentity nexoSettingsIdentity"><small>ANALISTA</small><strong>{save.player.name}</strong><span>Dia {save.player.currentDay} · autosave ativo</span></div>
+
+          <section className="nexoSettingsSection" aria-labelledby="nexo-settings-audio">
+            <div className="nexoSettingsSectionTitle" id="nexo-settings-audio"><span>ÁUDIO</span><small>{Math.round(settings.musicVolume * 100)}%</small></div>
+            <label className="settingsVolumeControl nexoSettingsVolume">
+              <span><strong>MÚSICA</strong><small>volume global</small></span>
+              <input type="range" min="0" max="100" step="1" value={Math.round(settings.musicVolume * 100)} onChange={(event) => changeMusicVolume(Number(event.target.value) / 100)} aria-label="Volume da música" />
+            </label>
+          </section>
+
+          <section className="nexoSettingsSection" aria-labelledby="nexo-settings-save">
+            <div className="nexoSettingsSectionTitle" id="nexo-settings-save"><span>SAVE</span><small>local + nuvem</small></div>
+            <div className="nexoSettingsActions">
+              <button role="menuitem" type="button" onClick={saveNow}>SALVAR AGORA</button>
+              <button role="menuitem" type="button" onClick={exportCurrentSave}>EXPORTAR</button>
+              <button role="menuitem" type="button" className="settingsImport" onClick={() => importInputRef.current?.click()}>IMPORTAR</button>
+            </div>
+            <input ref={importInputRef} className="settingsImportInput" type="file" accept="application/json,.json" onChange={handleImport} tabIndex={-1} aria-hidden="true" />
+          </section>
+
+          <section className="nexoSettingsSection nexoSettingsAccount" aria-labelledby="nexo-settings-account">
+            <div className="nexoSettingsSectionTitle" id="nexo-settings-account"><span>CONTA</span><small>sessão atual</small></div>
+            <button role="menuitem" type="button" className="settingsExit" onClick={saveAndExit}>SALVAR E SAIR</button>
+            <button role="menuitem" type="button" className="settingsSignOut" onClick={() => void signOutAccount()}>SAIR DA CONTA</button>
+          </section>
+        </div>}
+      </div>
       <aside className={(activeContact || libraryView !== "chats") ? "nexoConversationList hasActive" : "nexoConversationList"}>
         <header className="nexoSidebarHeader">
           <div className="nexoBrandMark">N</div>

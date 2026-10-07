@@ -10296,3 +10296,45 @@ button:focus-visible, input:focus-visible, select:focus-visible, [role="button"]
   .nexoNightFooterActions { grid-template-columns:1fr; }
   .agencyManualNexoFooter { width:100% !important; min-width:0; }
 }
+
+/* Beta 1 v0.3.0-beta.26 - NEXO desktop: Configuracoes integradas ao messenger */
+.nexoMessengerShell { position:relative; }
+
+@media (min-width:781px) {
+  /* O controle deixa de flutuar fora da moldura e passa a ocupar o canto
+     superior direito da propria superficie NEXO. */
+  .nexoMessengerShell > .nexoSettingsHost {
+    position:absolute;
+    top:0;
+    right:0;
+    z-index:190;
+  }
+  .nexoMessengerShell > .nexoSettingsHost .settingsButton {
+    height:61px;
+    min-width:148px;
+    padding:0 16px;
+    justify-content:center;
+    border-top:0;
+    border-right:0;
+    border-bottom-color:#1b3849;
+    border-left-color:#28485b;
+    background:#0b1c26;
+    box-shadow:none;
+  }
+  .nexoMessengerShell > .nexoSettingsHost .settingsButton:hover,
+  .nexoMessengerShell > .nexoSettingsHost .settingsButton.active {
+    background:#0d2634;
+    border-left-color:#58bddd;
+    border-bottom-color:#58bddd;
+  }
+  .nexoMessengerShell > .nexoSettingsHost .settingsMenu.nexoSettingsMenu {
+    top:62px;
+    right:0;
+  }
+
+  /* Quando uma conversa esta aberta, reserva-se a area da engrenagem no
+     header da thread para que Configuracoes nunca cubra as acoes do chat. */
+  .nexoPrivateHeader {
+    padding-right:164px;
+  }
+}
