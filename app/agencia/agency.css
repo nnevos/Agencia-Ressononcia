@@ -1398,3 +1398,26 @@
   .mobileDispatchPageHeader{padding-left:10px;padding-right:10px}.mobileDispatchPageHeader h1{font-size:.94rem}
   .mobileDispatchActionBar{grid-template-columns:1fr}.mobileDispatchActionBar>div{display:flex;align-items:center;justify-content:space-between;gap:8px}.mobileDispatchActionBar>div strong{text-align:right;max-width:68%}
 }
+
+/* ========================================================================== 
+   Beta 1 v0.3.0-beta.27 — briefing desktop resiliente em viewport baixa
+   O wrapper do corpo precisa ser o unico item da area central do grid. Isso
+   impede mensagens operacionais de disputarem a mesma grid-area e garante que
+   todo o briefing continue acessivel por scroll em monitores de baixa altura.
+   ========================================================================== */
+@media(min-width:981px){
+  .mapBriefingLayer .briefScrollBody{
+    display:block;
+    grid-area:content;
+    min-height:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    scrollbar-gutter:stable;
+  }
+  .mapBriefingLayer .briefGrid{
+    grid-area:auto;
+    min-height:0;
+    overflow:visible;
+  }
+}

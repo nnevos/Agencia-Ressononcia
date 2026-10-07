@@ -17,7 +17,7 @@ function contains(rel, needle) {
 }
 
 const pkg = JSON.parse(read('package.json'));
-check('versao-baseline', pkg.version === '0.3.0-beta.26', `package.json=${pkg.version}`);
+check('versao-baseline', pkg.version === '0.3.0-beta.27', `package.json=${pkg.version}`);
 check('save-schema-v10', contains('lib/save.ts', 'CURRENT_SAVE_VERSION = 10'), 'schema esperado: v10');
 check('date-gate-launch-query', contains('app/encontro/[sceneId]/page.tsx', 'params.get("launch") !== "1"'), 'Date normal exige ?launch=1');
 check('date-cta-persiste-reserva', contains('components/PhoneDialogueEngine.tsx', 'outingsByGlobalDay: { ...current.social.outingsByGlobalDay'), 'CTA persiste seleção da noite');

@@ -1135,3 +1135,18 @@
 - Composer redundante fica oculto ate uma resposta ser selecionada; depois aparece apenas a confirmacao/envio.
 - Configuracoes continuam acessiveis pela engrenagem no topo direito.
 - Save schema v10 e logica social inalterados.
+
+## Beta 1 · v0.3.0-beta.26 — QA estático do NEXO desktop/mobile (2026-10-07)
+- Baseline exclusiva: ZIP beta.26 fornecido nesta sessão; nenhuma versão anterior reutilizada.
+- Suite estática registrada no projeto revalidada: flow 45/45, arquitetura Beta 1 17/17, refactor 15/15, GitHub Pages 12/12, auth 7/7, mobile Dispatch 12/12, clock pause 11/11, Dispatch responsivo 9/9, end-turn/NEXO 6/6, mobile full 12/12, endgame 10/10, settings/logout 4/4 e áudio 12/12.
+- `scripts/qa-nexo-mobile-overlap.mjs` corrigido para não depender de whitespace do CSS e ampliado com invariantes da beta.26; resultado 9/9 PASS.
+- QA confirma estaticamente Configurações dentro da moldura do messenger, menu ancorado abaixo do controle, espaço reservado no header da thread e preservação das proteções mobile beta.25.
+- Publicação e QA visual/runtime em 1280×720, 1366×768, 1920×1080, ultrawide e 320/360/390/430 px continuam pendentes por ausência de navegador/deploy neste ambiente.
+- Gameplay, conteúdo autoral, cânone, Supabase, Dates, regras sociais e save schema v10 não foram alterados.
+
+## Beta 1 · v0.3.0-beta.27 — Briefing desktop low-height hotfix (2026-10-07)
+- Corrigida disputa de grid entre o conteúdo principal do briefing e as mensagens operacionais em desktop de baixa altura.
+- `briefScrollBody` passa a ser a região central rolável, mantendo header e despacho acessíveis.
+- Adicionado `scripts/qa-briefing-low-height.mjs`: 6/6 PASS.
+- Flow 45/45, mobile Dispatch 12/12 e mobile full 12/12 PASS.
+- Sem alteração narrativa/canônica, gameplay, balanceamento, Supabase, Dates, regras sociais ou save schema v10.

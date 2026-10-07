@@ -1,3 +1,12 @@
+## Beta 1 · v0.3.0-beta.27 — Briefing desktop resiliente em viewport baixa (2026-10-07)
+
+- Feedback visual em viewport ~1365×605 revelou que partes da ocorrência podiam ficar inacessíveis no briefing desktop.
+- Causa: `briefScrollBody` usava `display: contents` no desktop, permitindo que o grid do modal tratasse briefing e mensagens operacionais como itens concorrentes na área central.
+- Correção: `briefScrollBody` agora é a única região `content` do modal desktop e possui scroll vertical próprio; header e footer/despacho permanecem fora da região rolável.
+- O layout mobile full-screen permanece preservado. Nenhum conteúdo de ocorrência, gameplay, balanceamento, autoria, cânone, Supabase, Dates ou regras sociais foi alterado. Save schema permanece v10.
+- QA: flow 45/45 PASS; mobile Dispatch 12/12 PASS; mobile full 12/12 PASS; novo QA low-height briefing 6/6 PASS.
+- Pendente: validação visual/runtime em 1280×720, 1366×768 e, especialmente, alturas abaixo de 720 px como o caso reportado (~605 px).
+
 ## Beta 1 · v0.3.0-beta.26 — Configurações integradas ao NEXO desktop (2026-10-07)
 
 - O botão de Configurações do NEXO desktop agora pertence à moldura do messenger, no canto superior direito, em vez de flutuar fora do painel.
@@ -678,3 +687,9 @@ ENTRAR e CRIAR CONTA foram reforçados como modos independentes. O login existen
 - Composer redundante fica oculto ate uma resposta ser selecionada; depois aparece apenas a confirmacao/envio.
 - Configuracoes continuam acessiveis pela engrenagem no topo direito.
 - Save schema v10 e logica social inalterados.
+
+## QA de continuidade beta.26 — 2026-10-07
+- Todos os QAs estáticos registrados no `package.json` passaram nesta baseline.
+- O QA de sobreposição NEXO foi reparado para tolerar whitespace e ampliado para cobrir as invariantes desktop da beta.26; 9/9 PASS.
+- Nenhuma regressão estática foi encontrada nas proteções mobile beta.25 nem na integração desktop de Configurações.
+- O gate visual/runtime/publicação de `NEXT_SESSION.md` permanece aberto e deve ser executado em navegador real nas resoluções especificadas.
