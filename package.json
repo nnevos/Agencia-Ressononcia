@@ -1,6 +1,6 @@
 {
   "name": "ressonancia",
-  "version": "0.3.0-beta.10",
+  "version": "0.3.0-beta.14",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,7 +17,9 @@
     "qa:mobile-dispatch": "node scripts/qa-mobile-dispatch.mjs",
     "qa:clock-pause": "node scripts/qa-clock-pause.mjs",
     "qa:dispatch-responsive": "node scripts/qa-dispatch-responsive.mjs",
-    "qa:endturn-nexo": "node scripts/qa-endturn-nexo.mjs"
+    "qa:endturn-nexo": "node scripts/qa-endturn-nexo.mjs",
+    "qa:mobile-full": "node scripts/qa-mobile-full.mjs",
+    "qa:endgame": "node scripts/qa-endgame.mjs"
   },
   "dependencies": {
     "next": "16.3.6",

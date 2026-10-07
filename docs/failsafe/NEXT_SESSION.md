@@ -1,18 +1,27 @@
-# NEXT SESSION — Beta 1 · v0.3.0-beta.10
+# NEXT SESSION — Beta 1 · v0.3.0-beta.14
 
-1. QA em browser: fim do expediente → confirmação → Desenvolvimento → NEXO.
-2. No NEXO, confirmar que ENCERRAR NOITE sempre abre confirmação.
-3. Verificar em mobile que o texto de orientação e o modal de confirmação permanecem legíveis.
-4. Confirmar que conversar com um contato não bloqueia os demais e que nenhuma conversa é obrigatória para encerrar a noite.
+1. QA real em 320/360/390/430 px: Central → Chamado → Equipe → FICHA → Dispatch → Resultado → Arquivar.
+2. Confirmar no GitHub Pages que o resultado mobile nunca mostra o modal desktop simultaneamente.
+3. Confirmar pausa do relógio/deadline com FICHA e tutorial de Ressonância/Combo/Condição dentro do fluxo mobile novo.
+4. Não alterar fórmulas de Dispatch durante esse QA.
 
+# NEXT SESSION — Beta 1 · v0.3.0-beta.12
 
-## Gate imediato — browser/GitHub Pages
-1. Testar Central em 1366x768, 1440x900 e 1920x1080: mensagens do NEXO devem permanecer roláveis e sem cortar texto.
-2. Abrir briefing com mensagens recentes e confirmar o espelho NEXO em 1366x768/1440x900; em 1920x1080 o rail lateral pode continuar como fonte principal.
-3. Em 360/390/430 px, abrir chamado, receber mensagens, rolar o briefing inteiro e confirmar que `NEXO · OPERAÇÕES` e CTA de despacho permanecem acessíveis.
-4. Validar textos longos e mensagens `alert/system`: nenhuma deve escapar horizontalmente.
-5. Confirmar que a pausa contextual beta.8 continua funcionando ao abrir FICHA/tutorial.
-6. Depois continuar o gate de save cloud em segundo dispositivo/perfil.
+1. QA browser: completar o DATE 2 do último romance e confirmar transição para `/final`.
+2. Em `/final`, validar os sete agentes com DATE 1/2 marcados, mobile 320/360/390/430 px e desktop baixo.
+3. Clicar CONTINUAR JOGANDO → NEXO → ENCERRAR NOITE → confirmar novo expediente e Dispatch pós-Dia 6.
+4. Voltar ao menu/recarregar depois de ver o final: CONTINUAR não deve reabrir `/final`.
+5. Testar um save já 100% completo sem a flag de final: NEXO/menu devem encaminhar uma vez para `/final`.
+6. Rodar `next build` no GitHub Actions e smoke test no Pages.
+
+# NEXT SESSION — Beta 1 · v0.3.0-beta.11
+
+1. QA real em 320/360/390/430 px: resultado aberto + tutorial Edison simultâneo; confirmar ausência de cartões/rail sobre o relatório.
+2. NEXO mobile: iniciar conversa, selecionar cada uma das 3 respostas, enviar, aguardar mensagens e repetir com teclado virtual aberto.
+3. Abrir FICHA durante ocorrência ativa e confirmar pausa do relógio + scroll/fechamento em mobile.
+4. Desenvolvimento: testar técnica, atributo e milestones múltiplos em 360/390 px.
+5. Manual, confirmação de encerrar turno/noite, Date e Novo Jogo: confirmar CTA sempre visível acima de safe-area.
+6. Rodar `next build` no GitHub Actions e smoke test no Pages em Android/iOS reais.
 
 # NEXT SESSION — Beta 1 · v0.3.0-beta.8 (Pausa contextual)
 
@@ -578,3 +587,5 @@ Quando TODOS os chats estiverem prontos, executar o bloco `Pós-chats — padron
 - Abrir E-04 em 1920x1080, 1366x768 e mobile; confirmar que o balão do Edison não comprime briefing nem cobre o botão de despacho.
 - Abrir o resultado do E-04 e confirmar que o balão permanece visível, sem blackout adicional, e não cobre ARQUIVAR RESULTADO.
 - Capturar screenshot do briefing e do resultado para confirmar persistência visual do coach.
+
+- QA beta.14: testar conta existente em desktop e mobile: ENTRAR -> e-mail -> senha -> ENTRAR; depois alternar criar conta -> voltar por JÁ TENHO CONTA -> ENTRAR.

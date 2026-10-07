@@ -4,7 +4,7 @@ import type { DispatchResult, Incident } from "@/game/types";
 
 export function MissionResultModal({ result, incident, onClose, onAcknowledge }: { result: DispatchResult; incident: Incident; onClose: () => void; onAcknowledge: () => void }) {
   const reportTeam = result.selectedHeroIds.flatMap((id) => heroById[id] ? [heroById[id]] : []);
-  return <div className="opsModalBackdrop reportResultBackdrop" onMouseDown={onClose}>
+  return <div className="opsModalBackdrop reportResultBackdrop desktopMissionResult" onMouseDown={onClose}>
     <section className="reportResultModal" role="dialog" aria-modal="true" aria-labelledby="result-title" onMouseDown={(event) => event.stopPropagation()}>
       <header><div><span className="sectionLabel">RESULTADO DA OCORRÊNCIA</span><h2 id="result-title">{incident.title}</h2><p>{incident.district} · concluída às {formatGameTime(result.completedAtGameMinute)}</p></div><span className={`outcomeBadge ${result.outcome === "Sucesso" ? "success" : result.outcome === "Falha" ? "failure" : "cost"}`}>{result.outcome}</span></header>
       <div className="reportIncidentContext"><small>CHAMADO ORIGINAL</small><p>{incident.description}</p></div><p className="reportResultSummary"><small>COMO FOI RESOLVIDO</small>{result.summary}</p>

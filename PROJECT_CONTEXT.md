@@ -1,3 +1,28 @@
+## Beta 1 · v0.3.0-beta.14 — rework total do Dispatch mobile (2026-10-06)
+
+- Mobile deixa de comprimir a Central desktop e passa a usar fluxo sequencial próprio: Central → Chamado → Equipe → Resultado/Ficha.
+- MAPA deixa de ser dependência para abrir briefing no celular; desktop preserva a Central tática atual.
+- Resultado mobile é uma superfície dedicada, sem card de resultado, HUD, Manual ou tutorial flutuante competindo por espaço.
+- Edison e tutoriais progressivos entram no fluxo vertical mobile; relógio continua pausando quando o tutorial bloqueante/FICHA estiver ativo.
+- NEXO operacional e lista de agentes têm superfícies mobile próprias; nenhuma regra de Dispatch foi alterada.
+- Save schema permanece v10.
+
+## Beta 1 · v0.3.0-beta.12 — fim romântico + operação infinita (2026-10-06)
+
+- O fim sistêmico ocorre quando todos os sete agentes concluíram DATE 1 e DATE 2.
+- O último Date leva a uma tela final única, sem epílogo narrativo inventado.
+- A tela permite CONTINUAR JOGANDO (retorno ao NEXO e loop infinito de Dispatch na campanha) ou VOLTAR AO MENU.
+- Saves já completos também são detectados no NEXO/menu; a tela não repete após `campaign:all-romances-ending-seen`.
+- Save schema permanece v10.
+
+## Beta 1 · v0.3.0-beta.11 — revisão mobile completa (2026-10-06)
+
+- Resultado de ocorrência assume o viewport inteiro no mobile; rail/cartões da Central deixam de competir com o relatório aberto.
+- Ficha de agente usa viewport inteiro com header/footer alcançáveis e continua respeitando a pausa contextual.
+- NEXO privado usa histórico e composer em grid de 100dvh; respostas ficam em coluna, envio tem alvos touch >=44px e composer pode rolar quando há muitas opções.
+- Desenvolvimento, Manual, confirmações, menus, VN e Dates receberam safe-area/overflow mobile para evitar ações fora da tela.
+- Nenhuma regra de Dispatch, social, Supabase ou save foi alterada; save schema permanece v10.
+
 ## Beta 1 · v0.3.0-beta.10 — Responsividade das mensagens no Dispatch (2026-10-06)
 
 - NEXO operacional agora mantém mensagens legíveis em monitores baixos/estreitos com feed realmente rolável e texto com quebra segura.
@@ -38,7 +63,7 @@
 
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.10**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.14**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat

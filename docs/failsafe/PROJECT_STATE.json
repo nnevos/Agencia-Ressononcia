@@ -1,10 +1,10 @@
 {
   "project": "RESSONANCIA",
-  "prototypeVersion": "0.3.0-beta.10",
+  "prototypeVersion": "0.3.0-beta.14",
   "baselineName": "Foundation",
   "updatedAt": "2026-10-06",
   "status": "beta1_contextual_read_pause_runtime_qa_pending",
-  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation -> v0.1.1_nexo_multichat -> v0.1.2_nexo_longform -> v0.1.3_campaign_test_placeholders -> v0.1.4_social_progression_qa -> v0.1.5_nexo_dispatch_fixes -> v0.1.6_dev_perfect_shift -> v0.2.0_individual_routes_mastery -> v0.2.1_incident_pool_power_affinity -> v0.2.2_playtest_rebalance -> v0.2.3_first_dispatch_onboarding -> v0.2.4_tutorial_isolation_nexo_privacy -> v0.2.5_onboarding_polish -> v0.2.6_agency_intro_backgrounds -> v0.2.7_dialogue_speaker_avatar -> v0.2.8_yuki_authored_route_media -> v0.2.9_nexo_pacing_romance_no_hardlock -> v0.2.10_outing_stage_boundary_hotfix -> v0.2.11_stage_based_romance_progress -> v0.2.12_elysia_portrait_update -> v0.2.13_shift_flow_development_ui -> v0.2.14_nexo_initiative_scroll -> v0.2.15_yuki_date_backgrounds -> v0.2.16_mobile_dispatch_map -> v0.2.17_briefing_attributes_restored -> v0.2.18_briefing_comparative_radar -> v0.2.19_briefing_fit_dossier_portrait -> v0.2.20_compact_briefing_radar -> v0.2.21_briefing_first_view_fit -> v0.2.22_full_width_roster_integer_requirements -> v0.2.23_map_overlay_briefing_roster_selector -> v0.2.24_briefing_typography_legibility -> v0.2.25_central_typography_legibility -> v0.2.26_central_component_consolidation -> v0.2.27_accessibility_save_outing_asset_polish -> v0.2.28_briefing_hotfix -> v0.2.29_development_first_view -> v0.2.30_development_integrated_workbench -> v0.2.31_development_upgrade_focus -> v0.2.32_development_overlap_hotfix -> v0.2.33_elysia_authored_route_deleted_message -> v0.2.34_elysia_date_backgrounds -> v0.2.35_elysia_validation_hotfix -> v0.2.36_persistent_outing_cta -> v0.2.37_yuki_conversation_pattern -> v0.2.38_cinematic_city_menu -> v0.2.40_menu_entry_flow_account_settings_save_exit -> v0.2.41_agent_physical_data -> v0.2.42_lysandro_authored_route_media -> v0.2.43_lysandro_media_dates -> v0.2.44_lysandro_date2_two_backgrounds -> v0.2.45_lysandro_date2_static_qa -> v0.2.46_post_shift_only_mode -> v0.2.50_nexo_state_clarity -> v0.2.51_outing_linear_reader -> v0.2.52_nexo_memories_date_replay_social_qa -> v0.2.53_nexo_tabs_layout_hotfix -> v0.2.54_mobile_navigation_review -> v0.2.55_nexo_order_preview_autoscroll -> v0.2.56_social_robustness -> v0.2.57_explicit_outing_launch_gate -> v0.2.58_outing_launch_gate_hotfix -> v0.2.59_player_identity_pronouns -> v0.2.60_social_validation_hotfix -> v0.2.61_nexo_activity_group_pacing_tutorial_safety -> v0.2.62_nexo_group_authored -> v0.2.63_nexo_operational_contextual_v2 -> v0.2.64_progressive_tutorial_v2 -> v0.2.65_edison_tutorial_ux_v3 -> v0.3.0-beta.2_supabase_local_first_beta1 -> v0.3.0-beta.2_tutorial_visual_hotfix -> v0.3.0-beta.3_refactor_optimization -> v0.3.0-beta.5_github_pages_static_export -> v0.3.0-beta.6_auth_mobile_hotfix -> v0.3.0-beta.7_mobile_dispatch_hotfix -> v0.3.0-beta.8_contextual_read_pause -> v0.3.0-beta.9_dispatch_responsive_messages -> v0.3.0-beta.10_endturn_nexo_clarity",
+  "sourceLineage": "v0.9.14_funcional -> v0.1.0_foundation -> v0.1.1_nexo_multichat -> v0.1.2_nexo_longform -> v0.1.3_campaign_test_placeholders -> v0.1.4_social_progression_qa -> v0.1.5_nexo_dispatch_fixes -> v0.1.6_dev_perfect_shift -> v0.2.0_individual_routes_mastery -> v0.2.1_incident_pool_power_affinity -> v0.2.2_playtest_rebalance -> v0.2.3_first_dispatch_onboarding -> v0.2.4_tutorial_isolation_nexo_privacy -> v0.2.5_onboarding_polish -> v0.2.6_agency_intro_backgrounds -> v0.2.7_dialogue_speaker_avatar -> v0.2.8_yuki_authored_route_media -> v0.2.9_nexo_pacing_romance_no_hardlock -> v0.2.10_outing_stage_boundary_hotfix -> v0.2.11_stage_based_romance_progress -> v0.2.12_elysia_portrait_update -> v0.2.13_shift_flow_development_ui -> v0.2.14_nexo_initiative_scroll -> v0.2.15_yuki_date_backgrounds -> v0.2.16_mobile_dispatch_map -> v0.2.17_briefing_attributes_restored -> v0.2.18_briefing_comparative_radar -> v0.2.19_briefing_fit_dossier_portrait -> v0.2.20_compact_briefing_radar -> v0.2.21_briefing_first_view_fit -> v0.2.22_full_width_roster_integer_requirements -> v0.2.23_map_overlay_briefing_roster_selector -> v0.2.24_briefing_typography_legibility -> v0.2.25_central_typography_legibility -> v0.2.26_central_component_consolidation -> v0.2.27_accessibility_save_outing_asset_polish -> v0.2.28_briefing_hotfix -> v0.2.29_development_first_view -> v0.2.30_development_integrated_workbench -> v0.2.31_development_upgrade_focus -> v0.2.32_development_overlap_hotfix -> v0.2.33_elysia_authored_route_deleted_message -> v0.2.34_elysia_date_backgrounds -> v0.2.35_elysia_validation_hotfix -> v0.2.36_persistent_outing_cta -> v0.2.37_yuki_conversation_pattern -> v0.2.38_cinematic_city_menu -> v0.2.40_menu_entry_flow_account_settings_save_exit -> v0.2.41_agent_physical_data -> v0.2.42_lysandro_authored_route_media -> v0.2.43_lysandro_media_dates -> v0.2.44_lysandro_date2_two_backgrounds -> v0.2.45_lysandro_date2_static_qa -> v0.2.46_post_shift_only_mode -> v0.2.50_nexo_state_clarity -> v0.2.51_outing_linear_reader -> v0.2.52_nexo_memories_date_replay_social_qa -> v0.2.53_nexo_tabs_layout_hotfix -> v0.2.54_mobile_navigation_review -> v0.2.55_nexo_order_preview_autoscroll -> v0.2.56_social_robustness -> v0.2.57_explicit_outing_launch_gate -> v0.2.58_outing_launch_gate_hotfix -> v0.2.59_player_identity_pronouns -> v0.2.60_social_validation_hotfix -> v0.2.61_nexo_activity_group_pacing_tutorial_safety -> v0.2.62_nexo_group_authored -> v0.2.63_nexo_operational_contextual_v2 -> v0.2.64_progressive_tutorial_v2 -> v0.2.65_edison_tutorial_ux_v3 -> v0.3.0-beta.2_supabase_local_first_beta1 -> v0.3.0-beta.2_tutorial_visual_hotfix -> v0.3.0-beta.3_refactor_optimization -> v0.3.0-beta.5_github_pages_static_export -> v0.3.0-beta.6_auth_mobile_hotfix -> v0.3.0-beta.7_mobile_dispatch_hotfix -> v0.3.0-beta.8_contextual_read_pause -> v0.3.0-beta.9_dispatch_responsive_messages -> v0.3.0-beta.10_endturn_nexo_clarity -> v0.3.0-beta.11_mobile_full_review -> v0.3.0-beta.12_romance_endgame_endless_dispatch -> v0.3.0-beta.13_mobile_dispatch_rework -> v0.3.0-beta.14_auth_login_hotfix",
   "obsoleteDoNotUse": "ressonancia-fase1-0.1.1",
   "platform": "web",
   "saveVersion": 10,
@@ -113,7 +113,7 @@
   },
   "contentReadyRoadmap": "docs/design/CONTENT_COMPLETE_ROADMAP.md",
   "saveSchema": 10,
-  "lastUpdate": "Beta 1 v0.3.0-beta.10 2026-10-06: confirmação explícita ao encerrar turno/noite e orientação do NEXO sobre conversas opcionais com todos os contatos; save v10 preservado.",
+  "lastUpdate": "Beta 1 v0.3.0-beta.14 2026-10-06: login de conta existente reforçado com modo/CTA independente; Supabase e save v10 preservados.",
   "notes": [
     "v0.2.0: calendario global e rotas sociais desacoplados; campanha aberta ate completar rotas.",
     "Tecnicas relevantes agora afetam chance diretamente; Maestria sustenta progressao pos-Nv6.",
@@ -201,10 +201,11 @@
     "teamCapPP": 12,
     "mandatory": false
   },
-  "projectVersion": "0.3.0-beta.10",
+  "projectVersion": "0.3.0-beta.14",
   "systems": {
     "romanceProgress": "stage_based_route_completion_percentage",
-    "romanceGate": "none_stage_progress_display_only"
+    "romanceGate": "none_stage_progress_display_only",
+    "endgame": "all_7_romances_outing_milestones_3_and_6_then_one_time_final_screen_endless_operations"
   },
   "placeholderRouteStages": "eros_1-10_QA; yuki_elysia_lysandro_helio_demetria_alexandra_7-10_recovery_only",
   "qa": {
@@ -222,7 +223,8 @@
     "edisonTutorialUxRuntimeQa": "pending_browser_runtime_v0.2.65: spotlight targets, development action flags, NEXO Date CTA, Agency Manual and mobile layouts.",
     "beta1ArchitectureStaticQa": "2026-10-06: 17/17 PASS; adapters, RLS, no service role, guest fallback, refresh, conflict resolution, versioning.",
     "beta1SupabaseRuntimeQa": "pending_staging: signup/login/refresh/logout/upload/download/conflict/offline-reconnect.",
-    "dispatchResponsiveStatic": "pass: 9/9 checks; scroll/wrap do NEXO + espelho de mensagens no briefing para desktop comprimido e mobile"
+    "dispatchResponsiveStatic": "pass: 9/9 checks; scroll/wrap do NEXO + espelho de mensagens no briefing para desktop comprimido e mobile",
+    "endgameStatic": "2026-10-06: qa:endgame 10/10 PASS; browser final-date/endless-loop pending."
   },
   "history": [
     "v0.2.57: explicit NEXO CTA session gate before normal outing route; no narrative/save-schema change.",
@@ -235,9 +237,10 @@
     "v0.2.63: NEXO operational contextual v2 covers 48/48 incidents; messages react to affinity, team composition, known pair relations/combos and mission outcome; review DOCX synchronized; save v10.",
     "v0.2.64: Tutorial Progressivo v2 ensina sistemas no primeiro uso real via flags persistentes; Desenvolvimento, Dispatch, NEXO e Date cobertos; save v10.",
     "v0.2.65: Edison Tutorial UX v3 unifies coach visuals, advances tutorial by demonstrated actions where possible, and adds Agency Manual; save v10.",
-    "Beta 1 v0.3.0-beta.2: local-first persistence + Supabase Auth/cloud save adapters + RLS migration; one campaign slot; explicit cloud conflict resolution; save v10."
+    "Beta 1 v0.3.0-beta.2: local-first persistence + Supabase Auth/cloud save adapters + RLS migration; one campaign slot; explicit cloud conflict resolution; save v10.",
+    "v0.3.0-beta.12: all seven DATE 1/DATE 2 milestones trigger one-time systemic final screen; continue returns to NEXO and preserves endless post-D6 operations; save v10."
   ],
-  "version": "0.3.0-beta.10",
+  "version": "0.3.0-beta.14",
   "latestAuthoringUpdate": "Beta 1 infrastructure only: Supabase local-first/cloud architecture; no narrative/canon changes.",
   "dialogueContextReviewBacklog": "pending_after_all_social_chats_authored_and_standardized",
   "playerTextInterpolation": {

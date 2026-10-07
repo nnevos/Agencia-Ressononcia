@@ -9779,3 +9779,209 @@ button:focus-visible, input:focus-visible, select:focus-visible, [role="button"]
     min-height: 44px;
   }
 }
+
+/* ========================================================================== 
+   Beta 1 v0.3.0-beta.11 — revisão mobile global
+   Telas 320–430 px: nenhuma ação primária ou mensagem pode ficar fora da tela.
+   ========================================================================== */
+@media(max-width:780px){
+  html,body{max-width:100%;overflow-x:hidden}
+  body{min-height:100dvh}
+  button,input,select,textarea{font-size:16px}
+  button{touch-action:manipulation;-webkit-tap-highlight-color:rgba(110,220,255,.14)}
+  .button,.menuPrimaryButton,.menuSecondaryButton,.phoneContinue{min-height:44px}
+
+  /* NEXO: cabeçalho, histórico e composer formam um viewport único. */
+  .nexoDesktopScene{width:100%;height:100dvh;min-height:0;overflow:hidden}
+  .nexoMessengerShell{width:100%;height:100dvh;min-height:0;overflow:hidden}
+  .nexoConversationStage.active{height:100dvh;min-height:0;overflow:hidden}
+  .nexoConversationPane{
+    width:100%;height:100dvh;min-height:0;overflow:hidden;
+    grid-template-rows:auto minmax(0,1fr) auto;
+  }
+  .nexoPrivateHeader{
+    min-width:0;
+    padding-top:max(8px,env(safe-area-inset-top));
+  }
+  .nexoPrivateIdentity,.nexoPrivateIdentity strong,.nexoPrivateIdentity small{min-width:0}
+  .nexoPrivateIdentity strong,.nexoPrivateIdentity small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nexoChatWallpaper{
+    min-height:0!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    padding:16px 12px 18px!important;
+    scroll-padding-bottom:18px;
+  }
+  .nexoChatWallpaper .phoneBubble{
+    min-width:0!important;
+    width:auto;
+    max-width:92%!important;
+    overflow-wrap:anywhere;
+  }
+  .nexoChatWallpaper .phoneBubble p{
+    padding-right:0!important;
+    font-size:.88rem;
+    line-height:1.46;
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+  .nexoChatWallpaper .phoneBubble time{font-size:.63rem}
+
+  /* Envio no mobile: respostas deixam de ser carrossel horizontal estreito. */
+  .nexoComposerArea{
+    flex:0 0 auto;
+    min-width:0;
+    max-height:min(48dvh,390px)!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain;
+    padding:9px 10px max(10px,calc(8px + env(safe-area-inset-bottom)))!important;
+    background:rgba(8,21,29,.99)!important;
+    box-shadow:0 -12px 30px rgba(0,0,0,.25);
+  }
+  .nexoReplySuggestions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    max-height:30dvh;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    padding:0 0 8px!important;
+  }
+  .nexoReplySuggestions button{
+    width:100%!important;
+    max-width:none!important;
+    min-height:44px;
+    padding:10px 12px!important;
+    border-radius:10px!important;
+    font-size:.78rem!important;
+    line-height:1.35;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  .nexoComposer{
+    grid-template-columns:44px minmax(0,1fr) 48px!important;
+    gap:7px!important;
+    align-items:end!important;
+  }
+  .nexoComposerIcon,.nexoSendButton{width:44px!important;height:44px!important;min-width:44px;min-height:44px}
+  .nexoSendButton{width:48px!important;height:48px!important;font-size:1rem!important}
+  .nexoDraftField{
+    min-width:0;
+    min-height:44px!important;
+    max-height:124px!important;
+    overflow-y:auto!important;
+    align-items:flex-start!important;
+    padding:11px 12px!important;
+    border-radius:12px!important;
+    font-size:.82rem!important;
+    line-height:1.4!important;
+    overflow-wrap:anywhere;
+  }
+  .nexoManualIntroComposer>small{padding:0 2px!important}
+  .nexoComposerWaiting{min-height:52px!important}
+  .nexoConversationDone{min-height:48px;padding:8px 10px;text-align:center;line-height:1.35}
+  .nexoJumpLatest{bottom:auto!important;top:calc(max(64px,env(safe-area-inset-top) + 54px));right:10px!important;z-index:8}
+
+  /* Lista NEXO: rodapé pode crescer sem roubar a lista inteira. */
+  .nexoConversationList{
+    height:100dvh!important;
+    min-height:0;
+    overflow:hidden;
+    grid-template-rows:auto auto auto auto minmax(0,1fr) auto!important;
+  }
+  .nexoContactsScroll{min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+  .nexoNightFooter{max-height:36dvh;overflow-y:auto;padding-bottom:max(10px,env(safe-area-inset-bottom))!important}
+
+  /* Desenvolvimento: uma página rolável, sem painéis presos fora do viewport. */
+  .developmentPage{
+    width:100%;
+    min-height:100dvh!important;
+    height:auto!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    padding:10px 10px max(18px,env(safe-area-inset-bottom))!important;
+  }
+  .developmentHeader,.developmentShell,.developmentHeroPanel,.developmentAction{min-width:0}
+  .developmentHeader{gap:10px}
+  .developmentHeader .button{width:100%;min-height:44px}
+  .developmentShell{height:auto!important;min-height:0!important;overflow:visible!important}
+  .developmentRoster{max-height:none!important;overflow:visible!important}
+  .developmentHeroPanel{overflow:visible!important}
+  .developmentIdentity{min-width:0}
+  .developmentStats,.attributeUpgradeGrid,.techniqueChoiceGrid{min-width:0}
+  .attributeUpgradeGrid button,.techniqueChoiceGrid button{min-height:48px;overflow-wrap:anywhere}
+  .developmentMessage{position:static!important;margin:10px 0 0!important}
+
+  /* Manual e confirmações seguem safe-area e nunca excedem o viewport. */
+  .agencyManualLauncher{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important}
+  .agencyManualBackdrop{padding:max(8px,env(safe-area-inset-top)) 8px max(8px,env(safe-area-inset-bottom))!important}
+  .agencyManualModal{width:100%!important;max-height:100%!important}
+  .agencyManualModal>header{padding:14px!important}
+  .agencyManualEntries{padding-bottom:max(16px,env(safe-area-inset-bottom))!important}
+  .nexoNextDayBackdrop{padding:max(8px,env(safe-area-inset-top)) 8px max(8px,env(safe-area-inset-bottom))!important}
+  .nexoNextDayConfirm{width:100%;max-width:560px;margin:0!important;max-height:100%!important}
+
+  /* Story/Date: controles permanecem dentro do viewport útil. */
+  .storyDialogue{left:10px!important;right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;max-height:58dvh;overflow-y:auto}
+  .outingTextBox{overflow-y:auto!important;overscroll-behavior:contain}
+  .outingFooter{gap:7px;flex-wrap:wrap}
+  .outingReaderNav{min-width:0}
+
+  /* Menus/login/novo jogo: teclado e telas baixas não escondem ações. */
+  .mainMenuPage,.newGamePage,.phoneScene{min-height:100dvh;height:auto;overflow-y:auto;overflow-x:hidden}
+  .mainMenuPanel,.newGamePanel{min-height:100dvh!important;height:auto!important;padding-bottom:max(28px,env(safe-area-inset-bottom))!important}
+  .mainMenuBody,.menuSubPanel{min-width:0}
+  .accountForm input{min-height:46px}
+}
+
+@media(max-width:430px){
+  .nexoChatWallpaper{padding-left:9px!important;padding-right:9px!important}
+  .nexoChatWallpaper .phoneBubble{max-width:95%!important;padding:9px 10px!important}
+  .nexoReplySuggestions button{font-size:.75rem!important}
+  .nexoComposerArea{padding-left:8px!important;padding-right:8px!important}
+  .nexoComposer{grid-template-columns:40px minmax(0,1fr) 46px!important}
+  .nexoComposerIcon{width:40px!important;height:44px!important;min-width:40px}
+  .nexoSendButton{width:46px!important;height:46px!important;min-width:46px}
+  .nexoPrivateHeader{padding-left:6px!important;padding-right:8px!important}
+  .nexoHeaderActions{gap:7px!important}
+  .nexoRomanceMeter{display:none!important}
+  .developmentPage{padding-left:8px!important;padding-right:8px!important}
+}
+
+@media(max-width:360px){
+  .nexoPrivateHeader .phoneChatAvatar{width:34px;height:34px}
+  .nexoPrivateIdentity strong{font-size:.72rem}
+  .nexoChatWallpaper .phoneBubble p{font-size:.82rem}
+  .nexoComposerArea{max-height:52dvh!important}
+  .agencyManualLauncher b{display:none}
+  .storyDialogue{max-height:62dvh}
+}
+
+/* Beta 1 v0.3.0-beta.12 — conclusão de todas as rotas românticas */
+.romanceEndingPage{position:relative;min-height:100dvh;display:grid;place-items:center;padding:clamp(18px,4vw,56px);overflow:hidden;background:#02080d;color:var(--text)}
+.romanceEndingBackdrop{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(.72) brightness(.42);transform:scale(1.03)}
+.romanceEndingPage:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 34%,rgba(64,211,255,.14),transparent 44%),linear-gradient(180deg,rgba(1,7,11,.34),rgba(1,7,11,.9))}
+.romanceEndingCard{position:relative;z-index:1;width:min(920px,100%);max-height:calc(100dvh - 36px);overflow:auto;padding:clamp(24px,5vw,52px);border:1px solid rgba(91,211,255,.35);background:rgba(4,17,25,.94);box-shadow:0 24px 80px rgba(0,0,0,.48);scrollbar-gutter:stable}
+.romanceEndingEyebrow{font-size:.76rem;letter-spacing:.18em;font-weight:800;color:#70ddff;margin-bottom:10px}
+.romanceEndingCard h1{font-size:clamp(1.8rem,4vw,3.3rem);line-height:1.04;margin:0;max-width:760px}
+.romanceEndingLead{max-width:760px;margin:16px 0 26px;color:#b9ced9;font-size:clamp(.98rem,1.8vw,1.12rem);line-height:1.65}
+.romanceEndingRoster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 22px}
+.romanceEndingHero{min-width:0;display:flex;align-items:center;gap:12px;padding:11px 12px;border:1px solid rgba(111,216,250,.18);background:rgba(10,35,48,.64)}
+.romanceEndingAvatar{width:46px;height:46px;flex:0 0 46px;border-radius:50%;overflow:hidden;border:1px solid rgba(103,221,255,.42);display:grid;place-items:center;font-weight:900;color:#7ae4ff;background:#071923}
+.romanceEndingAvatar img{width:100%;height:100%;object-fit:cover}
+.romanceEndingHero>div:last-child{min-width:0;display:grid;gap:3px}.romanceEndingHero strong{font-size:.96rem}.romanceEndingHero span{font-size:.76rem;color:#83dfb0;overflow-wrap:anywhere}
+.romanceEndingInfinite{padding:15px 16px;border-left:3px solid #65e0b0;background:rgba(19,74,61,.2);margin-bottom:22px}.romanceEndingInfinite strong{font-size:.8rem;letter-spacing:.11em;color:#77edbc}.romanceEndingInfinite p{margin:6px 0 0;line-height:1.55;color:#b8d6cf}
+.romanceEndingActions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}.romanceEndingActions .button{min-height:46px;padding-inline:24px}
+@media(max-width:600px){.romanceEndingPage{padding:0;place-items:stretch}.romanceEndingCard{width:100%;max-height:100dvh;min-height:100dvh;border-left:0;border-right:0;padding:calc(22px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column}.romanceEndingRoster{grid-template-columns:1fr}.romanceEndingLead{margin-bottom:18px}.romanceEndingInfinite{margin-top:auto}.romanceEndingActions{display:grid;grid-template-columns:1fr}.romanceEndingActions .button{width:100%;min-height:50px}}
+
+/* Beta 1 v0.3.0-beta.14 - auth login/create separation hotfix */
+.accountFormHeading{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-left:3px solid #5fd8f7;background:rgba(9,29,39,.72)}
+.accountFormHeading strong{font-size:.76rem;letter-spacing:.08em;color:#eafaff}
+.accountFormHeading span{font-size:.68rem;line-height:1.4;color:#91aebb}
+.accountSubmitButton{position:relative;z-index:8;pointer-events:auto!important;touch-action:manipulation}
+.accountModeSwitch button[aria-pressed="true"]{border-color:#6edcff;color:#eefbff;background:#123647;box-shadow:0 0 0 1px rgba(110,220,255,.12)}
+@media(max-width:640px){.accountModeSwitch{grid-template-columns:repeat(2,minmax(0,1fr))}.accountModeSwitch button{min-height:68px;padding:10px}.accountModeSwitch button strong{font-size:.74rem}.accountModeSwitch button span{font-size:.58rem}.accountSubmitButton{min-height:56px;font-size:.78rem}}
+@media(max-width:360px){.accountModeSwitch{grid-template-columns:1fr}.accountModeSwitch button{min-height:56px}}

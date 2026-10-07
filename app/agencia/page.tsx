@@ -27,6 +27,7 @@ import { OperationsChatRail } from "@/components/agency/OperationsChatRail";
 import { AgentRoster } from "@/components/agency/AgentRoster";
 import { MissionBriefing } from "@/components/agency/MissionBriefing";
 import { MobileDispatchNav, type MobilePanel } from "@/components/agency/MobileDispatchNav";
+import { MobileDispatchExperience } from "@/components/agency/MobileDispatchExperience";
 
 
 const DevTools = dynamic(() => import("@/components/DevTools").then((module) => module.DevTools), { ssr: false });
@@ -331,11 +332,9 @@ export default function AgencyPage() {
     briefingOriginPanelRef.current = mobilePanel;
     setIncidentId(id);
     setSelected([]);
-    // MissionBriefing lives inside TacticalMap. On mobile the map panel must be
-    // mounted while the full-screen briefing is open; otherwise the modal is
-    // hidden together with the inactive map workspace. Desktop ignores this
-    // panel switch because all workspaces remain visible there.
-    setMobilePanel("map");
+    // Desktop continues to use MissionBriefing inside TacticalMap. Mobile uses
+    // MobileDispatchExperience as an independent sequential surface, so it no
+    // longer depends on mounting the MAPA workspace to make the briefing visible.
     setBriefingOpen(true);
   }
 
@@ -456,7 +455,7 @@ export default function AgencyPage() {
   }
 
   return (
-    <main className={`agencyShell dispatchUi ${shiftFinished ? "shiftIsFinished" : ""}`}>
+    <main className={`agencyShell dispatchUi ${shiftFinished ? "shiftIsFinished" : ""}${briefingOpen ? " briefingOpen" : ""}${reportResult ? " resultModalOpen" : ""}${heroInfoId ? " dossierModalOpen" : ""}`}>
       <div className="srOnly" role="status" aria-live="polite" aria-atomic="true">{message}</div>
       <AgencyHeader
         day={save.player.currentDay}
@@ -503,6 +502,42 @@ export default function AgencyPage() {
       /> }
       <AgencyManual save={save} className="agencyManualAgency" />
       {tutorialDone && save.player.currentDay === 1 && <aside className="tutorialCompleteCard"><img src={publicPath("/edison.jpg")} alt="Edison" /><div className="tutorialCompleteCopy"><small>{tutorialCopy.completeTitle}</small><strong>Primeiro despacho concluído.</strong><p>Você já conhece o ciclo básico. A Central vai liberar o restante dos chamados do Dia 1.</p><div className="tutorialCompleteSkills">{tutorialLearned.slice(0, 3).map((item) => <span key={item}>✓ {item}</span>)}</div><button onClick={() => { const next = { ...save, flags: save.flags.filter((flag) => flag !== "tutorial_complete") }; writeSave(next); setSave(next); }}>ASSUMIR A CENTRAL →</button></div></aside>}
+
+      <MobileDispatchExperience
+        save={save}
+        activeIncidents={activeIncidents}
+        operationalHeroes={operationalHeroes}
+        gameMinute={gameMinute}
+        waitingCount={waitingCount}
+        dispatchedCount={dispatchedCount}
+        availableCount={availableCount}
+        pendingReports={pendingReports}
+        missedCount={missedIncidents.length}
+        incident={incident}
+        runtime={selectedRuntime}
+        deadlineRemaining={deadlineRemaining}
+        assessment={missionAssessment}
+        selectedHeroes={selectedHeroes}
+        selectedIds={selected}
+        alerts={alerts}
+        heroNameById={heroNameById}
+        chatMessages={chatMessages}
+        reportResult={reportResult}
+        tutorial={tutorialText ? { ...tutorialText, targetLabel: reportResult?.incidentId === FIRST_TUTORIAL_INCIDENT_ID ? "Revise o resultado e arquive quando terminar" : briefingOpen && incidentId === FIRST_TUTORIAL_INCIDENT_ID ? (selected.includes(FIRST_TUTORIAL_HERO_ID) ? "Confira a previsão e despache a equipe" : "Selecione Hélio para este primeiro chamado") : tutorialResultPending ? "Abra o resultado disponível" : tutorialRuntime?.status === "waiting" ? "Abra o chamado E-04" : undefined } : null}
+        progressiveTutorial={progressiveTutorialKey ? progressiveTutorialCopy[progressiveTutorialKey] : null}
+        progressiveAction={dismissProgressiveTutorial}
+        tutorialActive={tutorialActive}
+        tutorialIncidentId={FIRST_TUTORIAL_INCIDENT_ID}
+        tutorialHeroId={FIRST_TUTORIAL_HERO_ID}
+        onSelectIncident={setIncidentId}
+        onOpenBriefing={openBriefingForIncident}
+        onCloseBriefing={closeBriefing}
+        onOpenResult={openResult}
+        onToggleHero={toggleHero}
+        onOpenHero={setHeroInfoId}
+        onDispatch={dispatchFromBriefing}
+        onAcknowledgeResult={acknowledgeResult}
+      />
 
       <MobileDispatchNav current={mobilePanel} waitingCount={waitingCount} availableCount={availableCount} onChange={setMobilePanel} />
 

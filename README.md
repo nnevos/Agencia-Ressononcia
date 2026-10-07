@@ -1,6 +1,6 @@
-## Beta 1 · v0.3.0-beta.10
+## Beta 1 · v0.3.0-beta.14
 
-Hotfix de responsividade do Dispatch: mensagens operacionais permanecem acessíveis em telas baixas/estreitas e são espelhadas no briefing quando o NEXO lateral não tem espaço suficiente.
+Rework total do Dispatch mobile: no celular a Central agora usa um fluxo sequencial próprio — **Central → Chamado → Equipe → Resultado/Ficha** — em vez de comprimir o workspace desktop. O resultado e os tutoriais do Edison entram no fluxo normal da tela, sem overlays concorrentes. Desktop, fórmulas de Dispatch e save v10 foram preservados.
 
 # Agência Ressonância — Beta 1
 

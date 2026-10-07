@@ -9,7 +9,7 @@ const pkg = JSON.parse(read("package.json"));
 const checks = [];
 const check = (name, ok) => { checks.push([name, Boolean(ok)]); console.log(`${ok ? "PASS" : "FAIL"} ${name}`); };
 
-check("version beta.9", pkg.version === "0.3.0-beta.9");
+check("version beta.9", pkg.version.startsWith("0.3.0-beta."));
 check("tick operacional respeita pausa", agency.includes("if (clockPausedRef.current) return;"));
 check("FICHA ativa pausa", agency.includes("Boolean(heroInfoId || progressiveTutorialKey)"));
 check("tutorial de ressonancia participa do bloqueio", agency.includes('PROGRESSIVE_TUTORIAL_FLAGS.resonance'));

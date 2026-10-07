@@ -54,3 +54,14 @@ Regras:
 - `outingMilestones`, avanço de `routeStage`, `completionFlag` e `routeAdvanceFlag` só são gravados ao concluir a última página da cena.
 - Progresso temporário de leitura pode ser mantido em `sessionStorage`; isso não faz parte do save e não altera o schema v9.
 - Um encontro já concluído não deve ser reexecutado por acesso manual à URL.
+
+
+## Beta 1 v0.3.0-beta.12 — fim romântico + operação infinita
+
+- O fim sistêmico da campanha social acontece quando **os sete personagens concluíram DATE 1 (marco 3) e DATE 2 (marco 6)**.
+- A conclusão é derivada de `social.outingMilestones`; percentual legado e `routeStage` isolado não substituem os dois marcos presenciais.
+- Ao completar o último romance, o jogo abre `/final` uma única vez e registra `campaign:all-romances-ending-seen`.
+- A tela final é sistêmica e não inventa epílogo/cânone: apenas confirma as rotas concluídas e lista os dois Dates por agente.
+- `CONTINUAR JOGANDO` volta ao NEXO. Na campanha completa, o jogador encerra a noite normalmente e o loop **Dispatch → Desenvolvimento → NEXO** continua indefinidamente usando a curva pós-Dia 6 já existente.
+- `VOLTAR AO MENU` preserva o save; `CONTINUAR` não reabre a tela final depois que ela foi vista.
+- Save schema permanece v10; a persistência usa flags já suportadas.

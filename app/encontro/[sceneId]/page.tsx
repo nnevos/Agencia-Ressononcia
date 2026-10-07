@@ -3,6 +3,7 @@
 import { getOutingScene } from "@/content/narrative/outings";
 import { getHeroPortrait } from "@/game/data/heroPortraits";
 import { routeAdvanceFlag } from "@/game/social/dialogue";
+import { shouldShowRomanceEnding } from "@/game/social/ending";
 import type { OutingScene, SaveGame } from "@/game/types";
 import { loadSave, updateSave } from "@/lib/save";
 import { formatPlayerText } from "@/lib/playerText";
@@ -149,9 +150,13 @@ export default function OutingPage() {
   const isLastPage = safePageIndex >= pages.length - 1;
   const progress = pages.length ? ((safePageIndex + 1) / pages.length) * 100 : 100;
 
-  function goBackToNexo() {
+  function leaveTo(href: string) {
     setLeaving(true);
-    window.setTimeout(() => router.push("/conversa"), reducedMotion ? 0 : 180);
+    window.setTimeout(() => router.push(href), reducedMotion ? 0 : 180);
+  }
+
+  function goBackToNexo() {
+    leaveTo("/conversa");
   }
 
   function finishScene() {
@@ -159,7 +164,7 @@ export default function OutingPage() {
     const activeScene = scene;
     const activeDay = save.player.currentDay;
     if (previewMode) { goBackToNexo(); return; }
-    updateSave((current) => {
+    const nextSave = updateSave((current) => {
       const milestones = current.social.outingMilestones[activeScene.characterId] ?? [];
       const nextMilestones = milestones.includes(activeScene.day) ? milestones : [...milestones, activeScene.day];
       return {
@@ -173,7 +178,7 @@ export default function OutingPage() {
       };
     });
     sessionStorage.removeItem(`ressonancia:outing-progress:${activeScene.id}:day:${activeDay}`);
-    goBackToNexo();
+    leaveTo(nextSave && shouldShowRomanceEnding(nextSave) ? "/final" : "/conversa");
   }
 
   function continueScene() {

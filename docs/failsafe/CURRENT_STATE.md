@@ -1,3 +1,17 @@
+# CURRENT STATE — Beta 1 · v0.3.0-beta.14 (2026-10-06)
+
+- Dispatch mobile refeito como fluxo sequencial independente da composição desktop.
+- Resultado e tutorial Edison mobile não usam overlays concorrentes.
+- Desktop e regras de simulação preservados; save v10.
+
+# CURRENT STATE — Beta 1 · v0.3.0-beta.12 (2026-10-06)
+
+Tela final sistêmica implementada para 100% romântico: todos os sete agentes precisam ter os milestones 3 e 6 concluídos. O último Date abre `/final`; saves já completos também são detectados no NEXO/menu. A tela aparece uma única vez, permite continuar jogando ou voltar ao menu e não encerra o loop operacional. Save schema permanece v10. QA endgame estático: 10/10 PASS.
+
+# CURRENT STATE — Beta 1 · v0.3.0-beta.11 (2026-10-06)
+
+Revisão mobile completa aplicada sobre a beta.10. Resultado/ficha agora assumem o viewport sem sobreposição da Central; NEXO privado mantém histórico e envio acessíveis em 320–430 px, respostas viram coluna e o CTA de envio tem área touch segura. Desenvolvimento, Manual, confirmações, menus, VN e Dates receberam regras de safe-area/overflow. Save schema permanece v10; gameplay/Supabase/cânone não mudaram. QA mobile-full: 12/12 PASS.
+
 # CURRENT STATE — Beta 1 · v0.3.0-beta.10 (2026-10-06)
 
 Confirmações explícitas de encerramento foram adicionadas ao fim do expediente e da noite. O NEXO agora comunica claramente que conversar é opcional, pode ser feito com todos os contatos disponíveis e exige abrir/enviar/responder para avançar cada rota. Save schema permanece v10.
@@ -601,3 +615,7 @@ Corrigido bug em que finalizar a etapa 2 podia exibir `MARCAR PRIMEIRA SAÍDA` p
 - Tutorials progressivos bloqueantes do Dispatch (Ressonância, Combo e Condição) pausam o relógio até serem registrados.
 - O tempo de pausa é descontado do relógio real ao fechar a superfície; não altera duração nominal de ocorrência/missão.
 - Indicador `PAUSADO · LEITURA` aparece no relógio da Central.
+
+
+## Auth login hotfix — beta.14
+ENTRAR e CRIAR CONTA foram reforçados como modos independentes. O login existente usa apenas e-mail + senha, com CTA próprio e fallback explícito para voltar de cadastro para login. Sem alteração de Supabase, save v10 ou gameplay.

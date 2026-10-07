@@ -1,3 +1,31 @@
+## Beta 1 · v0.3.0-beta.14 — login existente reforçado (2026-10-06)
+- ENTRAR e CRIAR CONTA agora têm estados e CTAs explícitos e independentes.
+- Login exige somente e-mail + senha; cadastro mantém nome de exibição + e-mail + senha.
+- Fallback JÁ TENHO CONTA → ENTRAR evita ficar preso no cadastro em mobile.
+- Supabase, save v10 e gameplay inalterados.
+
+## Beta 1 · v0.3.0-beta.13 — rework total do Dispatch mobile (2026-10-06)
+
+- Nova camada `MobileDispatchExperience`: Central → Chamado → Equipe → Resultado/Ficha.
+- Mobile não depende mais de ativar MAPA para abrir briefing.
+- Resultado mobile dedicado e Edison inline; desktop preservado.
+- Save v10 e simulação inalterados.
+
+## Beta 1 · v0.3.0-beta.12 — fim romântico + operação infinita (2026-10-06)
+- Todos os romances concluídos = DATE 1 + DATE 2 dos sete agentes.
+- Último Date abre tela final sistêmica `/final`; saves completos antigos também são capturados.
+- Tela final lista as sete rotas concluídas e oferece CONTINUAR JOGANDO ou VOLTAR AO MENU.
+- Continuar preserva o save e o loop pós-Dia 6; tela não repete após flag persistente.
+- Nenhum epílogo/cânone novo; save schema v10. QA endgame 10/10 PASS.
+
+## Beta 1 · v0.3.0-beta.11 — revisão mobile completa (2026-10-06)
+
+- Resultado de missão no mobile vira tela única rolável com CTA de arquivamento preso à safe-area; a Central fica oculta enquanto o relatório está aberto.
+- Ficha de agente passa a ocupar o viewport útil, preservando leitura e fechamento.
+- NEXO mobile reorganizado: histórico rolável, respostas em coluna, composer rolável e botão de envio touch-safe.
+- Desenvolvimento, Manual, confirmações, menus, VN e Dates receberam endurecimento de overflow/safe-area para 320–430 px.
+- Novo `qa:mobile-full` com 12 verificações; nenhum gameplay/save/Supabase alterado.
+
 ## Beta 1 · v0.3.0-beta.10 — Confirmação de encerramento + clareza do NEXO (2026-10-06)
 
 - Encerrar a noite agora sempre exige confirmação explícita, inclusive na campanha completa.

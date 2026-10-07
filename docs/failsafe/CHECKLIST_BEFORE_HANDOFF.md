@@ -269,3 +269,37 @@
 - [x] `npm run qa:flow:static` = 44/44 PASS.
 - [x] `npm run validate:social-assets` = 35/35 PASS.
 - [ ] QA visual/browser e mobile pendente.
+
+
+## Beta 1 v0.3.0-beta.11 — revisão mobile completa
+- [x] Resultado mobile assume 100dvh e não concorre com IncidentRail/workspace.
+- [x] CTA ARQUIVAR RESULTADO respeita safe-area e permanece alcançável.
+- [x] FICHA mobile assume viewport e mantém leitura/fechamento alcançáveis.
+- [x] NEXO: respostas em coluna, histórico rolável, composer rolável e envio >=44px.
+- [x] Desenvolvimento/Manual/confirmações/VN/Dates receberam overflow e safe-area mobile.
+- [x] `npm run qa:mobile-full` = 12/12 PASS.
+- [x] QAs legados de fluxo, Dispatch mobile, pausa, GitHub Pages, auth, Beta 1 e refactor permanecem PASS.
+- [ ] QA visual real com teclado virtual em Android/iOS ainda pendente.
+
+
+## Beta 1 v0.3.0-beta.12 — fim romântico + operação infinita
+- [x] Critério de fim usa milestones 3 e 6 dos sete agentes, não percentual legado.
+- [x] Último Date encaminha para `/final` quando completa o sétimo romance.
+- [x] NEXO/menu detectam saves 100% completos que ainda não viram o final.
+- [x] Tela final marca visualização uma única vez via flag persistente.
+- [x] CONTINUAR JOGANDO preserva save e retorna ao NEXO; loop operacional permanece infinito.
+- [x] VOLTAR AO MENU preserva o save.
+- [x] Tela final possui layout mobile/safe-area e lista dinâmica das sete rotas.
+- [x] Save schema permanece v10.
+- [x] `npm run qa:endgame`: 10/10 PASS.
+- [ ] Browser real: último Date → final → continuar → encerrar noite → novo Dispatch.
+
+
+## Beta 1 v0.3.0-beta.13 — Mobile Dispatch Rework
+- [x] Camada mobile própria, sem comprimir workspace desktop.
+- [x] Central/Chamado/Equipe/Resultado/Ficha separados.
+- [x] Resultado mobile dedicado.
+- [x] Edison inline no fluxo mobile.
+- [x] Desktop preservado.
+- [x] QA estático novo do rework mobile.
+- [ ] QA visual real 320/360/390/430 px no GitHub Pages.

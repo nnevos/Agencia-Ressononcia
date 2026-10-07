@@ -7,6 +7,7 @@ import { postShiftScenes, isSceneAvailable } from "@/content/dialogues/post-shif
 import { PROGRESSIVE_TUTORIAL_FLAGS, progressiveTutorialCopy } from "@/content/narrative/progressiveTutorial";
 import { getHeroPortrait } from "@/game/data/heroPortraits";
 import { dialogueIntroOutgoingFlag, getCompletedChoice, getCurrentTurn, getDialogueTurns, getRouteStage, getSceneDay, hasAdvancedRouteToday, isDialogueSceneComplete } from "@/game/social/dialogue";
+import { shouldShowRomanceEnding } from "@/game/social/ending";
 import type { DialogueScene, SaveGame } from "@/game/types";
 import { recoverHeroStates } from "@/game/simulation/heroState";
 import { createInitialShift, SHIFT_GAME_MINUTES } from "@/game/simulation/shift";
@@ -161,6 +162,10 @@ export default function ConversationPage() {
   }
 
   useEffect(() => { refresh(); }, [router]);
+
+  useEffect(() => {
+    if (save && shouldShowRomanceEnding(save)) router.replace("/final");
+  }, [save, router]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
