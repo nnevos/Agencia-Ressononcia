@@ -1,3 +1,8 @@
+## Beta 1 · v0.3.0-beta.14 — deploy QA/Supabase hotfix (2026-10-06)
+- QA estático atualizado para reconhecer a baseline real `0.3.0-beta.14` em vez da `beta.13`.
+- `package-lock.json` alinhado à versão do `package.json`.
+- GitHub Pages agora falha cedo com mensagem explícita se URL/chave pública do Supabase estiverem ausentes ou se a URL incluir `/rest/v1`.
+
 ## Beta 1 · v0.3.0-beta.14 — login existente reforçado (2026-10-06)
 - ENTRAR e CRIAR CONTA agora têm estados e CTAs explícitos e independentes.
 - Login exige somente e-mail + senha; cadastro mantém nome de exibição + e-mail + senha.
