@@ -1,0 +1,36 @@
+{
+  "name": "ressonancia",
+  "version": "0.3.0-beta.17",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "validate:social-assets": "node scripts/validate-social-assets.mjs",
+    "qa:flow:static": "node scripts/qa-flow-static.mjs",
+    "qa:playtest": "npm --prefix qa/playtest test",
+    "qa:beta1": "node scripts/qa-beta1-architecture.mjs",
+    "qa:refactor": "node scripts/qa-refactor-optimization.mjs",
+    "qa:github-pages": "node scripts/qa-github-pages.mjs",
+    "qa:auth": "node scripts/qa-simple-auth.mjs",
+    "qa:mobile-dispatch": "node scripts/qa-mobile-dispatch.mjs",
+    "qa:clock-pause": "node scripts/qa-clock-pause.mjs",
+    "qa:dispatch-responsive": "node scripts/qa-dispatch-responsive.mjs",
+    "qa:endturn-nexo": "node scripts/qa-endturn-nexo.mjs",
+    "qa:mobile-full": "node scripts/qa-mobile-full.mjs",
+    "qa:endgame": "node scripts/qa-endgame.mjs",
+    "qa:settings-logout": "node scripts/qa-settings-logout.mjs"
+  },
+  "dependencies": {
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.9.0"
+  }
+}

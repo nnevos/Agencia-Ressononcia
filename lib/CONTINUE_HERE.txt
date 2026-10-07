@@ -1,0 +1,11 @@
+RESSONÂNCIA — BASELINE v0.1.0 FOUNDATION / BUILD v0.2.38
+
+1. Leia PROJECT_CONTEXT.md
+2. Leia EDIT_HERE.md
+3. Leia content/README.md
+4. Leia docs/authoring/, docs/design/, docs/canon/ e docs/failsafe/
+5. Continue de docs/failsafe/NEXT_SESSION.md
+
+NÃO usar snapshots antigos como base. A baseline estrutural continua v0.1.0 Foundation; o build incremental atual é v0.2.38.
+
+v0.2.37 alinhou Yuki ao padrão conversacional da Elysia. v0.2.38 troca o placeholder do menu por cidade noturna full-screen e fade contínuo sob a navegação. Save schema v9. QA runtime do menu é o próximo passo.
