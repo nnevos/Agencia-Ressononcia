@@ -1,10 +1,18 @@
-## Beta 1 · v0.3.0-beta.24 — NEXO mobile overlap hotfix (2026-10-06)
+## Beta 1 · v0.3.0-beta.25 — Manual integrado ao rodapé mobile do NEXO (2026-10-07)
+
+- No mobile, o launcher flutuante do Manual foi removido da lista do NEXO.
+- `ENCERRAR NOITE` e `MANUAL` agora ocupam uma faixa de ações própria no rodapé, lado a lado; em 360 px ou menos empilham.
+- Conversas ativas continuam sem Manual flutuante, preservando respostas e envio livres de sobreposição.
+- Desktop permanece com o launcher flutuante anterior.
+- Save schema permanece v10.
+
+## Beta 1 · v0.3.0-beta.25 — NEXO mobile overlap hotfix (2026-10-06)
 
 - Corrigida aplicação real das regras mobile do NEXO.
 - Removida competição entre ENCERRAR NOITE, Configurações, Manual, respostas e botão de envio.
 - Save v10 e conteúdo autoral inalterados.
 
-## Beta 1 · v0.3.0-beta.24 — correção textual Lysandro (2026-10-06)
+## Beta 1 · v0.3.0-beta.25 — correção textual Lysandro (2026-10-06)
 
 - Corrigido `um rápido acontece` para `um rápido beijo acontece` no Date 1 de Lysandro.
 - `content/narrative/outings.ts` e `docs/authoring/chat-scripts/Lysandro - Chat.docx` mantidos em sincronia.
@@ -1113,7 +1121,7 @@
 - Added responsive tutorial/manual presentation for mobile.
 - No gameplay, balance, narrative or save-schema changes; save remains v10.
 
-## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposicoes (2026-10-06)
+## Beta 1 · v0.3.0-beta.25 — NEXO mobile sem sobreposicoes (2026-10-06)
 - Conversa mobile usa uma unica superficie de acao por regiao.
 - `PROXIMA NOITE`/`ENCERRAR NOITE` nao ocupa o cabecalho de uma conversa; a acao continua na lista do NEXO.
 - Manual nao flutua sobre respostas/composer durante conversa ativa; permanece acessivel ao voltar para a lista.

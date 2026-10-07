@@ -1,4 +1,12 @@
-## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposição de ações (2026-10-06)
+## Beta 1 · v0.3.0-beta.25 — Manual integrado ao rodapé mobile do NEXO (2026-10-07)
+
+- No mobile, o launcher flutuante do Manual foi removido da lista do NEXO.
+- `ENCERRAR NOITE` e `MANUAL` agora ocupam uma faixa de ações própria no rodapé, lado a lado; em 360 px ou menos empilham.
+- Conversas ativas continuam sem Manual flutuante, preservando respostas e envio livres de sobreposição.
+- Desktop permanece com o launcher flutuante anterior.
+- Save schema permanece v10.
+
+## Beta 1 · v0.3.0-beta.25 — NEXO mobile sem sobreposição de ações (2026-10-06)
 
 - Corrigido o bloco CSS da beta.23 que havia sido serializado com escapes literais e, por isso, não era aplicado pelo navegador.
 - Em conversa mobile, ENCERRAR NOITE permanece apenas na lista do NEXO; o cabeçalho fica reservado a contato + Configurações.
@@ -6,7 +14,7 @@
 - Composer de envio só aparece depois que uma resposta é selecionada; antes disso, as respostas são a única ação inferior.
 - Nenhuma lógica social, Date, Supabase ou save foi alterada; save schema permanece v10.
 
-## Beta 1 · v0.3.0-beta.24 — correção textual Lysandro (2026-10-06)
+## Beta 1 · v0.3.0-beta.25 — correção textual Lysandro (2026-10-06)
 
 - Date 1 de Lysandro: corrigido o trecho autoral para `um rápido beijo acontece`, preservando evento e intenção da cena.
 - Runtime e DOCX de autoria foram alinhados; nenhuma mecânica, flag, romance ou save foi alterado.
@@ -638,7 +646,7 @@ Pacote de robustez social: validação editorial reforçada para flags/IDs/mídi
 - Logout preserva o save local, encerra a sessão Supabase e retorna ao painel de autenticação.
 - Save schema permanece v10; nenhuma regra de gameplay/narrativa foi alterada.
 
-## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposicoes (2026-10-06)
+## Beta 1 · v0.3.0-beta.25 — NEXO mobile sem sobreposicoes (2026-10-06)
 - Conversa mobile usa uma unica superficie de acao por regiao.
 - `PROXIMA NOITE`/`ENCERRAR NOITE` nao ocupa o cabecalho de uma conversa; a acao continua na lista do NEXO.
 - Manual nao flutua sobre respostas/composer durante conversa ativa; permanece acessivel ao voltar para a lista.

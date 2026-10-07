@@ -1,4 +1,12 @@
-## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposição de ações (2026-10-06)
+## Beta 1 · v0.3.0-beta.25 — Manual integrado ao rodapé mobile do NEXO (2026-10-07)
+
+- No mobile, o launcher flutuante do Manual foi removido da lista do NEXO.
+- `ENCERRAR NOITE` e `MANUAL` agora ocupam uma faixa de ações própria no rodapé, lado a lado; em 360 px ou menos empilham.
+- Conversas ativas continuam sem Manual flutuante, preservando respostas e envio livres de sobreposição.
+- Desktop permanece com o launcher flutuante anterior.
+- Save schema permanece v10.
+
+## Beta 1 · v0.3.0-beta.25 — NEXO mobile sem sobreposição de ações (2026-10-06)
 
 - Hotfix corrige CSS mobile da beta.23 que estava armazenado com `\n` literais e não era interpretado.
 - Conversa mobile não mostra ENCERRAR NOITE no cabeçalho nem Manual sobre respostas.
@@ -656,7 +664,7 @@ Corrigido bug em que finalizar a etapa 2 podia exibir `MARCAR PRIMEIRA SAÍDA` p
 ## Auth login hotfix — beta.14
 ENTRAR e CRIAR CONTA foram reforçados como modos independentes. O login existente usa apenas e-mail + senha, com CTA próprio e fallback explícito para voltar de cadastro para login. Sem alteração de Supabase, save v10 ou gameplay.
 
-## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposicoes (2026-10-06)
+## Beta 1 · v0.3.0-beta.25 — NEXO mobile sem sobreposicoes (2026-10-06)
 - Conversa mobile usa uma unica superficie de acao por regiao.
 - `PROXIMA NOITE`/`ENCERRAR NOITE` nao ocupa o cabecalho de uma conversa; a acao continua na lista do NEXO.
 - Manual nao flutua sobre respostas/composer durante conversa ativa; permanece acessivel ao voltar para a lista.

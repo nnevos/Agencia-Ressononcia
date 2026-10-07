@@ -444,7 +444,7 @@ export default function ConversationPage() {
       </div>}
     </div>
     {progressiveTutorialKey && <ProgressiveTutorialCoach className="nexoTutorial" {...progressiveTutorialCopy[progressiveTutorialKey]} onDismiss={dismissProgressiveTutorial} actionLabel="OK" showSpotlight={false} />}
-    <AgencyManual save={save} className={`agencyManualNexo ${activeContact ? "conversationActive" : ""}`} />
+    <AgencyManual save={save} className={`agencyManualNexo nexoManualFloating ${activeContact ? "conversationActive" : ""}`} />
     <div className="nexoMessengerShell">
       <aside className={(activeContact || libraryView !== "chats") ? "nexoConversationList hasActive" : "nexoConversationList"}>
         <header className="nexoSidebarHeader">
@@ -502,7 +502,10 @@ export default function ConversationPage() {
             <small>Você pode conversar com todos. É opcional; abra um contato e envie/responda para avançar a rota.</small>
             {(nightStatus.pendingOutings || nightStatus.unread) ? <small className="nexoNightPending">{nightStatus.pendingOutings ? `${nightStatus.pendingOutings} convite${nightStatus.pendingOutings === 1 ? "" : "s"} pendente${nightStatus.pendingOutings === 1 ? "" : "s"}` : ""}{nightStatus.pendingOutings && nightStatus.unread ? " · " : ""}{nightStatus.unread ? `${nightStatus.unread} conversa${nightStatus.unread === 1 ? "" : "s"} não lida${nightStatus.unread === 1 ? "" : "s"}` : ""}</small> : null}
           </div>
-          <button onClick={requestFinishDay}>{postShiftOnly ? "ENCERRAR NOITE" : "ENCERRAR NOITE"}</button>
+          <div className="nexoNightFooterActions">
+            <button className="nexoEndNightFooterButton" onClick={requestFinishDay}>{postShiftOnly ? "ENCERRAR NOITE" : "ENCERRAR NOITE"}</button>
+            <AgencyManual save={save} className="agencyManualNexoFooter" />
+          </div>
         </footer>
       </aside>
 

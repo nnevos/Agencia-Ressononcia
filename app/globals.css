@@ -10244,3 +10244,55 @@ button:focus-visible, input:focus-visible, select:focus-visible, [role="button"]
   .nexoPrivateHeader .nexoHeaderActions { display:none !important; }
   .nexoReplySuggestions button { min-height:60px; }
 }
+
+
+/* Beta 1 v0.3.0-beta.25 - NEXO mobile: Manual integrado ao rodape da lista */
+.agencyManualNexoFooter { display:none; }
+.nexoNightFooterActions { display:flex; align-items:center; gap:8px; margin-left:auto; }
+.nexoNightFooterActions .nexoEndNightFooterButton { margin-left:0; }
+
+@media (max-width:780px) {
+  /* No mobile, o launcher flutuante deixa de existir na lista: Manual e Encerrar
+     ocupam a mesma faixa de acoes e nunca se sobrepoem. */
+  .agencyManualNexo.nexoManualFloating { display:none !important; }
+  .agencyManualNexoFooter {
+    display:flex !important;
+    position:static !important;
+    inset:auto !important;
+    z-index:auto !important;
+    margin:0 !important;
+    width:auto !important;
+    min-width:112px;
+    height:46px !important;
+    justify-content:center;
+    flex:0 0 auto;
+    box-shadow:none !important;
+  }
+  .agencyManualNexoFooter b { display:inline !important; }
+  .nexoNightFooter {
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:10px !important;
+    overflow:visible !important;
+  }
+  .nexoNightFooter > div:first-child { min-width:0; }
+  .nexoNightFooterActions {
+    width:100%;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px;
+    margin-left:0;
+    align-items:stretch;
+  }
+  .nexoNightFooterActions .nexoEndNightFooterButton {
+    width:100% !important;
+    min-width:0;
+    min-height:46px;
+    margin:0 !important;
+  }
+}
+
+@media (max-width:360px) {
+  .nexoNightFooterActions { grid-template-columns:1fr; }
+  .agencyManualNexoFooter { width:100% !important; min-width:0; }
+}
