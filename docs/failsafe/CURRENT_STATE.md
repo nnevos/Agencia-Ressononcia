@@ -1,3 +1,10 @@
+# CURRENT STATE — Beta 1 · v0.3.0-beta.16 (2026-10-06)
+
+- Tutorial progressivo do NEXO não usa mais spotlight escuro nem força destaque sobre a lista.
+- Edison aparece em balão normal com `OK`; ao confirmar, a flag correspondente é persistida.
+- Interface permanece interativa e legível enquanto o aviso está aberto.
+- Save schema permanece v10.
+
 # CURRENT STATE — Beta 1 · v0.3.0-beta.14 (2026-10-06)
 
 - Dispatch mobile refeito como fluxo sequencial independente da composição desktop.

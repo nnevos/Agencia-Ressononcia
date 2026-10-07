@@ -1,3 +1,14 @@
+## Beta 1 · v0.3.0-beta.16 — ordem mobile da montagem de equipe (2026-10-06)
+
+- No Dispatch mobile, `PREVISÃO DA EQUIPE`/radar foi movida para antes da lista de agentes.
+- Desktop e lógica de seleção/despacho permanecem inalterados.
+
+## Beta 1 · v0.3.0-beta.16 — tutorial NEXO dismissível (2026-10-06)
+- Removido spotlight/backdrop escuro dos tutoriais progressivos do NEXO.
+- Avisos de pós-expediente e convite agora exibem botão `OK` e persistem a flag ao serem confirmados.
+- Removido destaque/z-index forçado da lista/contato durante esses avisos.
+- Nenhuma mudança em regras de rota, Date, Dispatch, Supabase ou save v10.
+
 ## Beta 1 · v0.3.0-beta.14 — deploy QA/Supabase hotfix (2026-10-06)
 - QA estático atualizado para reconhecer a baseline real `0.3.0-beta.14` em vez da `beta.13`.
 - `package-lock.json` alinhado à versão do `package.json`.

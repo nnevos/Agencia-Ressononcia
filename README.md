@@ -1,3 +1,9 @@
+## Beta 1 · v0.3.0-beta.16
+
+- Mobile: previsão da equipe/radar agora aparece antes da lista de agentes na montagem do Dispatch.
+
+Hotfix visual do tutorial do NEXO: os avisos de pós-expediente/convite agora aparecem como balões normais com botão **OK**, sem escurecer ou bloquear a interface.
+
 ## Beta 1 · v0.3.0-beta.14
 
 Rework total do Dispatch mobile: no celular a Central agora usa um fluxo sequencial próprio — **Central → Chamado → Equipe → Resultado/Ficha** — em vez de comprimir o workspace desktop. O resultado e os tutoriais do Edison entram no fluxo normal da tela, sem overlays concorrentes. Desktop, fórmulas de Dispatch e save v10 foram preservados.

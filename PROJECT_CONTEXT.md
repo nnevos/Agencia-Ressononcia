@@ -1,3 +1,9 @@
+## Beta 1 · v0.3.0-beta.16 — tutorial NEXO sem bloqueio visual (2026-10-06)
+- Tutoriais progressivos do NEXO agora usam balão normal com botão `OK`, sem spotlight/backdrop escuro.
+- Lista de contatos deixa de receber destaque/z-index forçado durante esses tutoriais.
+- Ao confirmar `OK`, a flag de tutorial é persistida e o balão não reaparece naquela campanha.
+- Gameplay, social, Supabase e save schema v10 permanecem inalterados.
+
 ## Beta 1 · v0.3.0-beta.14 — rework total do Dispatch mobile (2026-10-06)
 
 - Mobile deixa de comprimir a Central desktop e passa a usar fluxo sequencial próprio: Central → Chamado → Equipe → Resultado/Ficha.
@@ -63,7 +69,7 @@
 
 # RESSONÂNCIA — CONTEXTO MESTRE
 
-> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.14**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
+> BASELINE: **v0.1.0 (Foundation)**, consolidada da linha funcional v0.9.14. Build incremental atual: **Beta 1 · v0.3.0-beta.16**, com NEXO long-form, progresso romântico e curva diária de Dispatch; a baseline de origem continua sendo a Foundation.
 > NÃO confundir com o antigo snapshot `ressonancia-fase1-0.1.1`, que é obsoleto e nunca deve ser usado como base.
 
 ## Como retomar em outro chat

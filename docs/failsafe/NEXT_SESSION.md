@@ -1,3 +1,10 @@
+# NEXT SESSION — Beta 1 · v0.3.0-beta.16
+
+1. No GitHub Pages, abrir o NEXO com primeiro convite de Date e confirmar que a tela não escurece.
+2. Confirmar que o botão `OK` fecha o balão e ele não reaparece após reload/login.
+3. Verificar desktop e mobile 320/360/390/430 px; o balão não deve cobrir respostas/CTA essenciais.
+4. Confirmar que `IR PARA ENCONTRO` continua funcionando normalmente após dispensar o tutorial.
+
 # NEXT SESSION — Beta 1 · v0.3.0-beta.14
 
 1. QA real em 320/360/390/430 px: Central → Chamado → Equipe → FICHA → Dispatch → Resultado → Arquivar.

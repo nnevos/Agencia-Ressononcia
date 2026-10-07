@@ -336,7 +336,7 @@ export default function ConversationPage() {
   }
 
   return <main className="phoneScene nexoDesktopScene">
-    {progressiveTutorialKey && <ProgressiveTutorialCoach className="nexoTutorial" {...progressiveTutorialCopy[progressiveTutorialKey]} onDismiss={undefined} />}
+    {progressiveTutorialKey && <ProgressiveTutorialCoach className="nexoTutorial" {...progressiveTutorialCopy[progressiveTutorialKey]} onDismiss={dismissProgressiveTutorial} actionLabel="OK" showSpotlight={false} />}
     <AgencyManual save={save} className="agencyManualNexo" />
     <div className="nexoMessengerShell">
       <aside className={(activeContact || libraryView !== "chats") ? "nexoConversationList hasActive" : "nexoConversationList"}>
@@ -362,7 +362,7 @@ export default function ConversationPage() {
           <button className={libraryView === "dates" ? "active" : ""} onClick={() => { setLibraryView("dates"); setActiveCharacterId(null); }}>Dates<span>{completedOutings.length}</span></button>
         </nav>
 
-        <div className={`nexoContactsScroll ${progressiveTutorialKey === "postShiftNexo" || progressiveTutorialKey === "date" ? "tutorialTarget" : ""}`}>
+        <div className="nexoContactsScroll">
           {filteredContacts.length ? filteredContacts.map((contact) => {
             const portrait = getHeroPortrait(contact.characterId);
             const preview = latestPreview(contact, save);
@@ -372,7 +372,7 @@ export default function ConversationPage() {
             const completeForNow = contactIsCompleteForNow(contact, save);
             const active = activeCharacterId === contact.characterId;
             const rowState = pendingOuting ? " outingPending" : completeForNow ? " complete" : isNew ? " unread" : "";
-            return <button className={`nexoContactRow${active ? " active" : ""}${rowState}${progressiveTutorialKey === "date" && pendingOuting ? " tutorialTarget" : ""}`} key={contact.characterId} onClick={() => openContact(contact)}>
+            return <button className={`nexoContactRow${active ? " active" : ""}${rowState}`} key={contact.characterId} onClick={() => openContact(contact)}>
               <div className="nexoContactAvatar">{portrait ? <img src={portrait} alt="" /> : contact.speaker.slice(0,2).toUpperCase()}</div>
               <div className="nexoContactText">
                 <div><strong>{contact.speaker}</strong><time>{preview.time}</time></div>

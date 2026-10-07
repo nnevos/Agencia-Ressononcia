@@ -17,7 +17,7 @@ function contains(rel, needle) {
 }
 
 const pkg = JSON.parse(read('package.json'));
-check('versao-baseline', pkg.version === '0.3.0-beta.14', `package.json=${pkg.version}`);
+check('versao-baseline', pkg.version === '0.3.0-beta.16', `package.json=${pkg.version}`);
 check('save-schema-v10', contains('lib/save.ts', 'CURRENT_SAVE_VERSION = 10'), 'schema esperado: v10');
 check('date-gate-launch-query', contains('app/encontro/[sceneId]/page.tsx', 'params.get("launch") !== "1"'), 'Date normal exige ?launch=1');
 check('date-cta-persiste-reserva', contains('components/PhoneDialogueEngine.tsx', 'outingsByGlobalDay: { ...current.social.outingsByGlobalDay'), 'CTA persiste seleção da noite');
@@ -40,7 +40,8 @@ check('tutorial-nexo-contextual', contains('app/conversa/page.tsx', 'PROGRESSIVE
 
 check('edison-coach-unificado', fs.existsSync(path.join(root, 'components/EdisonCoach.tsx')) && contains('app/agencia/page.tsx', 'EdisonCoach') && contains('app/agencia/page.tsx', 'firstCaseTutorialBubble') && !contains('components/agency/MissionBriefing.tsx', 'briefTutorialCoach'), 'primeiro despacho usa o coach unificado em balao flutuante, sem comprimir o briefing');
 check('tutorial-avanca-por-acao', contains('app/desenvolvimento/page.tsx', 'markTutorialFlag(PROGRESSIVE_TUTORIAL_FLAGS.development)') && contains('app/desenvolvimento/page.tsx', '[PROGRESSIVE_TUTORIAL_FLAGS.technique]') && contains('app/desenvolvimento/page.tsx', '[PROGRESSIVE_TUTORIAL_FLAGS.attribute]'), 'desenvolvimento marca aprendizado por selecao/confirmacao real');
-check('tutorial-date-por-cta', contains('app/conversa/page.tsx', 'PROGRESSIVE_TUTORIAL_FLAGS.date') && contains('components/PhoneDialogueEngine.tsx', 'highlightOutingTutorial'), 'Date e registrado ao usar o CTA explicito');
+check('tutorial-date-por-cta', contains('app/conversa/page.tsx', 'PROGRESSIVE_TUTORIAL_FLAGS.date') && contains('components/PhoneDialogueEngine.tsx', 'highlightOutingTutorial'), 'Date continua registrado ao usar o CTA explicito');
+check('tutorial-nexo-dismissible-no-spotlight', contains('app/conversa/page.tsx', 'onDismiss={dismissProgressiveTutorial}') && contains('app/conversa/page.tsx', 'actionLabel="OK"') && contains('app/conversa/page.tsx', 'showSpotlight={false}'), 'tutoriais do NEXO usam OK e nao escurecem/bloqueiam a interface');
 check('manual-agencia', fs.existsSync(path.join(root, 'components/AgencyManual.tsx')) && fs.existsSync(path.join(root, 'content/narrative/agencyManual.ts')) && contains('app/agencia/page.tsx', 'AgencyManual') && contains('app/desenvolvimento/page.tsx', 'AgencyManual') && contains('app/conversa/page.tsx', 'AgencyManual'), 'Manual da Agencia disponivel nas superficies centrais');
 check('tutorial-spotlight', contains('app/globals.css', 'edisonSpotlightBackdrop') && contains('app/globals.css', 'tutorialTargetPulse'), 'spotlight e destaque pulsante implementados');
 
