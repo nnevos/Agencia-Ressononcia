@@ -1,4 +1,12 @@
-## Beta 1 · v0.3.0-beta.23 — correção textual Lysandro (2026-10-06)
+## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposição de ações (2026-10-06)
+
+- Corrigido o bloco CSS da beta.23 que havia sido serializado com escapes literais e, por isso, não era aplicado pelo navegador.
+- Em conversa mobile, ENCERRAR NOITE permanece apenas na lista do NEXO; o cabeçalho fica reservado a contato + Configurações.
+- Manual é ocultado enquanto uma conversa está aberta no mobile, evitando cobrir respostas/composer.
+- Composer de envio só aparece depois que uma resposta é selecionada; antes disso, as respostas são a única ação inferior.
+- Nenhuma lógica social, Date, Supabase ou save foi alterada; save schema permanece v10.
+
+## Beta 1 · v0.3.0-beta.24 — correção textual Lysandro (2026-10-06)
 
 - Date 1 de Lysandro: corrigido o trecho autoral para `um rápido beijo acontece`, preservando evento e intenção da cena.
 - Runtime e DOCX de autoria foram alinhados; nenhuma mecânica, flag, romance ou save foi alterado.
@@ -630,7 +638,7 @@ Pacote de robustez social: validação editorial reforçada para flags/IDs/mídi
 - Logout preserva o save local, encerra a sessão Supabase e retorna ao painel de autenticação.
 - Save schema permanece v10; nenhuma regra de gameplay/narrativa foi alterada.
 
-## Beta 1 · v0.3.0-beta.23 — NEXO mobile sem sobreposicoes (2026-10-06)
+## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposicoes (2026-10-06)
 - Conversa mobile usa uma unica superficie de acao por regiao.
 - `PROXIMA NOITE`/`ENCERRAR NOITE` nao ocupa o cabecalho de uma conversa; a acao continua na lista do NEXO.
 - Manual nao flutua sobre respostas/composer durante conversa ativa; permanece acessivel ao voltar para a lista.

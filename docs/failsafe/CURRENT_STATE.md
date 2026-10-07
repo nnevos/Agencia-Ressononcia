@@ -1,3 +1,10 @@
+## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposição de ações (2026-10-06)
+
+- Hotfix corrige CSS mobile da beta.23 que estava armazenado com `\n` literais e não era interpretado.
+- Conversa mobile não mostra ENCERRAR NOITE no cabeçalho nem Manual sobre respostas.
+- Composer de confirmação só aparece após selecionar uma resposta.
+- Save schema v10 inalterado.
+
 ## Delta beta.23
 
 - Date 1 de Lysandro corrigido: `um rápido beijo acontece`.
@@ -649,7 +656,7 @@ Corrigido bug em que finalizar a etapa 2 podia exibir `MARCAR PRIMEIRA SAÍDA` p
 ## Auth login hotfix — beta.14
 ENTRAR e CRIAR CONTA foram reforçados como modos independentes. O login existente usa apenas e-mail + senha, com CTA próprio e fallback explícito para voltar de cadastro para login. Sem alteração de Supabase, save v10 ou gameplay.
 
-## Beta 1 · v0.3.0-beta.23 — NEXO mobile sem sobreposicoes (2026-10-06)
+## Beta 1 · v0.3.0-beta.24 — NEXO mobile sem sobreposicoes (2026-10-06)
 - Conversa mobile usa uma unica superficie de acao por regiao.
 - `PROXIMA NOITE`/`ENCERRAR NOITE` nao ocupa o cabecalho de uma conversa; a acao continua na lista do NEXO.
 - Manual nao flutua sobre respostas/composer durante conversa ativa; permanece acessivel ao voltar para a lista.

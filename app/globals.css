@@ -10178,4 +10178,69 @@ button:focus-visible, input:focus-visible, select:focus-visible, [role="button"]
   .nexoSettingsActions>button,
   .nexoSettingsAccount>button { min-height:46px; font-size:.56rem; }
 }
-\n\n/* Beta 1 v0.3.0-beta.23 - NEXO mobile: uma camada de acao por regiao */\n@media(max-width:780px){\n  /* Dentro de uma conversa, encerrar/avancar noite volta para a lista.\n     O cabecalho privado fica dedicado a identidade + configuracoes. */\n  .nexoPrivateHeader .nexoEndNightButton{display:none!important}\n\n  /* O Manual nao flutua sobre respostas/composer. Continua disponivel na lista do NEXO. */\n  .agencyManualNexo.conversationActive{display:none!important}\n\n  /* Enquanto o jogador ainda escolhe uma resposta, nao mostramos um segundo composer\n     desabilitado dizendo para escolher acima. As escolhas sao a propria acao principal. */\n  .nexoChoiceComposer.awaitingSelection{display:none!important}\n  .nexoChoiceComposer.hasSelection{\n    position:sticky;\n    bottom:0;\n    grid-template-columns:minmax(0,1fr) 50px!important;\n    gap:8px!important;\n    padding-top:2px;\n    background:rgba(8,21,29,.99);\n  }\n  .nexoChoiceComposer.hasSelection .nexoComposerIcon{display:none!important}\n  .nexoChoiceComposer.hasSelection .nexoDraftField{\n    min-height:48px!important;\n    max-height:92px!important;\n  }\n  .nexoChoiceComposer.hasSelection .nexoSendButton{width:50px!important;height:48px!important;min-width:50px}\n\n  /* Respostas ganham o espaco que antes era consumido pelo composer redundante. */\n  .nexoReplySuggestions{max-height:38dvh!important;padding-bottom:2px!important}\n  .nexoComposerArea{max-height:min(46dvh,360px)!important}\n}\n\n@media(max-width:430px){\n  .nexoPrivateHeader{padding-right:58px!important}\n  .nexoPrivateHeader .nexoHeaderActions{display:none!important}\n  .nexoSettingsHost .settingsButton{width:40px;height:40px}\n  .nexoReplySuggestions{max-height:40dvh!important}\n}\n
+
+
+/* Beta 1 v0.3.0-beta.24 - NEXO mobile: remove sobreposicoes de acoes */
+@media (max-width:780px) {
+  /* A conversa mobile fica dedicada a contato + mensagens. Encerrar noite permanece
+     na lista do NEXO, evitando competir com Configuracoes no cabecalho. */
+  .nexoPrivateHeader .nexoEndNightButton { display:none !important; }
+  .nexoPrivateHeader .nexoHeaderActions > span { display:none !important; }
+
+  /* O Manual continua disponivel na lista do NEXO, mas nunca cobre respostas ou envio. */
+  .agencyManualNexo.conversationActive { display:none !important; }
+
+  /* A engrenagem global ocupa so a area reservada no canto direito. */
+  .nexoPrivateHeader { padding-right:58px !important; }
+  .nexoSettingsHost .settingsButton {
+    width:40px;
+    height:40px;
+    min-width:40px;
+  }
+
+  /* Enquanto nenhuma resposta foi escolhida, as tres respostas sao a unica acao.
+     O composer aparece somente depois da selecao, liberando o botao de envio. */
+  .nexoChoiceComposer.awaitingSelection { display:none !important; }
+  .nexoChoiceComposer.hasSelection {
+    position:relative;
+    bottom:auto;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) 50px !important;
+    gap:8px !important;
+    padding:8px 0 max(4px, env(safe-area-inset-bottom));
+    background:#08151d;
+    z-index:1;
+  }
+  .nexoChoiceComposer.hasSelection .nexoComposerIcon { display:none !important; }
+  .nexoChoiceComposer.hasSelection .nexoDraftField {
+    min-height:48px !important;
+    max-height:96px !important;
+    overflow:auto;
+  }
+  .nexoChoiceComposer.hasSelection .nexoSendButton {
+    width:50px !important;
+    height:48px !important;
+    min-width:50px !important;
+    align-self:end;
+  }
+
+  /* Uma unica regiao rolavel para respostas + confirmacao, sem elementos flutuantes. */
+  .nexoComposerArea {
+    position:relative !important;
+    max-height:min(48dvh, 390px) !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    padding-bottom:max(10px, env(safe-area-inset-bottom)) !important;
+    overscroll-behavior:contain;
+  }
+  .nexoReplySuggestions {
+    max-height:none !important;
+    overflow:visible !important;
+    padding-bottom:4px !important;
+  }
+}
+
+@media (max-width:430px) {
+  .nexoPrivateHeader .nexoHeaderActions { display:none !important; }
+  .nexoReplySuggestions button { min-height:60px; }
+}
